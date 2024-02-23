@@ -9,7 +9,7 @@ import { AuthContext } from "../AuthProvider/AuthProvider";
 
 const Navbar = () => {
   const { user, logOut } = useContext(AuthContext);
-  console.log(user?.email);
+
   const [theme, setTheme] = useState(
     localStorage.getItem("theme") ? localStorage.getItem("theme") : "light"
   );
@@ -24,7 +24,9 @@ const Navbar = () => {
 
   const handelLogOut = () => {
     logOut()
-      .then(() => {})
+      .then(() => {
+        localStorage.setItem("token", null);
+      })
       .catch((error) => {
         console.log(error.message);
       });

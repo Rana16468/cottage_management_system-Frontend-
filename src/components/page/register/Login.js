@@ -15,17 +15,25 @@ const Login = () => {
 
   const onSubmit = (data) => {
     signIn(data?.email, data?.password)
-      .then((result) => {
+      .then(async (result) => {
         const user = result.user;
+
+        if (user) {
+          const res = await fetch("http://localhost:3013/api/v1/create_token", {
+            method: "POST",
+            body: JSON.stringify({ role: user?.photoURL, email: data?.email }),
+          });
+          const accessToken = await res.json();
+          localStorage.setItem("token", accessToken?.data);
+        }
+
+        toast.success("Successfully Login");
         const userInoformation = {
-          full_name: user?.displayName,
-          email: user?.email,
-          role: user?.photoURL,
           lastLogin: user?.metadata?.lastLoginAt,
           lastSignInTime: user?.metadata?.lastSignInTime,
         };
         console.log(userInoformation);
-        console.log(user);
+
         setLogain(true);
         setError("");
         navigate(form, { replace: true });

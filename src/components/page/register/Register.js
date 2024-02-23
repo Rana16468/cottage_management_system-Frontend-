@@ -28,7 +28,15 @@ const Register = () => {
     createUser(data.email, data.password)
       .then(async (result) => {
         const user = result.user;
-        console.log(user);
+
+        if (user) {
+          const res = await fetch("http://localhost:3013/api/v1/create_token", {
+            method: "POST",
+            body: JSON.stringify({ role: data?.role, email: data?.email }),
+          });
+          const accessToken = await res.json();
+          localStorage.setItem("token", accessToken?.data);
+        }
         updateProfileInfo(data?.username, data?.role);
         setRegister(true);
         EmailVarification();
@@ -68,7 +76,7 @@ const Register = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        toast.error(data?.message);
+        toast.success(data?.message);
       })
       .catch((error) => {
         console.log(error.message);
