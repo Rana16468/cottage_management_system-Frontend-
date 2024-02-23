@@ -64,6 +64,57 @@ const Navbar = () => {
     </>
   );
 
+  const buyerAccountHolder = user?.photoURL === "buyer" && (
+    <>
+      <li>
+        <a href="...">NEW ARRIVALS</a>
+      </li>
+      <li>
+        <a href="....">GIFTS</a>
+      </li>
+      <li>
+        <a href="....">COUTURE</a>
+      </li>
+      <li onMouseOver={() => setClickbutton(!clickButton)}>
+        <Link>Company</Link>
+      </li>
+      <li>
+        <a href="....">Man</a>
+      </li>
+      <li>
+        <a href="....">Weman</a>
+      </li>
+      <li>
+        <a href="....">Kids</a>
+      </li>
+    </>
+  );
+  const sellerAccountHolder = user?.photoURL === "seller" && (
+    <>
+      <li>
+        <a href="...">AI</a>
+      </li>
+      <li>
+        <a href="....">Home</a>
+      </li>
+      <li>
+        <a href="....">Service</a>
+      </li>
+      <li onMouseOver={() => setClickbutton(!clickButton)}>
+        <Link>Company</Link>
+      </li>
+      <li>
+        <a href="....">Contract</a>
+      </li>
+      <li>
+        <a href="....">Help</a>
+      </li>
+      <li>
+        <a href="....">Kids</a>
+      </li>
+    </>
+  );
+
   return (
     <>
       <nav className=" bg-gray-100 justify-between hidden lg:flex ">
@@ -126,52 +177,8 @@ const Navbar = () => {
               <li>
                 <Link to="/">Home</Link>
               </li>
-              <li>
-                <Link to="exp">NEW ARRIVALS</Link>
-              </li>
-              <li>
-                <a href="....">GIFTS</a>
-              </li>
-              <li>
-                <button
-                  onMouseOver={() => setClickbutton(!clickButton)}
-                  className="flex items-center justify-between w-full py-2 pl-3 pr-4  text-gray-900 rounded md:w-auto hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-600 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-blue-500 md:dark:hover:bg-transparent dark:border-gray-700">
-                  Company{" "}
-                  <svg
-                    className="w-2.5 h-2.5 ml-2.5"
-                    aria-hidden="true"
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 10 6">
-                    <path
-                      stroke="currentColor"
-                      strokeLinecap="round"
-                      strokeWidth="2"
-                      d="m1 1 4 4 4-4"
-                    />
-                  </svg>
-                </button>
-              </li>
-              <li>
-                <a href="..." className="block py-2 pl-3 pr-4 ">
-                  Home
-                </a>
-              </li>
-              <li>
-                <a href="..." className="block py-2 pl-3 pr-4 ">
-                  Services
-                </a>
-              </li>
-              <li>
-                <a href="..." className="block py-2 pl-3 pr-4 ">
-                  Pricing
-                </a>
-              </li>
-              <li>
-                <a href="..." className="block py-2 pl-3 pr-4">
-                  Contact
-                </a>
-              </li>
+              {buyerAccountHolder}
+              {sellerAccountHolder}
 
               <ul className="space-x-2"></ul>
             </ul>
@@ -186,27 +193,8 @@ const Navbar = () => {
             <li>
               <Link to="/">Home</Link>
             </li>
-            <li>
-              <a href="...">NEW ARRIVALS</a>
-            </li>
-            <li>
-              <a href="....">GIFTS</a>
-            </li>
-            <li>
-              <a href="....">COUTURE</a>
-            </li>
-            <li onMouseOver={() => setClickbutton(!clickButton)}>
-              <Link>Company</Link>
-            </li>
-            <li>
-              <a href="....">Man</a>
-            </li>
-            <li>
-              <a href="....">Weman</a>
-            </li>
-            <li>
-              <a href="....">Kids</a>
-            </li>
+            {buyerAccountHolder}
+            {sellerAccountHolder}
             <ul className="flex space-x-2"></ul>
           </ul>
         </div>

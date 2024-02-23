@@ -33,6 +33,7 @@ const Register = () => {
         setRegister(true);
         EmailVarification();
         toast.success("Checked Your Email and Varified");
+        await storeUserInformation(data);
         navigate("/");
 
         reset();
@@ -57,7 +58,22 @@ const Register = () => {
       });
   };
 
-  console.log(error);
+  const storeUserInformation = async (data) => {
+    fetch("http://localhost:3013/api/v1/user_information", {
+      method: "POST", // or 'PUT'
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        toast.error(data?.message);
+      })
+      .catch((error) => {
+        console.log(error.message);
+      });
+  };
 
   return (
     <>
