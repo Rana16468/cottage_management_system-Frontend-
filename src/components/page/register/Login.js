@@ -16,15 +16,32 @@ const Login = () => {
   const onSubmit = (data) => {
     signIn(data?.email, data?.password)
       .then(async (result) => {
-        const user = result.user;
-
+        const user = await result?.user;
         if (user) {
-          const res = await fetch("http://localhost:3013/api/v1/create_token", {
-            method: "POST",
-            body: JSON.stringify({ role: user?.photoURL, email: data?.email }),
-          });
-          const accessToken = await res.json();
-          localStorage.setItem("token", accessToken?.data);
+          try {
+            const response = await fetch(
+              "http://localhost:3013/api/v1/create_token",
+              {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                  role: user?.photoURL,
+                  email: user?.email,
+                }),
+              }
+            );
+            if (!response.ok) {
+              throw new Error("Failed to fetch token");
+            }
+            const data = await response.json();
+            const accessToken = data?.data;
+            localStorage.setItem("token", accessToken);
+            // Call your other function here
+          } catch (error) {
+            console.error("Error fetching token:", error);
+          }
         }
 
         toast.success("Successfully Login");

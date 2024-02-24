@@ -32,6 +32,9 @@ const Register = () => {
         if (user) {
           const res = await fetch("http://localhost:3013/api/v1/create_token", {
             method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
             body: JSON.stringify({ role: data?.role, email: data?.email }),
           });
           const accessToken = await res.json();
