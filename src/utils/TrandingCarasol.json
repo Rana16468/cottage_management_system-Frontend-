@@ -25,7 +25,32 @@
                 "tittle": "HBCU Versity Collage",
                 "location": "/trandint_product/4",
                 "image": "https://i.pinimg.com/736x/31/52/ff/3152ff2bae15f93a2fd2805aa8356c41.jpg"
+            },
+            {
+                "id": 5,
+                "tittle": "Just in: Nike Vomero 17",
+                "location": "/trandint_product/1",
+                "image": "https://runpacers.com/cdn/shop/files/Womens-Nike-Vomero-17.jpg?v=1696517263"
+            },
+            {
+                "id": 6,
+                "tittle": "Nike Leggings",
+                "location": "/trandint_product/2",
+                "image": "https://runpacers.com/cdn/shop/files/Womens-Nike-Vomero-17.jpg?v=1696517263"
+            },
+            {
+                "id": 7,
+                "tittle": "Air Jordan 1 Mind  SE Creft",
+                "location": "/trandint_product/3",
+                "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ_THXRPeoFEqCDEvuzPvfkMvcc5wZOR8tiD4jrmy8zz0RT9a1M6YC1hBXyYx6ARYFUx1A&usqp=CAU"
+            },
+            {
+                "id": 8,
+                "tittle": "HBCU Versity Collage",
+                "location": "/trandint_product/4",
+                "image": "https://i.pinimg.com/736x/31/52/ff/3152ff2bae15f93a2fd2805aa8356c41.jpg"
             }
+
 
         ]
     },

@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import logo1 from "./../image/logo.jfif";
 import { GiRoyalLove } from "react-icons/gi";
 import { GiShoppingCart } from "react-icons/gi";
-import TrandingCarosel from "./TrandingCarosel";
+
 import { AuthContext } from "../AuthProvider/AuthProvider";
 
 const Navbar = () => {
@@ -97,7 +97,7 @@ const Navbar = () => {
         <a href="...">AI</a>
       </li>
       <li>
-        <Link to="/home">Home</Link>
+        <Link to="">Home</Link>
       </li>
       <li>
         <a href="....">Service</a>
@@ -177,7 +177,7 @@ const Navbar = () => {
               tabIndex={0}
               className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">
               <li>
-                <Link to="/home">Home</Link>
+                <Link to="">Home</Link>
               </li>
               {buyerAccountHolder}
               {sellerAccountHolder}
@@ -193,7 +193,7 @@ const Navbar = () => {
         <div className="navbar-center hidden lg:flex">
           <ul className="menu menu-horizontal px-1">
             <li>
-              <Link to="/home">Home</Link>
+              <Link to="">Home</Link>
             </li>
             {buyerAccountHolder}
             {sellerAccountHolder}
@@ -300,7 +300,6 @@ const Navbar = () => {
               </li>
             </ul>
           </div>
-          <TrandingCarosel />
         </div>
       )}
     </>
