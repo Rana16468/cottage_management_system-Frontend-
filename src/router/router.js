@@ -20,7 +20,7 @@ const router = createBrowserRouter([
       { path: "/New_arrivals", element: "" },
       { path: "/trandint_product/:id", element: "" },
       {
-        path: "/buyer_dashboard/:id",
+        path: "/buyer_dashboard/:categorieId/:id",
         element: (
           <PrivateRouter>
             <Dashboard />

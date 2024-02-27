@@ -89,7 +89,7 @@ const TrandingCarosel = () => {
           <select
             className="rounded-full btn btn-outline btn-sm"
             onChange={(event) => setSize(event.target.value)}>
-            <option value="10" selected>
+            <option value="10" defaultValue={10}>
               10
             </option>
             <option value="15">15</option>
@@ -107,7 +107,7 @@ const TrandingCarosel = () => {
                 <div
                   key={index}
                   className="w-full bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
-                  <Link to={`/buyer_dashboard/${v?.id}`}>
+                  <Link to={`/buyer_dashboard/${item?.categorieId}/${v?.id}`}>
                     <img
                       className="w-full h-72 object-cover rounded"
                       src={v?.image}
@@ -115,12 +115,12 @@ const TrandingCarosel = () => {
                     />
                   </Link>
                   <div className="p-5">
-                    <Link to={`/buyer_dashboard/${v?.id}`}>
+                    <Link to={`/buyer_dashboard/${item?.categorieId}/${v?.id}`}>
                       <h5 className="text-center mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
                         {v?.tittle}
                       </h5>
                     </Link>
-                    <Link to={`/buyer_dashboard/${v?.id}`}>
+                    <Link to={`/buyer_dashboard/${item?.categorieId}/${v?.id}`}>
                       <h5 className="text-center mb-2 text-xl font-serif tracking-tight text-gray-900 dark:text-white">
                         Categorie :{item?._id}
                       </h5>
