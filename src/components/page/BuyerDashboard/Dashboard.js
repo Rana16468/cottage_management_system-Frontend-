@@ -1,10 +1,16 @@
-import React from "react";
+import React, { useState } from "react";
 import { useParams } from "react-router-dom";
 import MenuDashbord from "./MenuDashbord";
 import { useQuery } from "@tanstack/react-query";
+import AllProductList from "../../reusable/AllProductList";
 
 const Dashboard = () => {
   const { categorieId, id } = useParams();
+
+  // pagination
+  const [page, setPage] = useState(0);
+  const [size, setSize] = useState(10);
+  const pages = Math.ceil(75 / size);
 
   const url = `http://localhost:3013/api/v1/get_specificProduct_categories?categorieId=${categorieId}&productId=${id}`;
 
@@ -25,18 +31,49 @@ const Dashboard = () => {
       return data;
     },
   });
-  console.log(categoricalProduct);
-  console.log(isLoading);
-  console.log(error);
 
   return (
     <>
       <div className="flex">
         <MenuDashbord />
         {/* bg-gray-200 */}
-        <div className="w-full px-4 py-2  lg:w-full">
-          <h1>{categorieId}</h1>
-          <h1>{id}</h1>
+        {/* <h1>{categorieId}</h1>
+          <h1>{id}</h1> */}
+        <AllProductList
+          isLoading={isLoading}
+          error={error}
+          categoricalProduct={categoricalProduct}
+        />
+      </div>
+      <div className="flex justify-end">
+        <div
+          style={{
+            marginLeft: "200px",
+            marginBottom: "50px",
+          }}>
+          <p>
+            Current Page : {page + 1} and Size:{size}
+          </p>
+          {[...Array(pages).keys()].map((number) => (
+            <button
+              className="mr-3 text-xl btn btn-outline btn-sm"
+              key={number}
+              onClick={() => {
+                setPage(number);
+              }}>
+              {number + 1}
+            </button>
+          ))}
+          <select
+            className="rounded-full btn btn-outline btn-sm"
+            onChange={(event) => setSize(event.target.value)}>
+            <option value="10" defaultValue={10}>
+              10
+            </option>
+            <option value="15">15</option>
+            <option value="20">20</option>
+            <option value="25">25</option>
+          </select>
         </div>
       </div>
     </>

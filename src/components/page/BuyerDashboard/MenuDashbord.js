@@ -171,7 +171,6 @@ const MenuDashbord = () => {
                       <li key={index}>
                         <details open>
                           <summary className="mb-2 rounded bg-slate-50 hover:shadow hover:bg-white">
-                            {" "}
                             {v?.catagoties}
                           </summary>
                           <hr />
@@ -180,11 +179,9 @@ const MenuDashbord = () => {
                               <li
                                 className="mb-2 rounded hover:shadow hover:bg-gray-800"
                                 key={index}>
-                                <a
-                                  className="inline-block w-full h-full px-3 py-2 font-bold text-white"
-                                  href="...">
+                                <Link className="inline-block w-full h-full px-3 py-2 font-bold text-white">
                                   {v}
-                                </a>
+                                </Link>
                               </li>
                             ))}
                           </ul>

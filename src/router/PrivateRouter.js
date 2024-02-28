@@ -8,7 +8,11 @@ const PrivateRouter = ({ children }) => {
   const { user, loading } = useContext(AuthContext);
 
   if (loading) {
-    return <p className="text-3xl text-center text-red-500">Is Loading</p>;
+    return (
+      <div className="flex justify-center items-center">
+        <span className="loading loading-bars loading-lg"></span>
+      </div>
+    );
   }
   if (user) {
     return children;

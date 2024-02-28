@@ -1,0 +1,69 @@
+import React from "react";
+import ErrorPage from "../error/ErrorPage";
+
+const AllProductList = ({ isLoading, error, categoricalProduct }) => {
+  return (
+    <>
+      <div className="w-full px-4 py-2  lg:w-full">
+        {/* <h1>{categorieId}</h1>
+          <h1>{id}</h1> */}
+
+        <div className="grid lg:grid-cols-3 md:grid-cols-3  gap-2 sm:grid-cols-1">
+          {isLoading && (
+            <div className="flex justify-center items-center">
+              <span className="loading loading-bars loading-lg"></span>
+            </div>
+          )}
+
+          {/* second card  */}
+          {error && <ErrorPage />}
+
+          {categoricalProduct?.success &&
+            categoricalProduct?.data?.map((v, index) => (
+              <div
+                key={index}
+                className="max-w-full rounded overflow-hidden shadow-lg">
+                <img className="w-full h-96" src={v?.image} alt="" />
+                <div className="px-6 py-4">
+                  <div className="font-bold text-xl font-serif mb-2">
+                    {v.name}
+                  </div>
+                  <p className="text-gray-700 text-base font-serif">
+                    {v?.description.slice(0, 60) + "...."}
+                  </p>
+                  <p className="inline-block mt-1 bg-gray-200 rounded-full px-2 py-1 text-sm font-semibold text-gray-700">
+                    #Price: {v?.price}
+                  </p>
+
+                  <p className="inline-block m-2 bg-gray-200 rounded-full px-2 py-1 text-sm font-semibold text-gray-700">
+                    #Sales Of: {v?.salesOf} %
+                  </p>
+                  <p className="inline-block m-2 bg-gray-200 rounded-full px-2 py-1 text-sm font-semibold text-gray-700">
+                    #Selling Price :{v?.sellingPrice}
+                  </p>
+                </div>
+                <div className="px-3 py-2">
+                  <span className="inline-block m-2 bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2">
+                    #Available Now: {v?.quentity}
+                  </span>
+                  <span className="inline-block m-2 bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700">
+                    #Brand:
+                    <span className="text-sm font-serif">{v?.brandName}</span>
+                  </span>
+                </div>
+                <div className="flex justify-between ">
+                  <button className="btn btn-outline  btn-sm">
+                    Add to Cart
+                  </button>
+                  {/* You can open the modal using document.getElementById('ID').showModal() method */}
+                  <button className="btn btn-outline  btn-sm">Details</button>
+                </div>
+              </div>
+            ))}
+        </div>
+      </div>
+    </>
+  );
+};
+
+export default AllProductList;
