@@ -1,65 +1,73 @@
 import React, { useState } from "react";
 import { AiOutlineArrowLeft, AiOutlineArrowRight } from "react-icons/ai";
-import { Link } from "react-router-dom";
-const ProductCarasal = ({ items, product }) => {
+
+const ProductCarasal = ({ data }) => {
+  console.log(data);
   const [currentIndex, setCurrentIndex] = useState(0);
 
-  const nextSlide = () => {
-    setCurrentIndex((currentIndex + 1) % items.length);
+  const handlePrev = () => {
+    setCurrentIndex((prevIndex) =>
+      prevIndex === 0 ? data?.length - 1 : prevIndex - 1
+    );
   };
 
-  const prevSlide = () => {
-    setCurrentIndex((currentIndex - 1 + items.length) % items.length);
+  const handleNext = () => {
+    setCurrentIndex((prevIndex) =>
+      prevIndex === data?.length - 1 ? 0 : prevIndex + 1
+    );
   };
 
   return (
     <>
-      <div className="relative m-3">
-        <div className="flex items-center justify-center">
-          <div className="grid lg:grid-cols-5 md:grid-cols-3 gap-2 sm:grid-cols-1">
-            {product.map((v, index) => {
-              return (
-                <div key={index}>
-                  {v?.products?.map((v, index) => {
-                    return (
-                      <div
-                        key={index}
-                        className="w-full bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
-                        <Link to={`/product/${product.id}`}>
-                          <img
-                            className="w-full h-72 object-cover rounded"
-                            src={v?.image}
-                            alt={v?.title}
-                          />
-                        </Link>
-                        <div className="p-5">
-                          <Link to={`/product/${product.id}`}>
-                            <h5 className="text-center mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
-                              {v?.title}
-                            </h5>
-                          </Link>
-                        </div>
-                      </div>
-                    );
-                  })}
-                </div>
-              );
-            })}
+      <div className="max-w-full mx-auto bg-white rounded overflow-hidden shadow-lg m-3">
+        <div className="relative">
+          <div
+            className="carousel-item"
+            style={{ transform: `translateX(-${currentIndex * 100}%)` }}>
+            {data?.map((imageUrl, index) => (
+              <img
+                key={index}
+                src={imageUrl}
+                alt=""
+                className="w-full h-64 object-cover"
+              />
+            ))}
           </div>
-        </div>
-        <div className="absolute top-1/2 transform -translate-y-1/2 left-4 cursor-pointer">
           <button
-            onClick={prevSlide}
-            className="bg-gray-800 text-white rounded-full w-10 h-10 flex items-center justify-center">
+            onClick={handlePrev}
+            className="absolute top-1/2 transform -translate-y-1/2 left-4 cursor-pointer">
             <AiOutlineArrowLeft className="text-xl" />
           </button>
-        </div>
-        <div className="absolute top-1/2 transform -translate-y-1/2 right-4 cursor-pointer">
           <button
-            onClick={nextSlide}
-            className="bg-gray-800 text-white rounded-full w-10 h-10 flex items-center justify-center">
+            onClick={handleNext}
+            className="absolute top-1/2 transform -translate-y-1/2 right-4 cursor-pointer">
             <AiOutlineArrowRight className="text-xl" />
           </button>
+        </div>
+        <div className="px-6 py-4">
+          <div className="font-bold text-xl mb-2 font-serif">
+            Interior Design Name: {}
+          </div>
+          <p className="text-gray-700 text-base font-serif">
+            {data?.data?.discription}
+          </p>
+          <p className="text-gray-700 text-base font-serif">
+            Publishing Date {}
+          </p>
+        </div>
+        <div className="px-6 py-4">
+          <span className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-serif text-gray-700 mr-2">
+            #Categories {}
+          </span>
+          <span className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-serif text-gray-700">
+            #Price: {}
+          </span>
+          <span className="m-1 inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-serif text-gray-700">
+            # SellerName: {}
+          </span>
+          <span className="m-1 inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-serif text-gray-700">
+            {}
+          </span>
         </div>
       </div>
     </>

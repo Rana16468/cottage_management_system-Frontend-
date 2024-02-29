@@ -6,6 +6,7 @@ import Register from "../components/page/register/Register";
 import Login from "../components/page/register/Login";
 import Dashboard from "../components/page/BuyerDashboard/Dashboard";
 import PrivateRouter from "./PrivateRouter";
+import ProductDetails from "../components/page/BuyerDashboard/ProductDetails";
 
 const router = createBrowserRouter([
   {
@@ -24,6 +25,14 @@ const router = createBrowserRouter([
         element: (
           <PrivateRouter>
             <Dashboard />
+          </PrivateRouter>
+        ),
+      },
+      {
+        path: "/product_details/:productId/:SubcategorieId",
+        element: (
+          <PrivateRouter>
+            <ProductDetails />
           </PrivateRouter>
         ),
       },
