@@ -1,8 +1,8 @@
-import React from "react";
 import MenuDashbord from "./MenuDashbord";
 import { useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import ProductDetailsCard from "../../reusable/ProductDetailsCard";
+import ErrorPage from "../../error/ErrorPage";
 
 const ProductDetails = () => {
   const { productId, SubcategorieId } = useParams();
@@ -27,19 +27,35 @@ const ProductDetails = () => {
     },
   });
 
-  console.log(productDetails);
   console.log(isLoading);
   console.log(error);
+
+  console.log(productDetails);
+  // productDetails?.data?.map((v) => {
+  //   v?.categorie?.map((v) => {
+  //     console.log(v?.image);
+  //   });
+  // });
+
   return (
     <>
+      {isLoading && (
+        <div className="flex justify-center items-center">
+          <span className="loading loading-bars loading-lg"></span>
+        </div>
+      )}
+      {error && <ErrorPage />}
+
       <div className="flex">
         <MenuDashbord />
-        {/* bg-gray-200 */}
-        <ProductDetailsCard
-          productDetails={productDetails}
-          isLoading={isLoading}
-          error={error}
-        />
+
+        {productDetails?.data?.length ? (
+          <ProductDetailsCard productDetails={productDetails} />
+        ) : (
+          <p className="text-4xl font-serif text-center">
+            Product Details is Not Exist
+          </p>
+        )}
       </div>
     </>
   );
