@@ -27,16 +27,6 @@ const ProductDetails = () => {
     },
   });
 
-  console.log(isLoading);
-  console.log(error);
-
-  console.log(productDetails);
-  // productDetails?.data?.map((v) => {
-  //   v?.categorie?.map((v) => {
-  //     console.log(v?.image);
-  //   });
-  // });
-
   return (
     <>
       {isLoading && (
