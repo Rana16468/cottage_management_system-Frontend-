@@ -1,9 +1,11 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { BiSend } from "react-icons/bi";
 import "./style.css";
+import { AuthContext } from "../AuthProvider/AuthProvider";
 //import { useParams } from "react-router-dom";
 const ProductDetailsCard = ({ productDetails }) => {
   //const { productId, SubcategorieId } = useParams();
+  const { user } = useContext(AuthContext);
   const [message, setMessage] = useState([]);
   const handelTextMessages = (event) => {
     event.preventDefault();
@@ -139,9 +141,11 @@ const ProductDetailsCard = ({ productDetails }) => {
                         </p>
                       )}
                       <div className="flex justify-end">
-                        <button className="btn btn-outline btn-sm ">
-                          Add to Cart
-                        </button>
+                        {user?.photoURL === "buyer" && (
+                          <button className="btn btn-outline btn-sm ">
+                            Add to Cart
+                          </button>
+                        )}
                       </div>
                     </div>
                   </div>
@@ -152,80 +156,84 @@ const ProductDetailsCard = ({ productDetails }) => {
 
         {/* chatbot */}
 
-        <div className=" m-3 flex justify-center">
-          <div
-            style={{ width: "950px" }}
-            className="card  bg-base-100 shadow-xl">
-            <div className="card-body">
-              <div className="form-control">
-                <label className="label">
-                  <span className="label-text text-xl">
-                    Buyer/Seller Reaply Message
-                  </span>
-                </label>
-                <div name="message" className="textarea textarea-success">
-                  {message?.map((v, index) => (
-                    <div key={index} className="chat chat-end">
-                      <div className="chat-image avatar">
-                        <div className="w-10 rounded-full">
-                          <img
-                            src="https://blinkit.com/careers/sites/default/files/2021-12/local-desktop-masthead.png"
-                            alt=""
-                          />
+        {user?.photoURL === "buyer" && (
+          <div className=" m-3 flex justify-center">
+            <div
+              style={{ width: "950px" }}
+              className="card  bg-base-100 shadow-xl">
+              <div className="card-body">
+                <div className="form-control">
+                  <label className="label">
+                    <span className="label-text text-xl">
+                      Buyer/Seller Reaply Message
+                    </span>
+                  </label>
+                  <div name="message" className="textarea textarea-success">
+                    {message?.map((v, index) => (
+                      <div key={index} className="chat chat-end">
+                        <div className="chat-image avatar">
+                          <div className="w-10 rounded-full">
+                            <img
+                              src="https://blinkit.com/careers/sites/default/files/2021-12/local-desktop-masthead.png"
+                              alt=""
+                            />
+                          </div>
+                        </div>
+                        <div className="chat-header">
+                          Buyer Message
+                          <time className="text-xs opacity-50 m-2">
+                            {new Date().toString().slice(16, 23)}
+                          </time>
+                        </div>
+                        <div className="chat-bubble text-white text-xl">
+                          {v}
+                        </div>
+                        <div className="chat-footer opacity-50">
+                          <p className="text-sm text-black">
+                            {new Date().toString().slice(0, 23)}
+                          </p>
                         </div>
                       </div>
-                      <div className="chat-header">
-                        Buyer Message
-                        <time className="text-xs opacity-50 m-2">
-                          {new Date().toString().slice(16, 23)}
-                        </time>
-                      </div>
-                      <div className="chat-bubble text-white text-xl">{v}</div>
-                      <div className="chat-footer opacity-50">
-                        <p className="text-sm text-black">
-                          {new Date().toString().slice(0, 23)}
-                        </p>
-                      </div>
-                    </div>
-                  ))}
+                    ))}
+                  </div>
                 </div>
               </div>
-            </div>
 
-            <div className="chat chat-start m-2">
-              <div className="chat-image avatar">
-                <div className="w-10 rounded-full">
-                  <img
-                    src="https://previews.123rf.com/images/lexaarts/lexaarts1311/lexaarts131100148/24091315-happy-buyer-3d-human-and-shopping-cart.jpg"
-                    alt=""
-                  />
+              <div className="chat chat-start m-2">
+                <div className="chat-image avatar">
+                  <div className="w-10 rounded-full">
+                    <img
+                      src="https://previews.123rf.com/images/lexaarts/lexaarts1311/lexaarts131100148/24091315-happy-buyer-3d-human-and-shopping-cart.jpg"
+                      alt=""
+                    />
+                  </div>
                 </div>
-              </div>
-              <div className="chat-header">
-                Buyer Message Box -
-                <time className="text-xs opacity-50">
-                  {new Date().toString().slice(0, 18)}
-                </time>
-              </div>
-              <form
-                onSubmit={handelTextMessages}
-                className="chat-bubble w-full">
-                <div className="flex justify-between">
-                  <input
-                    type="text"
-                    name="textMessage"
-                    placeholder="Type here"
-                    className="input input-bordered input-info w-full max-w-4xl text-black text-xl mr-3"
-                  />
-                  <button className="btn btn-primary text-2xl">
-                    <BiSend className="text-xl"></BiSend>
-                  </button>
+                <div className="chat-header">
+                  Buyer Message Box -
+                  <time className="text-xs opacity-50">
+                    {new Date().toString().slice(0, 18)}
+                  </time>
                 </div>
-              </form>
-              <div className="chat-footer opacity-50">Delivered</div>
+                <form
+                  onSubmit={handelTextMessages}
+                  className="chat-bubble w-full">
+                  <div className="flex justify-between">
+                    <input
+                      type="text"
+                      name="textMessage"
+                      placeholder="Type here"
+                      className="input input-bordered input-info w-full max-w-4xl text-black text-xl mr-3"
+                    />
+                    <button className="btn btn-primary text-2xl">
+                      <BiSend className="text-xl"></BiSend>
+                    </button>
+                  </div>
+                </form>
+                <div className="chat-footer opacity-50">Delivered</div>
+              </div>
             </div>
           </div>
-        </div>
+        )}
       </div>
     </>
   );

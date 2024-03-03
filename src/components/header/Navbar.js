@@ -14,6 +14,7 @@ const Navbar = () => {
     localStorage.getItem("theme") ? localStorage.getItem("theme") : "light"
   );
   const [clickButton, setClickbutton] = useState(false);
+
   const handelToggle = (e) => {
     if (e.target.checked) {
       setTheme("dark");

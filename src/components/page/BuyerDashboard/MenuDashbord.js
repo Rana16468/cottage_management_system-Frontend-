@@ -1,20 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext } from "react";
 
 import { Link } from "react-router-dom";
 import menuItems from "../../../utils/AppData";
+import AllCatagorie from "../../../utils/AllCatagorie";
+import { AuthContext } from "../../AuthProvider/AuthProvider";
+import { MdOutlineChat } from "react-icons/md";
 const MenuDashbord = () => {
-  const [allCatagories, setAllCatagories] = useState([]);
-
-  useEffect(() => {
-    fetch("https://api.escuelajs.co/api/v1/categories")
-      .then((res) => res.json())
-      .then((data) => {
-        setAllCatagories(data);
-      })
-      .catch((error) => {
-        console.log(error?.message);
-      });
-  }, []);
+  const { user } = useContext(AuthContext);
   return (
     <>
       <div className=" lg:px-4 lg:py-2  bg-indigo-600 lg:w-1/4 sm:w-full">
@@ -123,29 +115,40 @@ const MenuDashbord = () => {
               </Link>
             </li>
 
+            <li className="mb-2 rounded hover:shadow hover:bg-gray-800">
+              <Link
+                to="/"
+                className="inline-block w-full h-full px-3 py-2 font-bold text-white">
+                <MdOutlineChat className="inline-block text-2xl" />
+                -Chat Bot
+              </Link>
+            </li>
             {/* add To product List */}
 
             {/* product Catagories List  */}
 
             <li>
-              <details open>
-                <summary className="mb-2 text-white  font-serif rounded hover:shadow hover:bg-gray-800">
-                  Catagories
-                </summary>
-                <ul>
-                  {allCatagories?.map((v, index) => (
-                    <li
-                      key={index}
-                      className="mb-2 rounded hover:shadow hover:bg-gray-800">
-                      <Link
-                        to={`/trandint_product/${index + 1}`}
-                        className="inline-block w-full h-full px-3 py-2 font-bold text-white">
-                        {v?.name}
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
-              </details>
+              {user?.photoURL === "seller" &&
+                AllCatagorie?.map((v, index) => (
+                  <details open key={index}>
+                    <summary className="mb-2 text-white  font-serif rounded hover:shadow hover:bg-gray-800">
+                      {v?.categorie}
+                    </summary>
+                    <ul>
+                      {v?.executeCatagorie?.map((v, index) => (
+                        <li
+                          key={index}
+                          className="mb-2 rounded hover:shadow hover:bg-gray-800">
+                          <Link
+                            to={`/trandint_product/${index + 1}`}
+                            className="inline-block w-full h-full px-2 py-2 font-serif text-white">
+                            {v?.name}
+                          </Link>
+                        </li>
+                      ))}
+                    </ul>
+                  </details>
+                ))}
             </li>
 
             <li>

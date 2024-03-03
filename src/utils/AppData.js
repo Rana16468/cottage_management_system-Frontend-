@@ -1,15 +1,13 @@
-import { Link } from "react-router-dom";
-
 const menuItems = [
-  {
-    title: "EXPORE",
-    subItems: [
-      {
-        catagoties: "New & Featured",
-        items: [<Link>Shoes</Link>, "Clothing", "Accessories", "Featured"],
-      },
-    ],
-  },
+  // {
+  //   title: "EXPORE",
+  //   subItems: [
+  //     {
+  //       catagoties: "New & Featured",
+  //       items: [<Link>Shoes</Link>, "Clothing", "Accessories", "Featured"],
+  //     },
+  //   ],
+  // },
   {
     title: "MEN",
     subItems: [
@@ -26,12 +24,6 @@ const menuItems = [
           "Fitness",
           "Cricket",
           "Football",
-          "Golf",
-          "Underwear",
-          "Sockes",
-          "T-Shart",
-          "Tops",
-          "Undergermance",
         ],
       },
       {
