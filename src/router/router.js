@@ -7,6 +7,7 @@ import Login from "../components/page/register/Login";
 import Dashboard from "../components/page/BuyerDashboard/Dashboard";
 import PrivateRouter from "./PrivateRouter";
 import ProductDetails from "../components/page/BuyerDashboard/ProductDetails";
+import PotteryCategorie from "../components/page/Categories/PotteryCategorie";
 
 const router = createBrowserRouter([
   {
@@ -33,6 +34,14 @@ const router = createBrowserRouter([
         element: (
           <PrivateRouter>
             <ProductDetails />
+          </PrivateRouter>
+        ),
+      },
+      {
+        path: "/create_categorie",
+        element: (
+          <PrivateRouter>
+            <PotteryCategorie />
           </PrivateRouter>
         ),
       },
