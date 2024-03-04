@@ -8,6 +8,7 @@ import Dashboard from "../components/page/BuyerDashboard/Dashboard";
 import PrivateRouter from "./PrivateRouter";
 import ProductDetails from "../components/page/BuyerDashboard/ProductDetails";
 import PotteryCategorie from "../components/page/Categories/PotteryCategorie";
+import SellerCategorie from "../components/page/Categories/SellerCategorie";
 
 const router = createBrowserRouter([
   {
@@ -20,7 +21,6 @@ const router = createBrowserRouter([
       { path: "/login", element: <Login /> },
       { path: "/add_to_card", element: "" },
       { path: "/New_arrivals", element: "" },
-      { path: "/trandint_product/:id", element: "" },
       {
         path: "/buyer_dashboard/:categorieId/:id",
         element: (
@@ -42,6 +42,14 @@ const router = createBrowserRouter([
         element: (
           <PrivateRouter>
             <PotteryCategorie />
+          </PrivateRouter>
+        ),
+      },
+      {
+        path: "/specific_seller_categorie",
+        element: (
+          <PrivateRouter>
+            <SellerCategorie />
           </PrivateRouter>
         ),
       },

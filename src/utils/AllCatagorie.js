@@ -1,5 +1,3 @@
-import { Link } from "react-router-dom";
-
 const AllCatagorie = [
   {
     id: 1,
@@ -7,9 +5,14 @@ const AllCatagorie = [
     executeCatagorie: [
       {
         id: 1,
-        name: <Link to="/create_categorie">Create Prottery Categorie </Link>,
+        name: "Create Prottery Categorie",
+        element: "/create_categorie",
       },
-      { id: 2, name: "Get All Categorie" },
+      {
+        id: 2,
+        name: "Your Categorie",
+        element: "/specific_seller_categorie",
+      },
     ],
   },
 ];

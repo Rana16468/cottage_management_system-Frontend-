@@ -140,7 +140,7 @@ const MenuDashbord = () => {
                           key={index}
                           className="mb-2 rounded hover:shadow hover:bg-gray-800">
                           <Link
-                            to={`/trandint_product/${index + 1}`}
+                            to={v.element}
                             className="inline-block w-full h-full px-2 py-2 font-serif text-white">
                             {v?.name}
                           </Link>

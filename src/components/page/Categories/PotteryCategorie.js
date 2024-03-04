@@ -3,6 +3,7 @@ import MenuDashbord from "../BuyerDashboard/MenuDashbord";
 import CategoriesName from "../../../utils/CategoriesName";
 import { AuthContext } from "../../AuthProvider/AuthProvider";
 import { useForm } from "react-hook-form";
+import toast from "react-hot-toast";
 
 const PotteryCategorie = () => {
   const {
@@ -16,7 +17,26 @@ const PotteryCategorie = () => {
       isCreated: true,
       productList: [],
     };
-    console.log(createCategories);
+    fetch("http://localhost:3013/api/v1/product", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        authorization: localStorage.getItem("token"),
+      },
+      body: JSON.stringify(createCategories),
+    })
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error(`Failed to create category: ${res.statusText}`);
+        }
+        return res.json();
+      })
+      .then((data) => {
+        toast.success(data?.message);
+      })
+      .catch((error) => {
+        toast.error("This Categorie Alredy Exist");
+      });
     reset();
   };
   return (
@@ -111,8 +131,8 @@ const PotteryCategorie = () => {
                     </div>
                     <div className="flex flex-col">
                       <h2 className="text-2xl">Call Us</h2>
-                      <p className="text-gray-400">Tel: xxx-xxx-xxx</p>
-                      <p className="text-gray-400">Fax: xxx-xxx-xxx</p>
+                      <p className="text-gray-400">Tel: 01722305054</p>
+                      <p className="text-gray-400">Fax: F1001-F2000-F100</p>
                     </div>
                   </div>
 
