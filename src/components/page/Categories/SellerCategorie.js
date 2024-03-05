@@ -7,6 +7,7 @@ import { toast } from "react-hot-toast";
 import Swal from "sweetalert2";
 import { useForm } from "react-hook-form";
 import CategoriesName from "../../../utils/CategoriesName";
+import { Link } from "react-router-dom";
 const SellerCategorie = () => {
   // pagination
   const [page, setPage] = useState(0);
@@ -100,10 +101,15 @@ const SellerCategorie = () => {
       title: "Action",
       key: "x",
       render: (item) => {
-        //console.log(item);
+        console.log(item?.categorie_name?.split(" ").join("_"));
         return (
           <Space>
-            <Button>Add To Product</Button>
+            <Link
+              to={`/addToProduct/${item?.categorie_name
+                ?.split(" ")
+                .join("_")}/${item?._id}`}>
+              <Button>Add To Product</Button>
+            </Link>
             <Button onClick={() => handelDeleteCategorie(item?._id)}>
               Delete
             </Button>
@@ -130,13 +136,13 @@ const SellerCategorie = () => {
           },
           {
             title: "image",
-            dataIndex: "image",
-            key: "image",
-            render: (image) => {
+            dataIndex: "photo",
+            key: "photo",
+            render: (photo) => {
               return (
                 <img
                   className="rounded-md "
-                  src={image}
+                  src={photo}
                   alt=""
                   style={{ width: 100 }}
                 />

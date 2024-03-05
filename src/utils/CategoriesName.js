@@ -1,5 +1,5 @@
 const CategoriesName = [
-  { id: 1, categorieName: "Bambao and cane Industry" },
+  { id: 1, categorieName: "Bambao and cane Industries" },
   { id: 2, categorieName: "Pottery" },
   { id: 3, categorieName: "Jute Goods" },
   { id: 4, categorieName: "Textile And Weaving Factories" },

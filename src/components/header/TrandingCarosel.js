@@ -110,7 +110,7 @@ const TrandingCarosel = () => {
                   <Link to={`/buyer_dashboard/${item?.categorieId}/${v?.id}`}>
                     <img
                       className="w-full h-72 object-cover rounded"
-                      src={v?.image}
+                      src={v?.photo}
                       alt={v?.tittle}
                     />
                   </Link>
