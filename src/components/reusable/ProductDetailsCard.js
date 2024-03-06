@@ -100,7 +100,7 @@ const ProductDetailsCard = ({ productDetails }) => {
                   <div className="max-w-full rounded overflow-hidden shadow-lg">
                     <img
                       className="w-full h-96"
-                      src={v?.image}
+                      src={v?.photo}
                       alt="Sunset in the mountains"
                     />
 

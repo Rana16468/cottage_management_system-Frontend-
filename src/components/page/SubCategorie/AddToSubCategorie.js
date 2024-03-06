@@ -1,26 +1,30 @@
 import React, { useContext } from "react";
 import MenuDashbord from "../BuyerDashboard/MenuDashbord";
+import { useParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { AuthContext } from "../../AuthProvider/AuthProvider";
-import CategoricalProduct from "../../../utils/CategoricalProduct";
-import toast from "react-hot-toast";
-import { useParams } from "react-router-dom";
+import { allPotterySubCategorie } from "../../../utils/AllSubCategorieName";
 import { TypeOfImage } from "../../../utils/ExtentionType";
+import toast from "react-hot-toast";
 
-const AddToProduct = () => {
+const AddToSubCategorie = () => {
+  const { subCategorie, categorieId, productId } = useParams();
+
+  const subCategories =
+    allPotterySubCategorie?.find(
+      (v) => v?.subCategorieName === subCategorie?.replace(/_(?=\w)/g, " ")
+    )?.subCategorie || [];
+
   const { handleSubmit, register, reset } = useForm();
-  const { categorieName, productId } = useParams();
-
-  // identify the categories
-  const categoriesProduct =
-    CategoricalProduct.find(
-      (v) => v?.categorieName === categorieName?.replace(/_(?=\w)/g, " ")
-    )?.categories || [];
-
   const {
     user: { email },
   } = useContext(AuthContext);
-  const onSubmitProduct = (data) => {
+
+  const onSubmitSubCategorie = (data) => {
+    data.price = Number(data.price);
+    data.quentity = Number(data.quentity);
+    data.salesOf = Number(data.salesOf);
+    const sellingPrice = data.price - data.price * (data.salesOf / 100);
     const image = data.photo[0];
     if (TypeOfImage.includes(image.name.split(".").pop().toLowerCase())) {
       const formData = new FormData();
@@ -30,42 +34,37 @@ const AddToProduct = () => {
         method: "POST",
         body: formData,
       })
-        .then((res) => res.json())
+        .then((res) => {
+          if (!res.ok) {
+            throw new Error("API ERROR");
+          }
+          return res.json();
+        })
         .then((imgData) => {
           if (imgData?.success) {
             data.photo = imgData?.data?.url;
-            // PUT Method Execution time now
-            fetch(`http://localhost:3013/api/v1/productList/${productId}`, {
-              method: "PUT",
-              headers: {
-                "Content-Type": "application/json",
-                authorization: localStorage.getItem("token"),
-              },
-              body: JSON.stringify(data),
-            })
-              .then((res) => {
-                if (!res.ok) {
-                  throw new Error("API ERROR");
-                }
-                return res.json();
-              })
-              .then((data) => {
-                toast.success(data?.message);
-              })
-              .catch((error) => {
-                toast.error(error?.message);
-              });
+            // post the sub categorial product
+
+            console.log(data);
           }
         })
         .catch((error) => {
-          toast.error(error?.message);
+          console.log(error?.message);
         });
     } else {
       toast.error("png,jpg,jpeg accespted Onter Types Not Accespted");
     }
+    const sub_categorical_product = {
+      ...data,
+      sellingPrice,
+      productId,
+      categorieId,
+    };
 
+    console.log(sub_categorical_product);
     reset();
   };
+
   return (
     <>
       <div className="flex">
@@ -76,11 +75,11 @@ const AddToProduct = () => {
               <div className="w-full p-8 my-4 md:px-12 lg:w-9/12 lg:pl-20 lg:pr-40 mr-auto rounded-2xl shadow-2xl">
                 <div className="flex">
                   <h1 className="font-serif  uppercase lg:text-2xl sm:text-sm">
-                    Add To Product -{categorieName}
+                    Add To Sub Categorical Product
                   </h1>
                 </div>
                 <form
-                  onSubmit={handleSubmit(onSubmitProduct)}
+                  onSubmit={handleSubmit(onSubmitSubCategorie)}
                   className="grid grid-cols-1 gap-3 md:grid-cols-1">
                   <input
                     className="w-full bg-gray-100 text-gray-900 mt-2 p-3 rounded-lg focus:outline-none focus:shadow-outline"
@@ -101,26 +100,64 @@ const AddToProduct = () => {
 
                   <select
                     className="border border-gray-300 rounded-lg  px-3 w-full  py-3"
-                    name="tittle"
-                    {...register("tittle")}
+                    name="name"
+                    {...register("name")}
                     required>
-                    <option disabled>Product Categories</option>
-
-                    {categoriesProduct?.map((v, index) => (
-                      <option
-                        className="font-serif text-sm"
-                        key={index}
-                        value={v.name}>
-                        {v.name}
+                    <option disabled>All Sub Categoeis Product</option>
+                    {subCategories.map((v, index) => (
+                      <option key={index} value={v}>
+                        {v}
                       </option>
                     ))}
-
-                    {/* <option value="Admin">Admin</option> */}
                   </select>
+                  <input
+                    className="w-full bg-gray-100 text-gray-900 mt-2 p-3 rounded-lg focus:outline-none focus:shadow-outline"
+                    type="number"
+                    name="price"
+                    {...register("price")}
+                    placeholder="Price"
+                  />
+                  <input
+                    className="w-full bg-gray-100 text-gray-900 mt-2 p-3 rounded-lg focus:outline-none focus:shadow-outline"
+                    type="number"
+                    name="salesOf"
+                    {...register("salesOf")}
+                    placeholder="SalesOf"
+                  />
+
+                  <input
+                    className="w-full bg-gray-100 text-gray-900 mt-2 p-3 rounded-lg focus:outline-none focus:shadow-outline"
+                    type="text"
+                    name="brandName"
+                    {...register("brandName")}
+                    placeholder="Brand Name"
+                  />
+                  <div className="col-span-full">
+                    <div className="mt-2">
+                      <textarea
+                        id="description"
+                        name="description"
+                        {...register("description")}
+                        minLength={50}
+                        maxLength={100}
+                        rows="3"
+                        placeholder="Description"
+                        className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                        required></textarea>
+                    </div>
+
+                    <input
+                      className="w-full bg-gray-100 text-gray-900 mt-2 p-3 rounded-lg focus:outline-none focus:shadow-outline"
+                      type="number"
+                      name="quentity"
+                      {...register("quentity")}
+                      placeholder="Quentity"
+                    />
+                    <p className="mt-3 text-sm leading-6 text-gray-600">
+                      Write a few sentences about Product (min-50, max-100).
+                    </p>
+                  </div>
                   <div>
-                    <label className="block text-sm font-medium text-white">
-                      Image
-                    </label>
                     <div className="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-md">
                       <div className="space-y-1 text-center">
                         <svg
@@ -241,4 +278,4 @@ const AddToProduct = () => {
   );
 };
 
-export default AddToProduct;
+export default AddToSubCategorie;

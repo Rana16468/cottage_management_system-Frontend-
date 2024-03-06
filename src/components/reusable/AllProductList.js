@@ -21,7 +21,7 @@ const AllProductList = ({ isLoading, error, categoricalProduct }) => {
               <div
                 key={index}
                 className="max-w-full rounded overflow-hidden shadow-lg">
-                <img className="w-full h-96" src={v?.image} alt="" />
+                <img className="w-full h-96" src={v?.photo} alt="" />
                 <div className="px-6 py-4">
                   <div className="font-bold text-xl font-serif mb-2">
                     {v?.name}

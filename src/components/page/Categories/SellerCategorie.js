@@ -8,6 +8,7 @@ import Swal from "sweetalert2";
 import { useForm } from "react-hook-form";
 import CategoriesName from "../../../utils/CategoriesName";
 import { Link } from "react-router-dom";
+
 const SellerCategorie = () => {
   // pagination
   const [page, setPage] = useState(0);
@@ -19,6 +20,7 @@ const SellerCategorie = () => {
     data: productCategories = [],
     isLoading,
     error,
+    refetch,
   } = useQuery({
     queryKey: ["productCategories"],
     queryFn: async () => {
@@ -101,7 +103,6 @@ const SellerCategorie = () => {
       title: "Action",
       key: "x",
       render: (item) => {
-        console.log(item?.categorie_name?.split(" ").join("_"));
         return (
           <Space>
             <Link
@@ -121,14 +122,14 @@ const SellerCategorie = () => {
       title: "Action",
       key: "x",
       render: (item) => {
-        return <UpdateModal item={item} />;
+        return <UpdateModal item={item} refetch={refetch} />;
       },
     },
+
     {
-      title: "Products",
-      dataIndex: "productList",
-      key: "productList",
-      render: (item) => {
+      title: "Sub Categorie",
+      key: "x",
+      render: (subitem) => {
         const columns = [
           {
             title: "Title",
@@ -146,6 +147,20 @@ const SellerCategorie = () => {
                   alt=""
                   style={{ width: 100 }}
                 />
+              );
+            },
+          },
+          {
+            title: "Add To Categories",
+            key: "x",
+            render: (item) => {
+              return (
+                <Link
+                  to={`/add_to_categorie/${item?.tittle
+                    ?.split(" ")
+                    .join("_")}/${subitem?._id}/${item?.id}`}>
+                  <Button>Sub Categories</Button>
+                </Link>
               );
             },
           },
@@ -172,10 +187,12 @@ const SellerCategorie = () => {
         return (
           <Table
             columns={columns}
-            dataSource={item?.map((item) => ({
-              ...item,
-              key: item.id,
-            }))}
+            dataSource={subitem?.productList?.map((item) => {
+              return {
+                ...item,
+                key: item.id,
+              };
+            })}
           />
         );
       },
@@ -236,13 +253,34 @@ const SellerCategorie = () => {
   );
 };
 
-const UpdateModal = ({ item }) => {
+const UpdateModal = ({ item, refetch }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const { handleSubmit, register } = useForm();
 
   const onSubmit = (updatedata) => {
-    console.log(updatedata);
+    fetch(`http://localhost:3013/api/v1/update_categorie/${item?._id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        authorization: localStorage.getItem("token"),
+      },
+      body: JSON.stringify(updatedata),
+    })
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error("API ERROR");
+        }
+        return res.json();
+      })
+      .then((data) => {
+        refetch();
+
+        toast.success(data?.message);
+      })
+      .catch((error) => {
+        toast.error(error?.message);
+      });
   };
 
   const showModal = () => {
@@ -271,7 +309,6 @@ const UpdateModal = ({ item }) => {
             className="w-full bg-gray-100 text-gray-900 mt-2 p-3 rounded-lg focus:outline-none focus:shadow-outline"
             type="email"
             name="email"
-            {...register("email")}
             defaultValue={item?.email}
             readOnly
             placeholder="Email*"

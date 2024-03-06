@@ -9,6 +9,7 @@ import ProductDetails from "../components/page/BuyerDashboard/ProductDetails";
 import PotteryCategorie from "../components/page/Categories/PotteryCategorie";
 import SellerCategorie from "../components/page/Categories/SellerCategorie";
 import AddToProduct from "../components/page/Categories/AddToProduct";
+import AddToSubCategorie from "../components/page/SubCategorie/AddToSubCategorie";
 
 const router = createBrowserRouter([
   {
@@ -58,6 +59,14 @@ const router = createBrowserRouter([
         element: (
           <PrivateRouter>
             <AddToProduct />
+          </PrivateRouter>
+        ),
+      },
+      {
+        path: "/add_to_categorie/:subCategorie/:categorieId/:productId",
+        element: (
+          <PrivateRouter>
+            <AddToSubCategorie />
           </PrivateRouter>
         ),
       },
