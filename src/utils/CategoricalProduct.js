@@ -26,6 +26,31 @@ const CategoricalProduct = [
       { id: 6, name: "Jewelry" },
     ],
   },
+  {
+    id: 3,
+    categorieName: "Jute goods",
+    categories: [
+      { id: 1, name: "Jute apparel" },
+      { id: 2, name: "Jute bags" },
+      { id: 3, name: "Jute furnishings" },
+      { id: 4, name: "Jute handicrafts" },
+      { id: 5, name: "Bags" },
+      { id: 6, name: "Hessian fabric" },
+      { id: 7, name: "Jute yarns" },
+      { id: 8, name: "Textile" },
+    ],
+  },
+  {
+    id: 4,
+    categorieName: "Textile And Weaving Factories",
+    categories: [
+      { id: 1, name: "Handloom Weaving" },
+      { id: 2, name: "Khadi Making" },
+      { id: 3, name: "Sericulture" },
+      { id: 4, name: "Carpet Weaving" },
+      { id: 5, name: "Natural Dyeing" },
+    ],
+  },
 ];
 
 export default CategoricalProduct;

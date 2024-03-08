@@ -98,18 +98,28 @@ const AddToSubCategorie = () => {
                     placeholder="Release Date"
                   />
 
-                  <select
-                    className="border border-gray-300 rounded-lg  px-3 w-full  py-3"
-                    name="name"
-                    {...register("name")}
-                    required>
-                    <option disabled>All Sub Categoeis Product</option>
-                    {subCategories.map((v, index) => (
-                      <option key={index} value={v}>
-                        {v}
-                      </option>
-                    ))}
-                  </select>
+                  {subCategories?.length ? (
+                    <select
+                      className="border border-gray-300 rounded-lg  px-3 w-full  py-3"
+                      name="name"
+                      {...register("name")}
+                      required>
+                      <option disabled>All Sub Categoeis Product</option>
+                      {subCategories.map((v, index) => (
+                        <option key={index} value={v}>
+                          {v}
+                        </option>
+                      ))}
+                    </select>
+                  ) : (
+                    <input
+                      className="w-full bg-gray-100 text-gray-900 mt-2 p-3 rounded-lg focus:outline-none focus:shadow-outline"
+                      type="text"
+                      name="name"
+                      {...register("name")}
+                      placeholder="Sub Categories Name*"
+                    />
+                  )}
                   <input
                     className="w-full bg-gray-100 text-gray-900 mt-2 p-3 rounded-lg focus:outline-none focus:shadow-outline"
                     type="number"
