@@ -70,15 +70,17 @@ const AllProductList = ({ isLoading, error, categoricalProduct }) => {
                 <div className="flex justify-between ">
                   {user?.photoURL === "seller" ? (
                     <>
-                      <Link
-                        to={`/add_to_details/${v?.productId}/${v?._id}`}
-                        className="btn btn-outline btn-sm ">
-                        Add To Details
+                      <Link to={`/add_to_details/${v?.productId}/${v?._id}`}>
+                        <button
+                          disabled={v?.isDetails}
+                          className="btn btn-outline btn-sm ">
+                          Add To Details
+                        </button>
                       </Link>
                     </>
                   ) : (
                     <>
-                      <button className="btn btn-outline btn-sm ">
+                      <button sName="btn btn-outline btn-sm ">
                         Add to Cart
                       </button>
                     </>
