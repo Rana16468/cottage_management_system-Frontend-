@@ -51,6 +51,44 @@ const CategoricalProduct = [
       { id: 5, name: "Natural Dyeing" },
     ],
   },
+  {
+    id: 5,
+    categorieName: "Embroidered Quilts",
+    categories: [
+      { id: 1, name: "Applique Quilts" },
+      { id: 2, name: "Crazy Quilts" },
+      { id: 3, name: "Japanese Boro Stitching" },
+      { id: 4, name: "Trapunto Quilts" },
+      { id: 5, name: "Redwork Quilts" },
+      { id: 6, name: "Shadow Quilting" },
+    ],
+  },
+  {
+    id: 6,
+    categorieName: "Cool Mat",
+    categories: [
+      { id: 1, name: "Floral Motifs" },
+      { id: 2, name: "Geometric Designs" },
+      { id: 3, name: "Animal Motifs" },
+      { id: 4, name: "Natural Color Mats" },
+      { id: 5, name: "Dyed Mats" },
+    ],
+  },
+  {
+    id: 7,
+    categorieName: "Oraments",
+    categories: [
+      { id: 1, name: "Earring" },
+      { id: 2, name: "Necklace" },
+      { id: 3, name: "Bridal jewellery" },
+      { id: 4, name: "Fashion jewelry" },
+      { id: 5, name: "Rings" },
+      { id: 6, name: "Bead jewellery" },
+      { id: 7, name: "Bracelet" },
+      { id: 8, name: "Filigree jewellery" },
+      { id: 9, name: "Anklet" },
+    ],
+  },
 ];
 
 export default CategoricalProduct;

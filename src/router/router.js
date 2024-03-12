@@ -10,6 +10,8 @@ import PotteryCategorie from "../components/page/Categories/PotteryCategorie";
 import SellerCategorie from "../components/page/Categories/SellerCategorie";
 import AddToProduct from "../components/page/Categories/AddToProduct";
 import AddToSubCategorie from "../components/page/SubCategorie/AddToSubCategorie";
+import MySubCategorie from "../components/page/SubCategorie/MySubCategorie";
+import AddToDetails from "../components/page/AddToDetails/AddToDetails";
 
 const router = createBrowserRouter([
   {
@@ -67,6 +69,23 @@ const router = createBrowserRouter([
         element: (
           <PrivateRouter>
             <AddToSubCategorie />
+          </PrivateRouter>
+        ),
+      },
+      {
+        path: "/your_sub_categorie/:categorieId/:productId",
+        element: (
+          <PrivateRouter>
+            <MySubCategorie />
+          </PrivateRouter>
+        ),
+      },
+      // addded to product details
+      {
+        path: "/add_to_details/:productId/:SubcategorieId",
+        element: (
+          <PrivateRouter>
+            <AddToDetails />
           </PrivateRouter>
         ),
       },

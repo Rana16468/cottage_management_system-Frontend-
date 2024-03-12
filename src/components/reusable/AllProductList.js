@@ -1,8 +1,12 @@
+import { useContext } from "react";
 import ErrorPage from "../error/ErrorPage";
 import "./style.css";
 
 import { Link } from "react-router-dom";
+import { AuthContext } from "../AuthProvider/AuthProvider";
 const AllProductList = ({ isLoading, error, categoricalProduct }) => {
+  const { user } = useContext(AuthContext);
+
   return (
     <>
       <div className="w-full px-4 py-2  lg:w-full">
@@ -64,9 +68,21 @@ const AllProductList = ({ isLoading, error, categoricalProduct }) => {
                   </span>
                 </div>
                 <div className="flex justify-between ">
-                  <button className="btn btn-outline btn-sm ">
-                    Add to Cart
-                  </button>
+                  {user?.photoURL === "seller" ? (
+                    <>
+                      <Link
+                        to={`/add_to_details/${v?.productId}/${v?._id}`}
+                        className="btn btn-outline btn-sm ">
+                        Add To Details
+                      </Link>
+                    </>
+                  ) : (
+                    <>
+                      <button className="btn btn-outline btn-sm ">
+                        Add to Cart
+                      </button>
+                    </>
+                  )}
                   {/* You can open the modal using document.getElementById('ID').showModal() method */}
                   <Link
                     className="btn btn-outline  btn-sm"

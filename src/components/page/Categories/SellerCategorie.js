@@ -165,6 +165,17 @@ const SellerCategorie = () => {
             },
           },
           {
+            title: "Sub_Categorie",
+            key: "x",
+            render: (item) => {
+              return (
+                <Link to={`/your_sub_categorie/${subitem?._id}/${item?.id}`}>
+                  <Button>Sub Categorie</Button>
+                </Link>
+              );
+            },
+          },
+          {
             title: "Delete",
             key: "x",
             render: () => {

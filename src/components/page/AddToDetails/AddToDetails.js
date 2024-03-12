@@ -1,89 +1,64 @@
 import React, { useContext } from "react";
 import MenuDashbord from "../BuyerDashboard/MenuDashbord";
-import { useParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { AuthContext } from "../../AuthProvider/AuthProvider";
-import { allPotterySubCategorie } from "../../../utils/AllSubCategorieName";
+import { useParams } from "react-router-dom";
+import axios from "axios";
 import { TypeOfImage } from "../../../utils/ExtentionType";
 import toast from "react-hot-toast";
-
-const AddToSubCategorie = () => {
-  const { subCategorie, categorieId, productId } = useParams();
-
-  const subCategories =
-    allPotterySubCategorie?.find(
-      (v) => v?.subCategorieName === subCategorie?.replace(/_(?=\w)/g, " ")
-    )?.subCategorie || [];
-
+const AddToDetails = () => {
   const { handleSubmit, register, reset } = useForm();
+  const { productId, SubcategorieId } = useParams();
+
   const {
     user: { email },
   } = useContext(AuthContext);
 
-  const onSubmitSubCategorie = (data) => {
-    data.price = Number(data.price);
-    data.quentity = Number(data.quentity);
-    data.salesOf = Number(data.salesOf);
-    const sellingPrice = data.price - data.price * (data.salesOf / 100);
-    const image = data.photo[0];
-    if (TypeOfImage.includes(image.name.split(".").pop().toLowerCase())) {
-      const formData = new FormData();
-      formData.append("image", image);
-      const url = `https://api.imgbb.com/1/upload?key=${process.env.REACT_APP_IMAGE_KEY}`;
-      fetch(url, {
-        method: "POST",
-        body: formData,
-      })
-        .then((res) => {
-          if (!res.ok) {
-            throw new Error("API ERROR");
-          }
-          return res.json();
-        })
-        .then((imgData) => {
-          if (imgData?.success) {
-            data.photo = imgData?.data?.url;
-            // post the sub categorial product
-            const sub_categorical_product = {
-              ...data,
-              sellingPrice,
-              productId,
-              categorieId,
-            };
-            fetch("http://localhost:3013/api/v1/product_categorie", {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json",
-                authorization: localStorage.getItem("token"),
-              },
-              body: JSON.stringify(sub_categorical_product),
-            })
-              .then((res) => {
-                if (!res.ok) {
-                  throw Error("API ERROR");
-                }
-                return res.json();
-              })
-              .then((data) => {
-                toast.success(data?.message);
-              })
-              .catch((error) => {
-                toast.error(error?.message);
-              });
+  const onSubmitSubCategorieDetails = async (productDetails) => {
+    const formData = new FormData();
+    const filesTypes = [];
 
-            //console.log(sub_categorical_product);
-          }
-        })
-        .catch((error) => {
-          console.log(error?.message);
-        });
-    } else {
-      toast.error("png,jpg,jpeg accespted Onter Types Not Accespted");
+    for (let i = 0; i < productDetails?.photo?.length; i++) {
+      const fileName = productDetails?.photo[i].name;
+      const fileExtension = fileName.split(".").pop().toLowerCase();
+      if (TypeOfImage.includes(fileExtension)) {
+        filesTypes.push(TypeOfImage.includes(fileExtension));
+      } else {
+        toast.error(`File ${fileName} has an unsupported extension.`);
+        // Handle unsupported file extension error here
+      }
     }
 
+    if (filesTypes?.length) {
+      const productData = {
+        ...productDetails,
+        productId,
+        SubcategorieId,
+      };
+      formData.append("formData", JSON.stringify(productData));
+      Object.values(productDetails?.photo).forEach((v) =>
+        formData?.append("photo", v)
+      );
+
+      try {
+        const response = await axios.post(
+          "http://localhost:3013/api/v1/product_details",
+          formData,
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+              authorization: localStorage.getItem("token"),
+            },
+          }
+        );
+
+        toast.success(response?.data?.message);
+      } catch (error) {
+        toast.error(error?.message);
+      }
+    }
     reset();
   };
-
   return (
     <>
       <div className="flex">
@@ -94,11 +69,11 @@ const AddToSubCategorie = () => {
               <div className="w-full p-8 my-4 md:px-12 lg:w-9/12 lg:pl-20 lg:pr-40 mr-auto rounded-2xl shadow-2xl">
                 <div className="flex">
                   <h1 className="font-serif  uppercase lg:text-2xl sm:text-sm">
-                    Add To Sub Categorical Product
+                    Add To Sub Categorical Product Details
                   </h1>
                 </div>
                 <form
-                  onSubmit={handleSubmit(onSubmitSubCategorie)}
+                  onSubmit={handleSubmit(onSubmitSubCategorieDetails)}
                   className="grid grid-cols-1 gap-3 md:grid-cols-1">
                   <input
                     className="w-full bg-gray-100 text-gray-900 mt-2 p-3 rounded-lg focus:outline-none focus:shadow-outline"
@@ -119,80 +94,6 @@ const AddToSubCategorie = () => {
                     required
                   />
 
-                  {subCategories?.length ? (
-                    <select
-                      className="border border-gray-300 rounded-lg  px-3 w-full  py-3"
-                      name="name"
-                      {...register("name")}
-                      required>
-                      <option disabled>All Sub Categoeis Product</option>
-                      {subCategories.map((v, index) => (
-                        <option key={index} value={v}>
-                          {v}
-                        </option>
-                      ))}
-                    </select>
-                  ) : (
-                    <input
-                      className="w-full bg-gray-100 text-gray-900 mt-2 p-3 rounded-lg focus:outline-none focus:shadow-outline"
-                      type="text"
-                      name="name"
-                      {...register("name")}
-                      placeholder="Sub Categories Name*"
-                      required
-                    />
-                  )}
-                  <input
-                    className="w-full bg-gray-100 text-gray-900 mt-2 p-3 rounded-lg focus:outline-none focus:shadow-outline"
-                    type="number"
-                    name="price"
-                    {...register("price")}
-                    placeholder="Price"
-                    required
-                  />
-                  <input
-                    className="w-full bg-gray-100 text-gray-900 mt-2 p-3 rounded-lg focus:outline-none focus:shadow-outline"
-                    type="number"
-                    name="salesOf"
-                    {...register("salesOf")}
-                    placeholder="SalesOf"
-                    required
-                  />
-
-                  <input
-                    className="w-full bg-gray-100 text-gray-900 mt-2 p-3 rounded-lg focus:outline-none focus:shadow-outline"
-                    type="text"
-                    name="brandName"
-                    {...register("brandName")}
-                    placeholder="Brand Name"
-                    required
-                  />
-                  <div className="col-span-full">
-                    <div className="mt-2">
-                      <textarea
-                        id="description"
-                        name="description"
-                        {...register("description")}
-                        minLength={50}
-                        maxLength={100}
-                        rows="3"
-                        placeholder="Description"
-                        className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                        required></textarea>
-                    </div>
-
-                    <input
-                      className="w-full bg-gray-100 text-gray-900 mt-2 p-3 rounded-lg focus:outline-none focus:shadow-outline"
-                      type="number"
-                      name="quentity"
-                      {...register("quentity")}
-                      placeholder="Quentity"
-                      required
-                    />
-                    <p className="mt-3 text-sm leading-6 text-gray-600">
-                      Write a few sentences about Product (min-50, max-100).
-                    </p>
-                  </div>
                   <div>
                     <div className="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-md">
                       <div className="space-y-1 text-center">
@@ -222,6 +123,7 @@ const AddToSubCategorie = () => {
                               {...register("photo", {
                                 required: "'photo is required",
                               })}
+                              multiple
                               className="sr-only"
                             />
                           </label>
@@ -234,7 +136,7 @@ const AddToSubCategorie = () => {
 
                   <div className="flex justify-end mt-3">
                     <button className="btn btn-outline bg-blue-900 text-white ">
-                      Add To Project
+                      Add To Details
                     </button>
                   </div>
                 </form>
@@ -314,4 +216,4 @@ const AddToSubCategorie = () => {
   );
 };
 
-export default AddToSubCategorie;
+export default AddToDetails;
