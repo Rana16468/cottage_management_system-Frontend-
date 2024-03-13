@@ -1,11 +1,15 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import ErrorPage from "../error/ErrorPage";
 import "./style.css";
-
+import { GrDocumentUpdate } from "react-icons/gr";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../AuthProvider/AuthProvider";
+import UpdateSubCategorie from "../CottageModal/UpdateSubCategorie";
+import { RiDeleteBinLine } from "react-icons/ri";
+import { TbListDetails } from "react-icons/tb";
 const AllProductList = ({ isLoading, error, categoricalProduct }) => {
   const { user } = useContext(AuthContext);
+  const [specificSubCategorie, setSpecificSubCategorie] = useState({});
 
   return (
     <>
@@ -67,20 +71,38 @@ const AllProductList = ({ isLoading, error, categoricalProduct }) => {
                     <span className="text-sm font-serif">{v?.brandName}</span>
                   </span>
                 </div>
-                <div className="flex justify-between ">
+                <div className="flex justify-around">
                   {user?.photoURL === "seller" ? (
                     <>
                       <Link to={`/add_to_details/${v?.productId}/${v?._id}`}>
                         <button
                           disabled={v?.isDetails}
                           className="btn btn-outline btn-sm ">
-                          Add To Details
+                          Add To <TbListDetails className="text-xl" />
                         </button>
                       </Link>
+
+                      {/* update Sub Categorical Product */}
+
+                      <button
+                        className="btn btn-outline  btn-sm"
+                        onClick={() => {
+                          document.getElementById("report_modal").showModal();
+                          setSpecificSubCategorie(v);
+                        }}>
+                        <GrDocumentUpdate className="text-xl" /> Sub Categorie
+                      </button>
+
+                      <button className="btn btn-outline bg-red-400  btn-sm">
+                        <RiDeleteBinLine className="text-xl" />
+                      </button>
+                      <UpdateSubCategorie
+                        subCategorieData={specificSubCategorie}
+                      />
                     </>
                   ) : (
                     <>
-                      <button sName="btn btn-outline btn-sm ">
+                      <button classNameName="btn btn-outline btn-sm ">
                         Add to Cart
                       </button>
                     </>
