@@ -19,7 +19,7 @@ const Dashboard = () => {
     error,
     isLoading,
   } = useQuery({
-    queryKey: ["bookingList", categorieId, id],
+    queryKey: ["categoricalProduct", categorieId, id],
     queryFn: async () => {
       const res = await fetch(url, {
         method: "GET",
@@ -30,15 +30,14 @@ const Dashboard = () => {
       const data = await res.json();
       return data;
     },
+    //refetchInterval: 1000,
   });
 
   return (
     <>
       <div className="flex">
         <MenuDashbord />
-        {/* bg-gray-200 */}
-        {/* <h1>{categorieId}</h1>
-          <h1>{id}</h1> */}
+
         <AllProductList
           isLoading={isLoading}
           error={error}

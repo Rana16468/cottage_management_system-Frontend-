@@ -28,6 +28,36 @@ const UpdateSubCategorie = ({ subCategorieData }) => {
     let image = element.photo.files[0] || subCategorieData?.photo;
     const sellingPrice = price - price * (salesOf / 100);
 
+    let updateData;
+
+    const commanAPIFetch = (updateData) => {
+      //http://localhost:3013/api/v1/update_sub_categorie/65dca0d728c454bf044463e6
+
+      fetch(
+        `http://localhost:3013/api/v1/update_sub_categorie/${subCategorieData?._id}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            authorization: localStorage.getItem("token"),
+          },
+          body: JSON.stringify(updateData),
+        }
+      )
+        .then((res) => {
+          if (!res.ok) {
+            throw Error("API ERROR");
+          }
+          return res.json();
+        })
+        .then((data) => {
+          toast.success(data?.message);
+        })
+        .catch((error) => {
+          toast.error(error?.message);
+        });
+    };
+
     if (TypeOfImage?.includes(image?.name?.split(".")?.pop()?.toLowerCase())) {
       const formData = new FormData();
       formData.append("image", image);
@@ -46,28 +76,37 @@ const UpdateSubCategorie = ({ subCategorieData }) => {
           if (imgData?.success) {
             image = imgData?.data?.url;
 
-            console.log(image);
+            updateData = {
+              name,
+              price,
+              salesOf,
+              brandName,
+              description,
+              quentity,
+              photo: image,
+              sellingPrice,
+            };
+            commanAPIFetch(updateData);
           }
         })
         .catch((error) => {
           toast.error(error?.message);
         });
+    } else if (!element.photo.files[0]) {
+      updateData = {
+        name,
+        price,
+        salesOf,
+        brandName,
+        description,
+        quentity,
+        photo: image,
+        sellingPrice,
+      };
+      commanAPIFetch(updateData);
     } else {
       toast.error("png,jpg,jpeg accespted Onter Types Not Accespted");
     }
-
-    const updateData = {
-      name,
-      price,
-      salesOf,
-      brandName,
-      description,
-      quentity,
-      photo: image,
-      sellingPrice,
-    };
-
-    console.log(updateData);
   };
 
   return (

@@ -2,6 +2,7 @@ import React, { useContext, useState } from "react";
 import { BiSend } from "react-icons/bi";
 import "./style.css";
 import { AuthContext } from "../AuthProvider/AuthProvider";
+import UpdateProductDetails from "./UpdateProductDetails";
 //import { useParams } from "react-router-dom";
 const ProductDetailsCard = ({ productDetails }) => {
   //const { productId, SubcategorieId } = useParams();
@@ -153,6 +154,16 @@ const ProductDetailsCard = ({ productDetails }) => {
               ))}
             </div>
           ))}
+
+        {/* table  */}
+        {user?.photoURL === "seller" && (
+          <>
+            <h1 className=" text-3xl font-serif text-center m-3">
+              Product Details Table
+            </h1>
+            <UpdateProductDetails />
+          </>
+        )}
 
         {/* chatbot */}
 
