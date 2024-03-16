@@ -161,7 +161,7 @@ const ProductDetailsCard = ({ productDetails }) => {
             <h1 className=" text-3xl font-serif text-center m-3">
               Product Details Table
             </h1>
-            <UpdateProductDetails />
+            <UpdateProductDetails item={productDetails} />
           </>
         )}
 
