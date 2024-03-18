@@ -4,7 +4,7 @@ import "./style.css";
 import { AuthContext } from "../AuthProvider/AuthProvider";
 import UpdateProductDetails from "./UpdateProductDetails";
 //import { useParams } from "react-router-dom";
-const ProductDetailsCard = ({ productDetails }) => {
+const ProductDetailsCard = ({ productDetails, refetch }) => {
   //const { productId, SubcategorieId } = useParams();
   const { user } = useContext(AuthContext);
   const [message, setMessage] = useState([]);
@@ -161,7 +161,7 @@ const ProductDetailsCard = ({ productDetails }) => {
             <h1 className=" text-3xl font-serif text-center m-3">
               Product Details Table
             </h1>
-            <UpdateProductDetails item={productDetails} />
+            <UpdateProductDetails item={productDetails} refetch={refetch} />
           </>
         )}
 

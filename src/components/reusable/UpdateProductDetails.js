@@ -1,10 +1,54 @@
-import React from "react";
-import { MdSystemUpdateAlt } from "react-icons/md";
+import React, { useState } from "react";
+import { GrDocumentUpdate } from "react-icons/gr";
 import { RiDeleteBin5Line } from "react-icons/ri";
-const UpdateProductDetails = ({ item }) => {
-  const handelUpdateDetails = (id, index) => {
-    console.log({ id, index });
+import UpdateProductDetailsModal from "../CottageModal/UpdateProductDetailsModal";
+import Swal from "sweetalert2";
+import toast from "react-hot-toast";
+const UpdateProductDetails = ({ item, refetch }) => {
+  const [productDetails, setProductDetails] = useState({});
+
+  const handelDeleteDetails = (id, image) => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        Swal.fire({
+          title: "Deleted!",
+          text: "Your file has been deleted.",
+          icon: "success",
+        });
+
+        fetch(`http://localhost:3013/api/v1/deleteImageDetails/${id}`, {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            authorization: localStorage.getItem("token"),
+          },
+          body: JSON.stringify({ image }),
+        })
+          .then((res) => {
+            if (!res.ok) {
+              throw Error("API ERROR");
+            }
+            return res.json();
+          })
+          .then((data) => {
+            toast.success(data?.message);
+            refetch();
+          })
+          .catch((error) => {
+            toast.error(error?.message);
+          });
+      }
+    });
   };
+
   return (
     <>
       {item?.data?.map((v, index) => (
@@ -66,11 +110,25 @@ const UpdateProductDetails = ({ item }) => {
 
                       <div className="flex justify-end">
                         <button
-                          onClick={() => handelUpdateDetails(v?._id, index)}
-                          className="btn btn-outline btn-success btn-sm m-1">
-                          Update <MdSystemUpdateAlt className="text-xl" />
+                          className="btn btn-outline  btn-sm m-1"
+                          onClick={() => {
+                            document
+                              .getElementById("product_details")
+                              .showModal();
+                            setProductDetails({
+                              _id: v?._id,
+                              indexToUpdate: index,
+                            });
+                          }}>
+                          <GrDocumentUpdate className="text-xl" /> Update
                         </button>
-                        <button className="btn btn-outline btn-error btn-sm m-1">
+                        <UpdateProductDetailsModal
+                          productDetails={productDetails}
+                        />
+
+                        <button
+                          onClick={() => handelDeleteDetails(v?._id, image)}
+                          className="btn btn-outline btn-error btn-sm m-1">
                           <RiDeleteBin5Line className="text-xl" />
                         </button>
                       </div>

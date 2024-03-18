@@ -13,6 +13,7 @@ const ProductDetails = () => {
     data: productDetails = [],
     isLoading,
     error,
+    refetch,
   } = useQuery({
     queryKey: ["productDetails", productId, SubcategorieId],
     queryFn: async () => {
@@ -25,6 +26,7 @@ const ProductDetails = () => {
       const data = await res.json();
       return data;
     },
+    //refetchInterval: 1000,
   });
 
   return (
@@ -40,7 +42,10 @@ const ProductDetails = () => {
         <MenuDashbord />
 
         {productDetails?.data?.length ? (
-          <ProductDetailsCard productDetails={productDetails} />
+          <ProductDetailsCard
+            productDetails={productDetails}
+            refetch={refetch}
+          />
         ) : (
           <p className="text-4xl font-serif text-center">
             Product Details is Not Exist

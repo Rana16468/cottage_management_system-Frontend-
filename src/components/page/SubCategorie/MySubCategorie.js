@@ -28,6 +28,7 @@ const MySubCategorie = () => {
       const data = await res.json();
       return data;
     },
+    refetchInterval: 1000,
   });
 
   return (
