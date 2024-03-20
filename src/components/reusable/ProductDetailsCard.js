@@ -1,18 +1,55 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { BiSend } from "react-icons/bi";
 import "./style.css";
 import { AuthContext } from "../AuthProvider/AuthProvider";
 import UpdateProductDetails from "./UpdateProductDetails";
+import toast from "react-hot-toast";
+import { useParams } from "react-router-dom";
 //import { useParams } from "react-router-dom";
 const ProductDetailsCard = ({ productDetails, refetch }) => {
   //const { productId, SubcategorieId } = useParams();
+
   const { user } = useContext(AuthContext);
-  const [message, setMessage] = useState([]);
+  const [messagetext, setMessage] = useState([]);
+  const [DetailsId, setDetailsId] = useState("");
+  const { SubcategorieId } = useParams();
+  const { _id } = productDetails?.data?.find(
+    (v) => v.SubcategorieId === SubcategorieId
+  );
+
   const handelTextMessages = (event) => {
     event.preventDefault();
     const element = event.target;
-    const textMessage = element.textMessage.value;
-    setMessage([...message, textMessage]);
+    const message = element.textMessage.value;
+    const sendMessage = {
+      DetailsId,
+      message,
+    };
+
+    // start fateching
+    fetch("http://localhost:3013/api/v1/message", {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+        authorization: localStorage.getItem("token"),
+      },
+      body: JSON.stringify(sendMessage),
+    })
+      .then((res) => {
+        if (!res.ok) {
+          throw Error("API ERROR");
+        }
+        return res.json();
+      })
+      .then((data) => {
+        toast.success(data?.message);
+        refetch();
+      })
+      .catch((error) => {
+        toast.error(error?.message);
+      });
+
+    setMessage([...messagetext, message]);
     // const send_message = {
     //   textMessage,
     //   productId,
@@ -21,8 +58,32 @@ const ProductDetailsCard = ({ productDetails, refetch }) => {
     // console.log(send_message);
     element.reset();
   };
+  // my message display with my text area start the codeing
 
-  console.log(message);
+  console.log(messagetext);
+
+  useEffect(() => {
+    fetch(`http://localhost:3013/api/v1/display_chatting_message/${_id}`, {
+      method: "GET",
+      headers: {
+        authorization: localStorage.getItem("token"),
+      },
+    })
+      .then((res) => {
+        if (!res.ok) {
+          throw Error("API ERROR");
+        }
+        return res.json();
+      })
+      .then((data) => {
+        console.log(data);
+        refetch();
+      })
+      .catch((error) => {
+        toast.error(error?.message);
+      });
+  }, [_id, refetch]);
+
   return (
     <>
       <div className="w-full px-4 py-2  lg:w-full">
@@ -152,6 +213,91 @@ const ProductDetailsCard = ({ productDetails, refetch }) => {
                   </div>
                 </div>
               ))}
+
+              {/* chatbot */}
+
+              {user?.photoURL === "buyer" && (
+                <div className=" m-3 flex justify-center">
+                  <div
+                    style={{ width: "950px" }}
+                    className="card  bg-base-100 shadow-xl">
+                    <div className="card-body">
+                      <div className="form-control">
+                        <label className="label">
+                          <span className="label-text text-xl">
+                            Buyer/Seller Reaply Message
+                          </span>
+                        </label>
+                        <div
+                          name="message"
+                          className="textarea textarea-success">
+                          {messagetext?.map((v, index) => (
+                            <div key={index} className="chat chat-end">
+                              <div className="chat-image avatar">
+                                <div className="w-10 rounded-full">
+                                  <img
+                                    src="https://blinkit.com/careers/sites/default/files/2021-12/local-desktop-masthead.png"
+                                    alt=""
+                                  />
+                                </div>
+                              </div>
+                              <div className="chat-header">
+                                Buyer Message
+                                <time className="text-xs opacity-50 m-2">
+                                  {new Date().toString().slice(16, 23)}
+                                </time>
+                              </div>
+                              <div className="chat-bubble text-white text-xl">
+                                {v}
+                              </div>
+                              <div className="chat-footer opacity-50">
+                                <p className="text-sm text-black">
+                                  {new Date().toString().slice(0, 23)}
+                                </p>
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="chat chat-start m-2">
+                      <div className="chat-image avatar">
+                        <div className="w-10 rounded-full">
+                          <img
+                            src="https://previews.123rf.com/images/lexaarts/lexaarts1311/lexaarts131100148/24091315-happy-buyer-3d-human-and-shopping-cart.jpg"
+                            alt=""
+                          />
+                        </div>
+                      </div>
+                      <div className="chat-header">
+                        Buyer Message Box -
+                        <time className="text-xs opacity-50">
+                          {new Date().toString().slice(0, 18)}
+                        </time>
+                      </div>
+                      <form
+                        onSubmit={handelTextMessages}
+                        className="chat-bubble w-full">
+                        <div className="flex justify-between">
+                          <input
+                            type="text"
+                            name="textMessage"
+                            placeholder="Type here"
+                            className="input input-bordered input-info w-full max-w-4xl text-black text-xl mr-3"
+                          />
+                          <button
+                            onClick={() => setDetailsId(item?._id)}
+                            className="btn btn-primary text-2xl">
+                            <BiSend className="text-xl"></BiSend>
+                          </button>
+                        </div>
+                      </form>
+                      <div className="chat-footer opacity-50">Delivered</div>
+                    </div>
+                  </div>
+                </div>
+              )}
             </div>
           ))}
 
@@ -163,87 +309,6 @@ const ProductDetailsCard = ({ productDetails, refetch }) => {
             </h1>
             <UpdateProductDetails item={productDetails} refetch={refetch} />
           </>
-        )}
-
-        {/* chatbot */}
-
-        {user?.photoURL === "buyer" && (
-          <div className=" m-3 flex justify-center">
-            <div
-              style={{ width: "950px" }}
-              className="card  bg-base-100 shadow-xl">
-              <div className="card-body">
-                <div className="form-control">
-                  <label className="label">
-                    <span className="label-text text-xl">
-                      Buyer/Seller Reaply Message
-                    </span>
-                  </label>
-                  <div name="message" className="textarea textarea-success">
-                    {message?.map((v, index) => (
-                      <div key={index} className="chat chat-end">
-                        <div className="chat-image avatar">
-                          <div className="w-10 rounded-full">
-                            <img
-                              src="https://blinkit.com/careers/sites/default/files/2021-12/local-desktop-masthead.png"
-                              alt=""
-                            />
-                          </div>
-                        </div>
-                        <div className="chat-header">
-                          Buyer Message
-                          <time className="text-xs opacity-50 m-2">
-                            {new Date().toString().slice(16, 23)}
-                          </time>
-                        </div>
-                        <div className="chat-bubble text-white text-xl">
-                          {v}
-                        </div>
-                        <div className="chat-footer opacity-50">
-                          <p className="text-sm text-black">
-                            {new Date().toString().slice(0, 23)}
-                          </p>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </div>
-
-              <div className="chat chat-start m-2">
-                <div className="chat-image avatar">
-                  <div className="w-10 rounded-full">
-                    <img
-                      src="https://previews.123rf.com/images/lexaarts/lexaarts1311/lexaarts131100148/24091315-happy-buyer-3d-human-and-shopping-cart.jpg"
-                      alt=""
-                    />
-                  </div>
-                </div>
-                <div className="chat-header">
-                  Buyer Message Box -
-                  <time className="text-xs opacity-50">
-                    {new Date().toString().slice(0, 18)}
-                  </time>
-                </div>
-                <form
-                  onSubmit={handelTextMessages}
-                  className="chat-bubble w-full">
-                  <div className="flex justify-between">
-                    <input
-                      type="text"
-                      name="textMessage"
-                      placeholder="Type here"
-                      className="input input-bordered input-info w-full max-w-4xl text-black text-xl mr-3"
-                    />
-                    <button className="btn btn-primary text-2xl">
-                      <BiSend className="text-xl"></BiSend>
-                    </button>
-                  </div>
-                </form>
-                <div className="chat-footer opacity-50">Delivered</div>
-              </div>
-            </div>
-          </div>
         )}
       </div>
     </>

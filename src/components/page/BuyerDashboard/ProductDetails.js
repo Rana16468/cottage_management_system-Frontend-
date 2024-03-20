@@ -8,7 +8,6 @@ const ProductDetails = () => {
   const { productId, SubcategorieId } = useParams();
 
   const url = `http://localhost:3013/api/v1/specific_product_details?productId=${productId}&SubcategorieId=${SubcategorieId}`;
-
   const {
     data: productDetails = [],
     isLoading,
