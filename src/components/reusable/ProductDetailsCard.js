@@ -1,16 +1,20 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 import { BiSend } from "react-icons/bi";
 import "./style.css";
 import { AuthContext } from "../AuthProvider/AuthProvider";
 import UpdateProductDetails from "./UpdateProductDetails";
+import { MdOutlineFileUpload } from "react-icons/md";
 import toast from "react-hot-toast";
 import { useParams } from "react-router-dom";
-//import { useParams } from "react-router-dom";
-const ProductDetailsCard = ({ productDetails, refetch }) => {
-  //const { productId, SubcategorieId } = useParams();
+import { BsArrowReturnRight } from "react-icons/bs";
+import { BsThreeDotsVertical } from "react-icons/bs";
+import { useQuery } from "@tanstack/react-query";
+import { FiEdit } from "react-icons/fi";
+import { MdAutoDelete } from "react-icons/md";
 
+const ProductDetailsCard = ({ productDetails, refetch }) => {
   const { user } = useContext(AuthContext);
-  const [messagetext, setMessage] = useState([]);
+
   const [DetailsId, setDetailsId] = useState("");
   const { SubcategorieId } = useParams();
   const { _id } = productDetails?.data?.find(
@@ -42,14 +46,13 @@ const ProductDetailsCard = ({ productDetails, refetch }) => {
         return res.json();
       })
       .then((data) => {
-        toast.success(data?.message);
         refetch();
+        toast.success(data?.message);
       })
       .catch((error) => {
         toast.error(error?.message);
       });
 
-    setMessage([...messagetext, message]);
     // const send_message = {
     //   textMessage,
     //   productId,
@@ -60,29 +63,23 @@ const ProductDetailsCard = ({ productDetails, refetch }) => {
   };
   // my message display with my text area start the codeing
 
-  console.log(messagetext);
-
-  useEffect(() => {
-    fetch(`http://localhost:3013/api/v1/display_chatting_message/${_id}`, {
-      method: "GET",
-      headers: {
-        authorization: localStorage.getItem("token"),
-      },
-    })
-      .then((res) => {
-        if (!res.ok) {
-          throw Error("API ERROR");
-        }
-        return res.json();
-      })
-      .then((data) => {
-        console.log(data);
-        refetch();
-      })
-      .catch((error) => {
-        toast.error(error?.message);
+  const chatUrl = `http://localhost:3013/api/v1/display_chatting_message/${_id}`;
+  const { data: chattingMessage = [] } = useQuery({
+    queryKey: ["chattingMessage", _id],
+    queryFn: async () => {
+      const res = await fetch(chatUrl, {
+        method: "GET",
+        headers: {
+          authorization: localStorage.getItem("token"),
+        },
       });
-  }, [_id, refetch]);
+      const data = await res.json();
+      return data?.data;
+    },
+    refetchInterval: 1000,
+  });
+
+  // console.log(chattingMessage);
 
   return (
     <>
@@ -231,30 +228,72 @@ const ProductDetailsCard = ({ productDetails, refetch }) => {
                         <div
                           name="message"
                           className="textarea textarea-success">
-                          {messagetext?.map((v, index) => (
-                            <div key={index} className="chat chat-end">
-                              <div className="chat-image avatar">
-                                <div className="w-10 rounded-full">
-                                  <img
-                                    src="https://blinkit.com/careers/sites/default/files/2021-12/local-desktop-masthead.png"
-                                    alt=""
-                                  />
+                          {chattingMessage?.map((chat, index) => (
+                            <div key={index}>
+                              {chat?.queries?.map((chatMessage, index) => (
+                                <div key={index} className="chat chat-end">
+                                  <div className="chat-image avatar">
+                                    <div className="w-10 rounded-full">
+                                      <img
+                                        src="https://blinkit.com/careers/sites/default/files/2021-12/local-desktop-masthead.png"
+                                        alt=""
+                                      />
+                                    </div>
+                                  </div>
+
+                                  <div className="chat-header">
+                                    Buyer Message
+                                    <time className="text-xs opacity-50 m-2">
+                                      {new Date().toString().slice(16, 23)}
+                                    </time>
+                                  </div>
+                                  <div className="chat-bubble text-white text-xl">
+                                    {chatMessage?.message}
+                                    <div className="flex justify-end">
+                                      <div className="dropdown">
+                                        <div tabIndex={0}>
+                                          <BsThreeDotsVertical />
+                                        </div>
+                                        <ul
+                                          tabIndex={0}
+                                          className="dropdown-content z-[1] menu p-2 shadow bg-black rounded-box w-32">
+                                          <li>
+                                            <button className="btn btn-outline btn-info btn-sm m-1">
+                                              <FiEdit className="text-xl" />
+                                            </button>
+                                          </li>
+                                          <li>
+                                            <button className="btn btn-outline btn-error btn-sm m-1">
+                                              <MdAutoDelete className="text-xl" />
+                                            </button>
+                                          </li>
+                                        </ul>
+                                      </div>
+                                    </div>
+
+                                    <div className="gap-2 relative left-5">
+                                      {chatMessage?.reply?.map(
+                                        (reply, index) => (
+                                          <div key={index}>
+                                            <BsArrowReturnRight className="text-xl font-bold" />
+                                            {reply?.replymessage}
+                                          </div>
+                                        )
+                                      )}
+
+                                      {/* {user?.email === employeerEmail && <button onClick={() => handelDelete(v.queId, _id)} className='btn btn-outline btn-error text-xl m-3'><RiDeleteBinLine></RiDeleteBinLine></button>
+
+                                                        } */}
+                                    </div>
+                                  </div>
+
+                                  <div className="chat-footer opacity-50">
+                                    <p className="text-sm text-black">
+                                      {new Date().toString().slice(0, 23)}
+                                    </p>
+                                  </div>
                                 </div>
-                              </div>
-                              <div className="chat-header">
-                                Buyer Message
-                                <time className="text-xs opacity-50 m-2">
-                                  {new Date().toString().slice(16, 23)}
-                                </time>
-                              </div>
-                              <div className="chat-bubble text-white text-xl">
-                                {v}
-                              </div>
-                              <div className="chat-footer opacity-50">
-                                <p className="text-sm text-black">
-                                  {new Date().toString().slice(0, 23)}
-                                </p>
-                              </div>
+                              ))}
                             </div>
                           ))}
                         </div>
@@ -279,13 +318,22 @@ const ProductDetailsCard = ({ productDetails, refetch }) => {
                       <form
                         onSubmit={handelTextMessages}
                         className="chat-bubble w-full">
-                        <div className="flex justify-between">
+                        <div className="flex justify-around">
+                          <label className="cursor-pointer">
+                            <input
+                              type="file"
+                              accept="image/*"
+                              className="hidden"
+                            />
+                            <MdOutlineFileUpload className="text-2xl m-3 rounded  bg-blue-700" />
+                          </label>
                           <input
                             type="text"
                             name="textMessage"
                             placeholder="Type here"
                             className="input input-bordered input-info w-full max-w-4xl text-black text-xl mr-3"
                           />
+
                           <button
                             onClick={() => setDetailsId(item?._id)}
                             className="btn btn-primary text-2xl">

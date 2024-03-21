@@ -7,6 +7,11 @@ import { AuthContext } from "../AuthProvider/AuthProvider";
 import UpdateSubCategorie from "../CottageModal/UpdateSubCategorie";
 import { RiDeleteBinLine } from "react-icons/ri";
 import { TbListDetails } from "react-icons/tb";
+import { GiEternalLove } from "react-icons/gi";
+import { GoCodeReview } from "react-icons/go";
+import { MdOutlineShoppingCart } from "react-icons/md";
+import { BiDetail } from "react-icons/bi";
+
 const AllProductList = ({ isLoading, error, categoricalProduct }) => {
   const { user } = useContext(AuthContext);
   const [specificSubCategorie, setSpecificSubCategorie] = useState({});
@@ -102,8 +107,14 @@ const AllProductList = ({ isLoading, error, categoricalProduct }) => {
                     </>
                   ) : (
                     <>
-                      <button classNameName="btn btn-outline btn-sm ">
-                        Add to Cart
+                      <button className="btn btn-outline btn-sm ">
+                        Add to <MdOutlineShoppingCart className="text-xl" />
+                      </button>
+                      <button className="btn btn-outline btn-sm ">
+                        <GiEternalLove className="text-xl text-red-500" />
+                      </button>
+                      <button className="btn btn-outline btn-sm ">
+                        <GoCodeReview className="text-xl text-pink-500" />
                       </button>
                     </>
                   )}
@@ -111,7 +122,7 @@ const AllProductList = ({ isLoading, error, categoricalProduct }) => {
                   <Link
                     className="btn btn-outline  btn-sm"
                     to={`/product_details/${v?.productId}/${v?._id}`}>
-                    Details
+                    Details <BiDetail className="text-xl" />
                   </Link>
                 </div>
               </div>
