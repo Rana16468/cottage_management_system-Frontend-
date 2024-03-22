@@ -11,10 +11,12 @@ import { BsThreeDotsVertical } from "react-icons/bs";
 import { useQuery } from "@tanstack/react-query";
 import { FiEdit } from "react-icons/fi";
 import { MdAutoDelete } from "react-icons/md";
+import EditChat from "../CottageModal/EditChat";
+import Swal from "sweetalert2";
 
 const ProductDetailsCard = ({ productDetails, refetch }) => {
   const { user } = useContext(AuthContext);
-
+  const [editmessage, setEditMessage] = useState({});
   const [DetailsId, setDetailsId] = useState("");
   const { SubcategorieId } = useParams();
   const { _id } = productDetails?.data?.find(
@@ -41,7 +43,7 @@ const ProductDetailsCard = ({ productDetails, refetch }) => {
     })
       .then((res) => {
         if (!res.ok) {
-          throw Error("API ERROR");
+          throw new Error("API ERROR");
         }
         return res.json();
       })
@@ -53,12 +55,6 @@ const ProductDetailsCard = ({ productDetails, refetch }) => {
         toast.error(error?.message);
       });
 
-    // const send_message = {
-    //   textMessage,
-    //   productId,
-    //   SubcategorieId,
-    // };
-    // console.log(send_message);
     element.reset();
   };
   // my message display with my text area start the codeing
@@ -78,6 +74,49 @@ const ProductDetailsCard = ({ productDetails, refetch }) => {
     },
     refetchInterval: 1000,
   });
+
+  // delete message
+
+  const handelChatDelete = (delete_message) => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        Swal.fire({
+          title: "Deleted!",
+          text: "Your file has been deleted.",
+          icon: "success",
+        });
+        fetch("http://localhost:3013/api/v1/delete_chettingMessage", {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+            authorization: localStorage.getItem("token"),
+          },
+          body: JSON.stringify(delete_message),
+        })
+          .then((res) => {
+            if (!res.ok) {
+              throw new Error("API ERROR");
+            }
+            return res.json();
+          })
+          .then((data) => {
+            toast.success(data?.message);
+            refetch();
+          })
+          .catch((error) => {
+            toast.error(error?.message);
+          });
+      }
+    });
+  };
 
   // console.log(chattingMessage);
 
@@ -258,12 +297,38 @@ const ProductDetailsCard = ({ productDetails, refetch }) => {
                                           tabIndex={0}
                                           className="dropdown-content z-[1] menu p-2 shadow bg-black rounded-box w-32">
                                           <li>
-                                            <button className="btn btn-outline btn-info btn-sm m-1">
+                                            <button
+                                              onClick={() => {
+                                                document
+                                                  .getElementById(
+                                                    "edit_chatbot"
+                                                  )
+                                                  .showModal();
+                                                setEditMessage({
+                                                  _id: chat?._id,
+                                                  messageId:
+                                                    chatMessage?.messageId,
+                                                  message: chatMessage?.message,
+                                                });
+                                              }}
+                                              className="btn btn-outline btn-info btn-sm">
                                               <FiEdit className="text-xl" />
                                             </button>
+                                            <EditChat
+                                              editmessage={editmessage}
+                                              refetch={refetch}
+                                            />
                                           </li>
                                           <li>
-                                            <button className="btn btn-outline btn-error btn-sm m-1">
+                                            <button
+                                              onClick={() =>
+                                                handelChatDelete({
+                                                  _id: chat?._id,
+                                                  messageId:
+                                                    chatMessage?.messageId,
+                                                })
+                                              }
+                                              className="btn btn-outline btn-error btn-sm">
                                               <MdAutoDelete className="text-xl" />
                                             </button>
                                           </li>
