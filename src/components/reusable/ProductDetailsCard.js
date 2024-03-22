@@ -13,6 +13,7 @@ import { FiEdit } from "react-icons/fi";
 import { MdAutoDelete } from "react-icons/md";
 import EditChat from "../CottageModal/EditChat";
 import Swal from "sweetalert2";
+import SellerReply from "./SellerReply";
 
 const ProductDetailsCard = ({ productDetails, refetch }) => {
   const { user } = useContext(AuthContext);
@@ -246,6 +247,8 @@ const ProductDetailsCard = ({ productDetails, refetch }) => {
                         )}
                       </div>
                     </div>
+
+                    <SellerReply detailsId={item?._id} />
                   </div>
                 </div>
               ))}
@@ -421,6 +424,7 @@ const ProductDetailsCard = ({ productDetails, refetch }) => {
               Product Details Table
             </h1>
             <UpdateProductDetails item={productDetails} refetch={refetch} />
+            {/* chatbot reply message  */}
           </>
         )}
       </div>
