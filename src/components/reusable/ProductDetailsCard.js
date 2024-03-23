@@ -248,7 +248,9 @@ const ProductDetailsCard = ({ productDetails, refetch }) => {
                       </div>
                     </div>
 
-                    <SellerReply detailsId={item?._id} />
+                    {user?.photoURL === "seller" && (
+                      <SellerReply detailsId={item?._id} />
+                    )}
                   </div>
                 </div>
               ))}
