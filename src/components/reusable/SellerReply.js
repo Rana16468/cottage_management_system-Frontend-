@@ -6,11 +6,15 @@ import { MdAutoDelete } from "react-icons/md";
 import ErrorPage from "../error/ErrorPage";
 import { BiSend } from "react-icons/bi";
 import toast from "react-hot-toast";
+import EditSallerChat from "../CottageModal/EditSallerChat";
+import Swal from "sweetalert2";
 
 const SellerReply = ({ detailsId }) => {
   const [sellerReplyMessage, setSellerReplyMessage] = useState([]);
   const [isError, setError] = useState("");
   const [replyIds, setReplyIds] = useState({});
+  const [refetch, setRefetch] = useState(1000000);
+  const [replyDetails, setReplyDetails] = useState({});
 
   useEffect(() => {
     const fetchData = () => {
@@ -40,12 +44,12 @@ const SellerReply = ({ detailsId }) => {
     // Fetch data initially
     fetchData();
 
-    // Set interval to refetch data every 10 seconds
-    const refetchInterval = setInterval(fetchData, 1000);
+    // Set interval to refetch data every 1 seconds
+    const refetchInterval = setInterval(fetchData, refetch);
 
     // Cleanup function to clear interval on component unmount
     return () => clearInterval(refetchInterval);
-  }, [detailsId]);
+  }, [detailsId, refetch]);
 
   const replyMessage = (event) => {
     event.preventDefault();
@@ -72,11 +76,53 @@ const SellerReply = ({ detailsId }) => {
       })
       .then((data) => {
         toast.success(data?.message);
+        setRefetch(1000);
       })
       .catch((error) => {
         toast.error(error?.message);
       });
     element.reset();
+  };
+
+  const handelDeleteReply = (deleteData) => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        Swal.fire({
+          title: "Deleted!",
+          text: "Your file has been deleted.",
+          icon: "success",
+        });
+        fetch("http://localhost:3013/api/v1/delete_reply_message", {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+            authorization: localStorage.getItem("token"),
+          },
+          body: JSON.stringify(deleteData),
+        })
+          .then((res) => {
+            if (!res.ok) {
+              throw new Error("API ERROR");
+            }
+            return res.json();
+          })
+          .then((data) => {
+            toast.success(data?.message);
+            setRefetch(1000);
+          })
+          .catch((error) => {
+            toast.error(error?.message);
+          });
+      }
+    });
   };
 
   return (
@@ -119,6 +165,53 @@ const SellerReply = ({ detailsId }) => {
                               <div key={index}>
                                 <BsArrowReturnRight className="text-xl font-bold" />
                                 {reply?.replymessage}
+                                <div className="flex justify-end">
+                                  <div className="dropdown">
+                                    <div tabIndex={0}>
+                                      <BsThreeDotsVertical />
+                                    </div>
+                                    <ul
+                                      tabIndex={0}
+                                      className="dropdown-content z-[1] menu p-2 shadow bg-black rounded-box w-32">
+                                      <li>
+                                        <button
+                                          onClick={() => {
+                                            document
+                                              .getElementById(
+                                                "reply_edit_chatbot"
+                                              )
+                                              .showModal();
+                                            setReplyDetails({
+                                              _id: chat?._id,
+                                              messageId: chatMessage?.messageId,
+                                              index,
+                                              replymessage: reply?.replymessage,
+                                            });
+                                          }}
+                                          className="btn btn-outline btn-info btn-sm">
+                                          <FiEdit className="text-xl" />
+                                        </button>
+                                        <EditSallerChat
+                                          replyDetails={replyDetails}
+                                          setRefetch={setRefetch}
+                                        />
+                                      </li>
+                                      <li>
+                                        <button
+                                          onClick={() =>
+                                            handelDeleteReply({
+                                              _id: chat?._id,
+                                              messageId: chatMessage?.messageId,
+                                              index,
+                                            })
+                                          }
+                                          className="btn btn-outline btn-error btn-sm">
+                                          <MdAutoDelete className="text-xl" />
+                                        </button>
+                                      </li>
+                                    </ul>
+                                  </div>
+                                </div>
                               </div>
                             ))}
                           </div>
