@@ -14,6 +14,7 @@ import { MdAutoDelete } from "react-icons/md";
 import EditChat from "../CottageModal/EditChat";
 import Swal from "sweetalert2";
 import SellerReply from "./SellerReply";
+import ChatBotValidateInput from "../../utils/ChatBotValidateInput";
 
 const ProductDetailsCard = ({ productDetails, refetch }) => {
   const { user } = useContext(AuthContext);
@@ -24,37 +25,56 @@ const ProductDetailsCard = ({ productDetails, refetch }) => {
     (v) => v.SubcategorieId === SubcategorieId
   );
 
+  /*
+const product=[
+    
+    {message:"https://assets.bigcartel.com/product_images/361265728/20230522_135652.jpg?auto=format&fit=max&w=2000"},
+     {message:"The Quick brown fox jumps over the lazy dog"},
+       {message:"The Quick brown fox jumps over the lazy dog"},
+         {message:"The Quick brown fox jumps over the lazy dog"}
+    
+    ];
+      const urlRegex = /^(http|https):\/\/[^\s]+/;
+      product.map((v)=>{
+          urlRegex.test(v.message) && console.log(v);
+           !urlRegex.test(v.message) && console.log(v);
+          
+      })
+       */
+
   const handelTextMessages = (event) => {
     event.preventDefault();
     const element = event.target;
     const message = element.textMessage.value;
-    const sendMessage = {
-      DetailsId,
-      message,
-    };
 
-    // start fateching
-    fetch("http://localhost:3013/api/v1/message", {
-      method: "PATCH",
-      headers: {
-        "Content-Type": "application/json",
-        authorization: localStorage.getItem("token"),
-      },
-      body: JSON.stringify(sendMessage),
-    })
-      .then((res) => {
-        if (!res.ok) {
-          throw new Error("API ERROR");
-        }
-        return res.json();
+    if (ChatBotValidateInput(message)) {
+      fetch("http://localhost:3013/api/v1/message", {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          authorization: localStorage.getItem("token"),
+        },
+        body: JSON.stringify({
+          DetailsId,
+          message,
+        }),
       })
-      .then((data) => {
-        refetch();
-        toast.success(data?.message);
-      })
-      .catch((error) => {
-        toast.error(error?.message);
-      });
+        .then((res) => {
+          if (!res.ok) {
+            throw new Error("API ERROR");
+          }
+          return res.json();
+        })
+        .then((data) => {
+          refetch();
+          toast.success(data?.message);
+        })
+        .catch((error) => {
+          toast.error(error?.message);
+        });
+    } else {
+      toast.error("Invalide Types");
+    }
 
     element.reset();
   };
