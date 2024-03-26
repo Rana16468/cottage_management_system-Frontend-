@@ -11,6 +11,7 @@ import { GiEternalLove } from "react-icons/gi";
 import { GoCodeReview } from "react-icons/go";
 import { MdOutlineShoppingCart } from "react-icons/md";
 import { BiDetail } from "react-icons/bi";
+import { AddToCard } from "./AddToCard";
 
 const AllProductList = ({ isLoading, error, categoricalProduct }) => {
   const { user } = useContext(AuthContext);
@@ -107,7 +108,9 @@ const AllProductList = ({ isLoading, error, categoricalProduct }) => {
                     </>
                   ) : (
                     <>
-                      <button className="btn btn-outline btn-sm ">
+                      <button
+                        onClick={() => AddToCard(v)}
+                        className="btn btn-outline btn-sm ">
                         Add to <MdOutlineShoppingCart className="text-xl" />
                       </button>
                       <button className="btn btn-outline btn-sm ">

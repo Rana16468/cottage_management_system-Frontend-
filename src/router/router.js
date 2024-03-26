@@ -12,6 +12,7 @@ import AddToProduct from "../components/page/Categories/AddToProduct";
 import AddToSubCategorie from "../components/page/SubCategorie/AddToSubCategorie";
 import MySubCategorie from "../components/page/SubCategorie/MySubCategorie";
 import AddToDetails from "../components/page/AddToDetails/AddToDetails";
+import AddToCard from "../components/page/AddToCard/AddToCard";
 
 const router = createBrowserRouter([
   {
@@ -22,7 +23,14 @@ const router = createBrowserRouter([
       { path: "/", element: <ADVTime /> },
       { path: "/register", element: <Register /> },
       { path: "/login", element: <Login /> },
-      { path: "/add_to_card", element: "" },
+      {
+        path: "/add_to_card",
+        element: (
+          <PrivateRouter>
+            <AddToCard />
+          </PrivateRouter>
+        ),
+      },
       { path: "/New_arrivals", element: "" },
       {
         path: "/buyer_dashboard/:categorieId/:id",

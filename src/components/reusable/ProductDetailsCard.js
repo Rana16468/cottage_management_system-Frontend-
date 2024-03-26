@@ -73,7 +73,7 @@ const product=[
           toast.error(error?.message);
         });
     } else {
-      toast.error("Invalide Types");
+      toast.error("Invalide Message");
     }
 
     element.reset();
@@ -140,6 +140,10 @@ const product=[
   };
 
   // console.log(chattingMessage);
+
+  const addToCard = (addToProduct) => {
+    console.log(addToProduct);
+  };
 
   return (
     <>
@@ -261,7 +265,9 @@ const product=[
                       )}
                       <div className="flex justify-end">
                         {user?.photoURL === "buyer" && (
-                          <button className="btn btn-outline btn-sm ">
+                          <button
+                            onClick={() => addToCard(v)}
+                            className="btn btn-outline btn-sm ">
                             Add to Cart
                           </button>
                         )}

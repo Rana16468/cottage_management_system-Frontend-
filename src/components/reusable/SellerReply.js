@@ -8,6 +8,7 @@ import { BiSend } from "react-icons/bi";
 import toast from "react-hot-toast";
 import EditSallerChat from "../CottageModal/EditSallerChat";
 import Swal from "sweetalert2";
+import ChatBotValidateInput from "../../utils/ChatBotValidateInput";
 
 const SellerReply = ({ detailsId }) => {
   const [sellerReplyMessage, setSellerReplyMessage] = useState([]);
@@ -55,32 +56,35 @@ const SellerReply = ({ detailsId }) => {
     event.preventDefault();
     const element = event.target;
     const replymessage = element.replymessage.value;
-    const replyText = {
-      replymessage,
-      ...replyIds,
-    };
+    if (ChatBotValidateInput(replymessage)) {
+      fetch("http://localhost:3013/api/v1/reply", {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          authorization: localStorage.getItem("token"),
+        },
+        body: JSON.stringify({
+          replymessage,
+          ...replyIds,
+        }),
+      })
+        .then((res) => {
+          if (!res.ok) {
+            throw new Error("API ERROR");
+          }
+          return res.json();
+        })
+        .then((data) => {
+          toast.success(data?.message);
+          setRefetch(1000);
+        })
+        .catch((error) => {
+          toast.error(error?.message);
+        });
+    } else {
+      toast.error("Invalidate Message");
+    }
 
-    fetch("http://localhost:3013/api/v1/reply", {
-      method: "PATCH",
-      headers: {
-        "Content-Type": "application/json",
-        authorization: localStorage.getItem("token"),
-      },
-      body: JSON.stringify(replyText),
-    })
-      .then((res) => {
-        if (!res.ok) {
-          throw new Error("API ERROR");
-        }
-        return res.json();
-      })
-      .then((data) => {
-        toast.success(data?.message);
-        setRefetch(1000);
-      })
-      .catch((error) => {
-        toast.error(error?.message);
-      });
     element.reset();
   };
 

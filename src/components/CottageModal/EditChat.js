@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
 import { AuthContext } from "../AuthProvider/AuthProvider";
 import toast from "react-hot-toast";
+import ChatBotValidateInput from "../../utils/ChatBotValidateInput";
 
 const EditChat = ({ editmessage, refetch }) => {
   const { user } = useContext(AuthContext);
@@ -9,27 +10,33 @@ const EditChat = ({ editmessage, refetch }) => {
     event.preventDefault();
     const element = event.target;
     editmessage.message = element.message.value;
-    fetch("http://localhost:3013/api/v1/update_chatting_message", {
-      method: "PATCH",
-      headers: {
-        "Content-Type": "application/json",
-        authorization: localStorage.getItem("token"),
-      },
-      body: JSON.stringify(editmessage),
-    })
-      .then((res) => {
-        if (!res.ok) {
-          throw new Error("API ERROR");
-        }
-        return res.json();
+
+    if (ChatBotValidateInput(editmessage.message)) {
+      fetch("http://localhost:3013/api/v1/update_chatting_message", {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          authorization: localStorage.getItem("token"),
+        },
+        body: JSON.stringify(editmessage),
       })
-      .then((data) => {
-        toast.success(data?.message);
-        refetch();
-      })
-      .catch((error) => {
-        toast.error(error?.message);
-      });
+        .then((res) => {
+          if (!res.ok) {
+            throw new Error("API ERROR");
+          }
+          return res.json();
+        })
+        .then((data) => {
+          toast.success(data?.message);
+          refetch();
+        })
+        .catch((error) => {
+          toast.error(error?.message);
+        });
+    } else {
+      toast.error("Invalidate Message");
+    }
+
     element.reset();
   };
 

@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
 import { AuthContext } from "../AuthProvider/AuthProvider";
 import toast from "react-hot-toast";
+import ChatBotValidateInput from "../../utils/ChatBotValidateInput";
 
 const EditSallerChat = ({ replyDetails, setRefetch }) => {
   const { user } = useContext(AuthContext);
@@ -10,27 +11,32 @@ const EditSallerChat = ({ replyDetails, setRefetch }) => {
     const element = event.target;
     replyDetails.replymessage = element.replymessage.value;
 
-    fetch(`http://localhost:3013/api/v1/update_reply_message`, {
-      method: "PATCH",
-      headers: {
-        "Content-Type": "application/json",
-        authorization: localStorage.getItem("token"),
-      },
-      body: JSON.stringify(replyDetails),
-    })
-      .then((res) => {
-        if (!res.ok) {
-          throw new Error("API ERROR");
-        }
-        return res.json();
+    if (ChatBotValidateInput(replyDetails.replymessage)) {
+      fetch(`http://localhost:3013/api/v1/update_reply_message`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          authorization: localStorage.getItem("token"),
+        },
+        body: JSON.stringify(replyDetails),
       })
-      .then((data) => {
-        toast.success(data?.message);
-        setRefetch(1000);
-      })
-      .catch((error) => {
-        toast.error(error?.message);
-      });
+        .then((res) => {
+          if (!res.ok) {
+            throw new Error("API ERROR");
+          }
+          return res.json();
+        })
+        .then((data) => {
+          toast.success(data?.message);
+          setRefetch(1000);
+        })
+        .catch((error) => {
+          toast.error(error?.message);
+        });
+    } else {
+      toast.error("Invalide Message");
+    }
+
     element.reset();
   };
 
