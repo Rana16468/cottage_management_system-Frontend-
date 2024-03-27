@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import MenuDashbord from "../BuyerDashboard/MenuDashbord";
 import { useQuery } from "@tanstack/react-query";
 import { Spin } from "antd";
@@ -6,13 +6,22 @@ import ErrorPage from "../../error/ErrorPage";
 import { FaPlusCircle } from "react-icons/fa";
 import { FaMinusCircle } from "react-icons/fa";
 import toast from "react-hot-toast";
+import AllDistrict from "../../../utils/AllDistrict";
+import { AuthContext } from "../../AuthProvider/AuthProvider";
+import {
+  ProductCalculation,
+  ProductCalculationLength,
+} from "../../reusable/ProductCalculation";
 
 const AddToCard = () => {
+  const {
+    user: { displayName, email },
+  } = useContext(AuthContext);
+
   const {
     data: MyAddToCard = [],
     error,
     isLoading,
-    refetch,
   } = useQuery({
     queryKey: ["MyAddToCard"],
     queryFn: async () => {
@@ -28,26 +37,26 @@ const AddToCard = () => {
       const data = await res.json();
       return data?.data;
     },
+    refetchInterval: 1000,
   });
 
-  console.log(MyAddToCard);
   const increment = (id, count) => {
-    AddToCount(id, count + 1);
+    AddToCount(id, count + 1, process.env.REACT_APP_increment);
   };
 
   // Function to handle decrement
   const decrement = (id, count) => {
-    AddToCount(id, count - 1);
+    AddToCount(id, count - 1, process.env.REACT_APP_decrement);
   };
 
-  const AddToCount = (id, count) => {
+  const AddToCount = (id, count, condition) => {
     fetch(`http://localhost:3013/api/v1/add_to_product_count/${id}`, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
         authorization: localStorage.getItem("token"),
       },
-      body: JSON.stringify({ count }),
+      body: JSON.stringify({ condition, count }),
     })
       .then((res) => {
         if (!res.ok) {
@@ -57,11 +66,34 @@ const AddToCard = () => {
       })
       .then((data) => {
         toast.success(data?.message);
-        refetch();
       })
       .catch((error) => {
         toast.error(error?.message);
       });
+  };
+
+  const handelDailvary = (event) => {
+    event.preventDefault();
+    const element = event.target;
+
+    const name = element.name.value;
+    const email = element.email.value;
+    const shippingCost = element.shippingCost.value;
+    const promocode = element.promocode.value;
+    const district = element.district.value;
+    const address = element.address.value;
+    /*promocode === process.env.REACT_APP_promocode
+      ? ProductCalculation(MyAddToCard, 0)
+      : ProductCalculation(MyAddToCard, 10);*/
+
+    console.log({
+      name,
+      email,
+      shippingCost,
+      promocode,
+      district,
+      address,
+    });
   };
 
   return (
@@ -80,7 +112,7 @@ const AddToCard = () => {
                       Shopping Cart
                     </h2>
                     <h2 className="font-manrope font-bold text-3xl leading-10 text-black">
-                      3 Items
+                      {MyAddToCard?.length}
                     </h2>
                   </div>
                   <div className="grid grid-cols-12 mt-8 max-md:hidden pb-6 border-b border-gray-200">
@@ -141,7 +173,7 @@ const AddToCard = () => {
                               type="number"
                               className="border-spacing-52 rounded border-gray-200 outline-none text-gray-900 font-semibold text-lg w-full max-w-[70px] min-w-[70px] placeholder:text-gray-900 py-[15px]  text-center bg-transparent"
                               readOnly
-                              defaultValue={v?.count}
+                              placeholder={v?.count}
                             />
                           </div>
                         </div>
@@ -180,13 +212,55 @@ const AddToCard = () => {
                   <div className="mt-8">
                     <div className="flex items-center justify-between pb-6">
                       <p className="font-normal text-lg leading-8 text-black">
-                        3 Items
+                        {ProductCalculationLength(MyAddToCard)}
                       </p>
                       <p className="font-medium text-lg leading-8 text-black">
-                        $480.00
+                        {ProductCalculation(MyAddToCard)}
                       </p>
                     </div>
-                    <form>
+                    <form onSubmit={handelDailvary}>
+                      {/* user name  */}
+                      <label className="flex items-center mb-1.5 text-gray-400 text-sm font-medium">
+                        User Name
+                      </label>
+                      <div className="flex pb-6">
+                        <div className="relative w-full">
+                          <div className=" absolute left-0 top-0 py-3 px-4">
+                            <span className="font-normal text-base text-gray-300">
+                              User Name
+                            </span>
+                          </div>
+                          <input
+                            type="text"
+                            name="name"
+                            className="block w-full h-11 pr-10 pl-36 min-[500px]:pl-52 py-2.5 text-base font-normal shadow-xs text-gray-900 bg-white border border-gray-300 rounded-lg placeholder-gray-400 focus:outline-gray-400"
+                            readOnly
+                            defaultValue={displayName}
+                            required
+                          />
+                        </div>
+                      </div>
+                      {/* email  */}
+                      <label className="flex items-center mb-1.5 text-gray-400 text-sm font-medium">
+                        Email Address
+                      </label>
+                      <div className="flex pb-6">
+                        <div className="relative w-full">
+                          <div className=" absolute left-0 top-0 py-3 px-4">
+                            <span className="font-normal text-base text-gray-300">
+                              User Email
+                            </span>
+                          </div>
+                          <input
+                            type="text"
+                            name="email"
+                            className="block w-full h-11 pr-10 pl-36 min-[500px]:pl-52 py-2.5 text-base font-normal shadow-xs text-gray-900 bg-white border border-gray-300 rounded-lg placeholder-gray-400 focus:outline-gray-400"
+                            readOnly
+                            defaultValue={email}
+                            required
+                          />
+                        </div>
+                      </div>
                       <label className="flex  items-center mb-1.5 text-gray-600 text-sm font-medium">
                         Shipping
                       </label>
@@ -194,71 +268,18 @@ const AddToCard = () => {
                         <div className="relative w-full">
                           <div className=" absolute left-0 top-0 py-3 px-4">
                             <span className="font-normal text-base text-gray-300">
-                              Second Delivery
+                              ShippingCost
                             </span>
                           </div>
                           <input
                             type="text"
                             className="block w-full h-11 pr-10 pl-36 min-[500px]:pl-52 py-2.5 text-base font-normal shadow-xs text-gray-900 bg-white border border-gray-300 rounded-lg placeholder-gray-400 focus:outline-gray-400"
                             placeholder="$5.00"
+                            name="shippingCost"
+                            defaultValue={25}
+                            readOnly
+                            required
                           />
-                          <button
-                            id="dropdown-button"
-                            data-target="dropdown-delivery"
-                            className="dropdown-toggle flex-shrink-0 z-10 inline-flex items-center py-4 px-4 text-base font-medium text-center text-gray-900 bg-transparent  absolute right-0 top-0 pl-2 "
-                            type="button">
-                            <svg
-                              className="ml-2 my-auto"
-                              width="12"
-                              height="7"
-                              viewBox="0 0 12 7"
-                              fill="none"
-                              xmlns="http://www.w3.org/2000/svg">
-                              <path
-                                d="M1 1.5L4.58578 5.08578C5.25245 5.75245 5.58579 6.08579 6 6.08579C6.41421 6.08579 6.74755 5.75245 7.41421 5.08579L11 1.5"
-                                stroke="#6B7280"
-                                strokeWidth="1.5"
-                                strokeLinecap="round"
-                                strokeLinejoin="round"></path>
-                            </svg>
-                          </button>
-                          <div
-                            id="dropdown-delivery"
-                            aria-labelledby="dropdown-delivery"
-                            className="z-20 hidden  divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700 absolute top-10 bg-white right-0">
-                            <ul
-                              className="py-2 text-sm text-gray-700 dark:text-gray-200"
-                              aria-labelledby="dropdown-button">
-                              <li>
-                                <a
-                                  href="..."
-                                  className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
-                                  Shopping
-                                </a>
-                              </li>
-                              <li>
-                                <a
-                                  href="...."
-                                  className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
-                                  Images
-                                </a>
-                              </li>
-                              <li>
-                                <a
-                                  href="..."
-                                  className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
-                                  News
-                                </a>
-                              </li>
-                              <li>
-                                <a
-                                  href="..."
-                                  className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
-                                  Finance
-                                </a>
-                              </li>
-                            </ul>
-                          </div>
                         </div>
                       </div>
                       <label className="flex items-center mb-1.5 text-gray-400 text-sm font-medium">
@@ -270,83 +291,79 @@ const AddToCard = () => {
                           <input
                             type="text"
                             className="block w-full h-11 pr-11 pl-5 py-2.5 text-base font-normal shadow-xs text-gray-900 bg-white border border-gray-300 rounded-lg placeholder-gray-500 focus:outline-gray-400 "
+                            defaultValue={"orpa123"}
+                            name="promocode"
+                            required
+                          />
+                        </div>
+                      </div>
+
+                      <label className="flex items-center mb-1.5 text-gray-400 text-sm font-medium">
+                        District
+                      </label>
+                      <div className="flex pb-4 w-full">
+                        <div className="relative w-full ">
+                          <div className=" absolute left-0 top-0 py-2.5 px-4 text-gray-300"></div>
+                          <select
+                            name="district"
+                            required
+                            className="select select-bordered select-sm w-full h-11 pr-11 pl-5 py-2.5 text-base font-normal shadow-xs text-gray-900 bg-white border border-gray-300 rounded-lg placeholder-gray-500 focus:outline-gray-400">
+                            <option disabled>District Name</option>
+                            {AllDistrict?.map((v, index) => (
+                              <option value={v.district_name} key={index}>
+                                {v.district_name} | {v.bn_name}
+                              </option>
+                            ))}
+                          </select>
+                        </div>
+                      </div>
+                      <label className="flex items-center mb-1.5 text-gray-400 text-sm font-medium">
+                        Actual Address
+                      </label>
+                      <div className="flex pb-4 w-full">
+                        <div className="relative w-full ">
+                          <div className=" absolute left-0 top-0 py-2.5 px-4 text-gray-300"></div>
+                          <input
+                            type="text"
+                            name="address"
+                            required
+                            className="block w-full h-11 pr-11 pl-5 py-2.5 text-base font-normal shadow-xs text-gray-900 bg-white border border-gray-300 rounded-lg placeholder-gray-500 focus:outline-gray-400 "
                             placeholder="xxxx xxxx xxxx"
                           />
-                          <button
-                            id="dropdown-button"
-                            data-target="dropdown"
-                            className="dropdown-toggle flex-shrink-0 z-10 inline-flex items-center py-4 px-4 text-base font-medium text-center text-gray-900 bg-transparent  absolute right-0 top-0 pl-2 "
-                            type="button">
-                            <svg
-                              className="ml-2 my-auto"
-                              width="12"
-                              height="7"
-                              viewBox="0 0 12 7"
-                              fill="none"
-                              xmlns="http://www.w3.org/2000/svg">
-                              <path
-                                d="M1 1.5L4.58578 5.08578C5.25245 5.75245 5.58579 6.08579 6 6.08579C6.41421 6.08579 6.74755 5.75245 7.41421 5.08579L11 1.5"
-                                stroke="#6B7280"
-                                strokeWidth="1.5"
-                                strokeLinecap="round"
-                                strokeLinejoin="round"></path>
-                            </svg>
-                          </button>
-                          <div
-                            id="dropdown"
-                            className="absolute top-10 right-0 z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700">
-                            <ul
-                              className="py-2 text-sm text-gray-700 dark:text-gray-200"
-                              aria-labelledby="dropdown-button">
-                              <li>
-                                <a
-                                  href="...."
-                                  className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
-                                  Shopping
-                                </a>
-                              </li>
-                              <li>
-                                <a
-                                  href="....."
-                                  className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
-                                  Images
-                                </a>
-                              </li>
-                              <li>
-                                <a
-                                  href="...."
-                                  className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
-                                  News
-                                </a>
-                              </li>
-                              <li>
-                                <a
-                                  href="...."
-                                  className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
-                                  Finance
-                                </a>
-                              </li>
-                            </ul>
-                          </div>
                         </div>
                       </div>
                       <div className="flex items-center border-b border-gray-200">
-                        <button className="rounded-full w-full bg-black py-3 px-4 text-white text-sm font-semibold text-center mb-8 transition-all duration-500 hover:bg-black/80">
+                        <button
+                          type="submit"
+                          className="rounded-full w-full bg-black py-3 px-4 text-white text-sm font-semibold text-center mb-8 transition-all duration-500 hover:bg-black/80">
                           Apply
                         </button>
                       </div>
-                      <div className="flex items-center justify-between py-8">
-                        <p className="font-medium text-xl leading-8 text-black">
-                          3 Items
-                        </p>
-                        <p className="font-semibold text-xl leading-8 text-indigo-600">
-                          $485.00
-                        </p>
-                      </div>
-                      <button className="w-full text-center bg-indigo-600 rounded-full py-4 px-6 font-semibold text-lg text-white transition-all duration-500 hover:bg-indigo-700">
-                        Checkout
-                      </button>
                     </form>
+
+                    <h1 className="text-xl font-serif text-center m-1">
+                      Total Payment Summay
+                    </h1>
+                    <div className="flex justify-between border-b border-gray-200">
+                      <p className="font-normal text-lg leading-8 text-gray-400">
+                        Total Product
+                      </p>
+                      <p className="font-normal text-lg leading-8 text-gray-400">
+                        Total Price
+                      </p>
+                    </div>
+                    <div className="flex items-center justify-between py-8">
+                      <p className="font-medium text-xl leading-8 text-black">
+                        {ProductCalculationLength(MyAddToCard)}
+                      </p>
+                      <p className="font-semibold text-xl leading-8 text-indigo-600">
+                        {ProductCalculation(MyAddToCard) +
+                          25 * ProductCalculationLength(MyAddToCard)}
+                      </p>
+                    </div>
+                    <button className="w-full text-center bg-indigo-600 rounded-full py-4 px-6 font-semibold text-lg text-white transition-all duration-500 hover:bg-indigo-700">
+                      Checkout
+                    </button>
                   </div>
                 </div>
               </div>
