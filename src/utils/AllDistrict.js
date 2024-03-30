@@ -8,6 +8,7 @@ const AllDistrict = [
     lat: "23.4682747",
     lon: "91.1788135",
     url: "www.comilla.gov.bd",
+    delivery_charges: 180,
   },
   {
     id: "2",
@@ -18,6 +19,7 @@ const AllDistrict = [
     lat: "23.023231",
     lon: "91.3840844",
     url: "www.feni.gov.bd",
+    delivery_charges: 180,
   },
   {
     id: "3",
@@ -28,6 +30,7 @@ const AllDistrict = [
     lat: "23.9570904",
     lon: "91.1119286",
     url: "www.brahmanbaria.gov.bd",
+    delivery_charges: 180,
   },
   {
     id: "4",
@@ -38,6 +41,7 @@ const AllDistrict = [
     lat: "22.65561018",
     lon: "92.17541121",
     url: "www.rangamati.gov.bd",
+    delivery_charges: 180,
   },
   {
     id: "5",
@@ -48,6 +52,7 @@ const AllDistrict = [
     lat: "22.869563",
     lon: "91.099398",
     url: "www.noakhali.gov.bd",
+    delivery_charges: 180,
   },
   {
     id: "6",
@@ -58,6 +63,7 @@ const AllDistrict = [
     lat: "23.2332585",
     lon: "90.6712912",
     url: "www.chandpur.gov.bd",
+    delivery_charges: 180,
   },
   {
     id: "7",
@@ -68,6 +74,7 @@ const AllDistrict = [
     lat: "22.942477",
     lon: "90.841184",
     url: "www.lakshmipur.gov.bd",
+    delivery_charges: 180,
   },
   {
     id: "8",
@@ -78,6 +85,7 @@ const AllDistrict = [
     lat: "22.335109",
     lon: "91.834073",
     url: "www.chittagong.gov.bd",
+    delivery_charges: 180,
   },
   {
     id: "9",
@@ -88,6 +96,7 @@ const AllDistrict = [
     lat: "21.44315751",
     lon: "91.97381741",
     url: "www.coxsbazar.gov.bd",
+    delivery_charges: 180,
   },
   {
     id: "10",
@@ -98,6 +107,7 @@ const AllDistrict = [
     lat: "23.119285",
     lon: "91.984663",
     url: "www.khagrachhari.gov.bd",
+    delivery_charges: 180,
   },
   {
     id: "11",
@@ -108,6 +118,7 @@ const AllDistrict = [
     lat: "22.1953275",
     lon: "92.2183773",
     url: "www.bandarban.gov.bd",
+    delivery_charges: 180,
   },
   {
     id: "12",
@@ -118,6 +129,7 @@ const AllDistrict = [
     lat: "24.4533978",
     lon: "89.7006815",
     url: "www.sirajganj.gov.bd",
+    delivery_charges: 180,
   },
   {
     id: "13",
@@ -128,6 +140,7 @@ const AllDistrict = [
     lat: "23.998524",
     lon: "89.233645",
     url: "www.pabna.gov.bd",
+    delivery_charges: 180,
   },
   {
     id: "14",
@@ -138,6 +151,7 @@ const AllDistrict = [
     lat: "24.8465228",
     lon: "89.377755",
     url: "www.bogra.gov.bd",
+    delivery_charges: 180,
   },
   {
     id: "15",
@@ -148,6 +162,7 @@ const AllDistrict = [
     lat: "24.37230298",
     lon: "88.56307623",
     url: "www.rajshahi.gov.bd",
+    delivery_charges: 180,
   },
   {
     id: "16",
@@ -158,6 +173,7 @@ const AllDistrict = [
     lat: "24.420556",
     lon: "89.000282",
     url: "www.natore.gov.bd",
+    delivery_charges: 180,
   },
   {
     id: "17",
@@ -168,6 +184,7 @@ const AllDistrict = [
     lat: "25.09636876",
     lon: "89.04004280",
     url: "www.joypurhat.gov.bd",
+    delivery_charges: 180,
   },
   {
     id: "18",
@@ -178,6 +195,7 @@ const AllDistrict = [
     lat: "24.5965034",
     lon: "88.2775122",
     url: "www.chapainawabganj.gov.bd",
+    delivery_charges: 180,
   },
   {
     id: "19",
@@ -188,6 +206,7 @@ const AllDistrict = [
     lat: "24.83256191",
     lon: "88.92485205",
     url: "www.naogaon.gov.bd",
+    delivery_charges: 180,
   },
   {
     id: "20",
@@ -198,6 +217,7 @@ const AllDistrict = [
     lat: "23.16643",
     lon: "89.2081126",
     url: "www.jessore.gov.bd",
+    delivery_charges: 180,
   },
   {
     id: "22",
@@ -208,6 +228,7 @@ const AllDistrict = [
     lat: "23.762213",
     lon: "88.631821",
     url: "www.meherpur.gov.bd",
+    delivery_charges: 180,
   },
   {
     id: "23",
@@ -218,6 +239,7 @@ const AllDistrict = [
     lat: "23.172534",
     lon: "89.512672",
     url: "www.narail.gov.bd",
+    delivery_charges: 180,
   },
   {
     id: "24",
@@ -228,6 +250,7 @@ const AllDistrict = [
     lat: "23.6401961",
     lon: "88.841841",
     url: "www.chuadanga.gov.bd",
+    delivery_charges: 180,
   },
   {
     id: "25",
@@ -238,6 +261,7 @@ const AllDistrict = [
     lat: "23.901258",
     lon: "89.120482",
     url: "www.kushtia.gov.bd",
+    delivery_charges: 180,
   },
   {
     id: "26",
@@ -248,6 +272,7 @@ const AllDistrict = [
     lat: "23.487337",
     lon: "89.419956",
     url: "www.magura.gov.bd",
+    delivery_charges: 180,
   },
   {
     id: "27",
@@ -258,6 +283,7 @@ const AllDistrict = [
     lat: "22.815774",
     lon: "89.568679",
     url: "www.khulna.gov.bd",
+    delivery_charges: 180,
   },
   {
     id: "28",
@@ -268,6 +294,7 @@ const AllDistrict = [
     lat: "22.651568",
     lon: "89.785938",
     url: "www.bagerhat.gov.bd",
+    delivery_charges: 180,
   },
   {
     id: "29",
@@ -278,6 +305,7 @@ const AllDistrict = [
     lat: "23.5448176",
     lon: "89.1539213",
     url: "www.jhenaidah.gov.bd",
+    delivery_charges: 180,
   },
   {
     id: "30",
@@ -288,6 +316,7 @@ const AllDistrict = [
     lat: "22.6422689",
     lon: "90.2003932",
     url: "www.jhalakathi.gov.bd",
+    delivery_charges: 180,
   },
   {
     id: "31",
@@ -298,6 +327,7 @@ const AllDistrict = [
     lat: "22.3596316",
     lon: "90.3298712",
     url: "www.patuakhali.gov.bd",
+    delivery_charges: 180,
   },
   {
     id: "32",
@@ -308,6 +338,7 @@ const AllDistrict = [
     lat: "22.5781398",
     lon: "89.9983909",
     url: "www.pirojpur.gov.bd",
+    delivery_charges: 180,
   },
   {
     id: "33",
@@ -318,6 +349,7 @@ const AllDistrict = [
     lat: "22.7004179",
     lon: "90.3731568",
     url: "www.barisal.gov.bd",
+    delivery_charges: 180,
   },
   {
     id: "34",
@@ -328,6 +360,7 @@ const AllDistrict = [
     lat: "22.685923",
     lon: "90.648179",
     url: "www.bhola.gov.bd",
+    delivery_charges: 180,
   },
   {
     id: "35",
@@ -338,6 +371,7 @@ const AllDistrict = [
     lat: "22.159182",
     lon: "90.125581",
     url: "www.barguna.gov.bd",
+    delivery_charges: 180,
   },
   {
     id: "36",
@@ -348,6 +382,7 @@ const AllDistrict = [
     lat: "24.8897956",
     lon: "91.8697894",
     url: "www.sylhet.gov.bd",
+    delivery_charges: 180,
   },
   {
     id: "37",
@@ -358,6 +393,7 @@ const AllDistrict = [
     lat: "24.482934",
     lon: "91.777417",
     url: "www.moulvibazar.gov.bd",
+    delivery_charges: 180,
   },
   {
     id: "38",
@@ -368,6 +404,7 @@ const AllDistrict = [
     lat: "24.374945",
     lon: "91.41553",
     url: "www.habiganj.gov.bd",
+    delivery_charges: 180,
   },
   {
     id: "39",
@@ -378,6 +415,7 @@ const AllDistrict = [
     lat: "25.0658042",
     lon: "91.3950115",
     url: "www.sunamganj.gov.bd",
+    delivery_charges: 180,
   },
   {
     id: "40",
@@ -388,6 +426,7 @@ const AllDistrict = [
     lat: "23.932233",
     lon: "90.71541",
     url: "www.narsingdi.gov.bd",
+    delivery_charges: 180,
   },
   {
     id: "41",
@@ -398,6 +437,7 @@ const AllDistrict = [
     lat: "24.0022858",
     lon: "90.4264283",
     url: "www.gazipur.gov.bd",
+    delivery_charges: 180,
   },
   {
     id: "42",
@@ -408,6 +448,7 @@ const AllDistrict = [
     lat: "23.2060195",
     lon: "90.3477725",
     url: "www.shariatpur.gov.bd",
+    delivery_charges: 180,
   },
   {
     id: "43",
@@ -418,6 +459,7 @@ const AllDistrict = [
     lat: "23.63366",
     lon: "90.496482",
     url: "www.narayanganj.gov.bd",
+    delivery_charges: 180,
   },
   {
     id: "44",
@@ -428,6 +470,7 @@ const AllDistrict = [
     lat: "24.264145",
     lon: "89.918029",
     url: "www.tangail.gov.bd",
+    delivery_charges: 180,
   },
   {
     id: "45",
@@ -438,6 +481,7 @@ const AllDistrict = [
     lat: "24.444937",
     lon: "90.776575",
     url: "www.kishoreganj.gov.bd",
+    delivery_charges: 180,
   },
   {
     id: "46",
@@ -448,6 +492,7 @@ const AllDistrict = [
     lat: "23.8602262",
     lon: "90.0018293",
     url: "www.manikganj.gov.bd",
+    delivery_charges: 180,
   },
   {
     id: "47",
@@ -458,6 +503,7 @@ const AllDistrict = [
     lat: "23.7115253",
     lon: "90.4111451",
     url: "www.dhaka.gov.bd",
+    delivery_charges: 180,
   },
   {
     id: "48",
@@ -468,6 +514,7 @@ const AllDistrict = [
     lat: "23.5435742",
     lon: "90.5354327",
     url: "www.munshiganj.gov.bd",
+    delivery_charges: 180,
   },
   {
     id: "49",
@@ -478,6 +525,7 @@ const AllDistrict = [
     lat: "23.7574305",
     lon: "89.6444665",
     url: "www.rajbari.gov.bd",
+    delivery_charges: 180,
   },
   {
     id: "50",
@@ -488,6 +536,7 @@ const AllDistrict = [
     lat: "23.164102",
     lon: "90.1896805",
     url: "www.madaripur.gov.bd",
+    delivery_charges: 180,
   },
   {
     id: "51",
@@ -498,6 +547,7 @@ const AllDistrict = [
     lat: "23.0050857",
     lon: "89.8266059",
     url: "www.gopalganj.gov.bd",
+    delivery_charges: 180,
   },
   {
     id: "52",
@@ -508,6 +558,7 @@ const AllDistrict = [
     lat: "23.6070822",
     lon: "89.8429406",
     url: "www.faridpur.gov.bd",
+    delivery_charges: 180,
   },
   {
     id: "53",
@@ -518,6 +569,7 @@ const AllDistrict = [
     lat: "26.3411",
     lon: "88.5541606",
     url: "www.panchagarh.gov.bd",
+    delivery_charges: 180,
   },
   {
     id: "54",
@@ -528,6 +580,7 @@ const AllDistrict = [
     lat: "25.6217061",
     lon: "88.6354504",
     url: "www.dinajpur.gov.bd",
+    delivery_charges: 180,
   },
   {
     id: "55",
@@ -538,6 +591,7 @@ const AllDistrict = [
     lat: "25.9165451",
     lon: "89.4532409",
     url: "www.lalmonirhat.gov.bd",
+    delivery_charges: 180,
   },
   {
     id: "56",
@@ -548,6 +602,7 @@ const AllDistrict = [
     lat: "25.931794",
     lon: "88.856006",
     url: "www.nilphamari.gov.bd",
+    delivery_charges: 180,
   },
   {
     id: "57",
@@ -558,6 +613,7 @@ const AllDistrict = [
     lat: "25.328751",
     lon: "89.528088",
     url: "www.gaibandha.gov.bd",
+    delivery_charges: 180,
   },
   {
     id: "58",
@@ -568,6 +624,7 @@ const AllDistrict = [
     lat: "26.0336945",
     lon: "88.4616834",
     url: "www.thakurgaon.gov.bd",
+    delivery_charges: 180,
   },
   {
     id: "59",
@@ -578,6 +635,7 @@ const AllDistrict = [
     lat: "25.7558096",
     lon: "89.244462",
     url: "www.rangpur.gov.bd",
+    delivery_charges: 180,
   },
   {
     id: "60",
@@ -588,6 +646,7 @@ const AllDistrict = [
     lat: "25.805445",
     lon: "89.636174",
     url: "www.kurigram.gov.bd",
+    delivery_charges: 180,
   },
   {
     id: "61",
@@ -598,6 +657,7 @@ const AllDistrict = [
     lat: "25.0204933",
     lon: "90.0152966",
     url: "www.sherpur.gov.bd",
+    delivery_charges: 180,
   },
   {
     id: "62",
@@ -608,6 +668,7 @@ const AllDistrict = [
     lat: "24.7471492",
     lon: "90.4202739",
     url: "www.mymensingh.gov.bd",
+    delivery_charges: 180,
   },
   {
     id: "63",
@@ -618,6 +679,7 @@ const AllDistrict = [
     lat: "24.937533",
     lon: "89.937775",
     url: "www.jamalpur.gov.bd",
+    delivery_charges: 180,
   },
   {
     id: "64",
@@ -628,6 +690,7 @@ const AllDistrict = [
     lat: "24.870955",
     lon: "90.727887",
     url: "www.netrokona.gov.bd",
+    delivery_charges: 180,
   },
   {
     id: "65",
@@ -638,6 +701,7 @@ const AllDistrict = [
     lat: "23.2060195",
     lon: "90.3477725",
     url: "www.shariatpur.gov.bd",
+    delivery_charges: 180,
   },
   {
     id: "66",
@@ -648,6 +712,7 @@ const AllDistrict = [
     lat: "23.164102",
     lon: "90.1896805",
     url: "www.madaripur.gov.bd",
+    delivery_charges: 180,
   },
   {
     id: "67",
@@ -658,6 +723,7 @@ const AllDistrict = [
     lat: "23.7574305",
     lon: "89.6444665",
     url: "www.rajbari.gov.bd",
+    delivery_charges: 180,
   },
   {
     id: "68",
@@ -668,6 +734,7 @@ const AllDistrict = [
     lat: "23.0050857",
     lon: "89.8266059",
     url: "www.gopalganj.gov.bd",
+    delivery_charges: 180,
   },
   {
     id: "69",
@@ -678,6 +745,7 @@ const AllDistrict = [
     lat: "23.6070822",
     lon: "89.8429406",
     url: "www.faridpur.gov.bd",
+    delivery_charges: 180,
   },
 ];
 

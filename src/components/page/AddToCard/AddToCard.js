@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import MenuDashbord from "../BuyerDashboard/MenuDashbord";
 import { useQuery } from "@tanstack/react-query";
 import { Spin } from "antd";
@@ -12,16 +12,22 @@ import {
   ProductCalculation,
   ProductCalculationLength,
 } from "../../reusable/ProductCalculation";
+import { TiDeleteOutline } from "react-icons/ti";
+import Swal from "sweetalert2";
+import TimeCalculation from "../../../utils/TimeCalculation";
 
 const AddToCard = () => {
   const {
     user: { displayName, email },
   } = useContext(AuthContext);
 
+  const [totalDeliveryCost, setTotalDeliveryCost] = useState(0);
+
   const {
     data: MyAddToCard = [],
     error,
     isLoading,
+    refetch,
   } = useQuery({
     queryKey: ["MyAddToCard"],
     queryFn: async () => {
@@ -78,21 +84,76 @@ const AddToCard = () => {
 
     const name = element.name.value;
     const email = element.email.value;
-    const shippingCost = element.shippingCost.value;
-    const promocode = element.promocode.value;
-    const district = element.district.value;
+    const shippingCost = Number(element.shippingCost.value);
+    const date = element.date.value;
+    const districtAnddelivery = element.district.value;
+    const district = districtAnddelivery.split("-")[0];
+    const delivery = Number(districtAnddelivery.split("-")[1]);
     const address = element.address.value;
-    /*promocode === process.env.REACT_APP_promocode
-      ? ProductCalculation(MyAddToCard, 0)
-      : ProductCalculation(MyAddToCard, 10);*/
-
-    console.log({
+    const totalproduct = ProductCalculationLength(MyAddToCard);
+    const shippingTex = shippingCost * totalproduct;
+    const deliveryTotalCost = totalproduct * delivery;
+    const actualamount = ProductCalculation(MyAddToCard);
+    const payableAmount = actualamount + shippingTex + deliveryTotalCost;
+    setTotalDeliveryCost(deliveryTotalCost);
+    const orderSummery = {
       name,
       email,
       shippingCost,
-      promocode,
+      date,
       district,
       address,
+      delivery,
+      actualamount,
+      totalproduct,
+      shippingTex,
+      deliveryTotalCost,
+      payableAmount,
+
+      status: "online",
+    };
+
+    console.log(orderSummery);
+  };
+
+  const handelDeleteItem = (id, count, email) => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        Swal.fire({
+          title: "Deleted!",
+          text: "Your file has been deleted.",
+          icon: "success",
+        });
+        fetch(`http://localhost:3013/api/v1/delete_add_to_cardItem/${id}`, {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+            authorization: localStorage.getItem("token"),
+          },
+          body: JSON.stringify({ count, email }),
+        })
+          .then((res) => {
+            if (!res.ok) {
+              throw new Error("API ERROR");
+            }
+            return res.json();
+          })
+          .then((data) => {
+            toast.success(data.message);
+            refetch();
+          })
+          .catch((error) => {
+            toast.error(error?.message);
+          });
+      }
     });
   };
 
@@ -152,21 +213,30 @@ const AddToCard = () => {
                             <h6 className="font-normal text-base leading-7 text-gray-500">
                               #Product Name: {v?.name}
                             </h6>
-                            <h6 className="font-semibold text-base leading-7 text-indigo-600">
-                              #price:{v?.price}
-                            </h6>
+                            <div className="flex justify-around">
+                              <h6 className="font-semibold text-base leading-7 text-indigo-600">
+                                #price:{v?.price}
+                              </h6>
+                              <button
+                                onClick={() =>
+                                  handelDeleteItem(v?._id, v?.count, v?.email)
+                                }
+                                className="ml-3 btn btn-outline btn-error btn-xs">
+                                <TiDeleteOutline className="text-xl" />
+                              </button>
+                            </div>
                           </div>
                         </div>
                         <div className="flex items-center max-[500px]:justify-center h-full max-md:mt-3">
                           <div className="flex items-center h-full">
                             <button
                               onClick={() => increment(v?._id, v?.count)}
-                              className="group rounded-l-full px-5 py-[18px] border border-gray-200 flex items-center justify-center shadow-sm shadow-transparent transition-all duration-500 hover:bg-gray-50 hover:border-gray-300 hover:shadow-gray-300 focus-within:outline-gray-300">
+                              className="group rounded-l-full px-5 py-[10px] border border-gray-200 flex items-center justify-center shadow-sm shadow-transparent transition-all duration-500 hover:bg-green-500 hover:border-gray-300 hover:shadow-gray-300 focus-within:outline-gray-300">
                               <FaPlusCircle className="text-2xl" />
                             </button>
                             <button
                               onClick={() => decrement(v?._id, v?.count)}
-                              className="group rounded-r-full px-5   py-[18px] border border-gray-200 flex items-center justify-center shadow-sm shadow-transparent transition-all duration-500 hover:bg-gray-50 hover:border-gray-300 hover:shadow-gray-300 focus-within:outline-gray-300">
+                              className="group rounded-r-full px-5   py-[10px] border border-gray-200 flex items-center justify-center shadow-sm shadow-transparent transition-all duration-500 hover:bg-red-500 hover:border-gray-300 hover:shadow-gray-300 focus-within:outline-gray-300">
                               <FaMinusCircle className="text-2xl" />
                             </button>
                             <input
@@ -262,13 +332,13 @@ const AddToCard = () => {
                         </div>
                       </div>
                       <label className="flex  items-center mb-1.5 text-gray-600 text-sm font-medium">
-                        Shipping
+                        Shipping & Tex
                       </label>
                       <div className="flex pb-6">
                         <div className="relative w-full">
                           <div className=" absolute left-0 top-0 py-3 px-4">
                             <span className="font-normal text-base text-gray-300">
-                              ShippingCost
+                              ShippingCost && Tex
                             </span>
                           </div>
                           <input
@@ -283,7 +353,7 @@ const AddToCard = () => {
                         </div>
                       </div>
                       <label className="flex items-center mb-1.5 text-gray-400 text-sm font-medium">
-                        Promo Code
+                        Order Date
                       </label>
                       <div className="flex pb-4 w-full">
                         <div className="relative w-full ">
@@ -291,15 +361,15 @@ const AddToCard = () => {
                           <input
                             type="text"
                             className="block w-full h-11 pr-11 pl-5 py-2.5 text-base font-normal shadow-xs text-gray-900 bg-white border border-gray-300 rounded-lg placeholder-gray-500 focus:outline-gray-400 "
-                            defaultValue={"orpa123"}
-                            name="promocode"
+                            defaultValue={TimeCalculation()}
+                            name="date"
                             required
                           />
                         </div>
                       </div>
 
                       <label className="flex items-center mb-1.5 text-gray-400 text-sm font-medium">
-                        District
+                        District | Delivery_charges
                       </label>
                       <div className="flex pb-4 w-full">
                         <div className="relative w-full ">
@@ -310,8 +380,11 @@ const AddToCard = () => {
                             className="select select-bordered select-sm w-full h-11 pr-11 pl-5 py-2.5 text-base font-normal shadow-xs text-gray-900 bg-white border border-gray-300 rounded-lg placeholder-gray-500 focus:outline-gray-400">
                             <option disabled>District Name</option>
                             {AllDistrict?.map((v, index) => (
-                              <option value={v.district_name} key={index}>
-                                {v.district_name} | {v.bn_name}
+                              <option
+                                value={`${v.district_name}-${v.delivery_charges}`}
+                                key={index}>
+                                {v.district_name} | {v.bn_name} - Delivery :{" "}
+                                {v.delivery_charges}
                               </option>
                             ))}
                           </select>
@@ -329,6 +402,45 @@ const AddToCard = () => {
                             required
                             className="block w-full h-11 pr-11 pl-5 py-2.5 text-base font-normal shadow-xs text-gray-900 bg-white border border-gray-300 rounded-lg placeholder-gray-500 focus:outline-gray-400 "
                             placeholder="xxxx xxxx xxxx"
+                          />
+                        </div>
+                      </div>
+                      {/* payment Currency */}
+                      <label className="flex items-center mb-1.5 text-gray-400 text-sm font-medium">
+                        Currency
+                      </label>
+                      <div className="flex pb-4 w-full">
+                        <div className="relative w-full ">
+                          <div className=" absolute left-0 top-0 py-2.5 px-4 text-gray-300"></div>
+                          <select
+                            name="currency"
+                            required
+                            className="select select-bordered select-sm w-full h-11 pr-11 pl-5 py-2.5 text-base font-normal shadow-xs text-gray-900 bg-white border border-gray-300 rounded-lg placeholder-gray-500 focus:outline-gray-400">
+                            <option disabled>Choose a Curreny</option>
+                            <option>BDT</option>
+                            <option>USD</option>
+                            <option>RMB</option>
+                            <option>Euro</option>
+                          </select>
+                        </div>
+                      </div>
+
+                      <label className="flex  items-center mb-1.5 text-gray-600 text-sm font-medium">
+                        Contruct Number
+                      </label>
+                      <div className="flex pb-6">
+                        <div className="relative w-full">
+                          <div className=" absolute left-0 top-0 py-3 px-4">
+                            <span className="font-normal text-base text-gray-300">
+                              Contruct Number
+                            </span>
+                          </div>
+                          <input
+                            type="number"
+                            className="block w-full h-11 pr-10 pl-36 min-[500px]:pl-52 py-2.5 text-base font-normal shadow-xs text-gray-900 bg-white border border-gray-300 rounded-lg placeholder-gray-400 focus:outline-gray-400"
+                            placeholder="018/017/019/015/016"
+                            name="number"
+                            required
                           />
                         </div>
                       </div>
@@ -358,12 +470,10 @@ const AddToCard = () => {
                       </p>
                       <p className="font-semibold text-xl leading-8 text-indigo-600">
                         {ProductCalculation(MyAddToCard) +
-                          25 * ProductCalculationLength(MyAddToCard)}
+                          25 * ProductCalculationLength(MyAddToCard) +
+                          totalDeliveryCost}
                       </p>
                     </div>
-                    <button className="w-full text-center bg-indigo-600 rounded-full py-4 px-6 font-semibold text-lg text-white transition-all duration-500 hover:bg-indigo-700">
-                      Checkout
-                    </button>
                   </div>
                 </div>
               </div>
