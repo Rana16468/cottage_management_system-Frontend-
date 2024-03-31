@@ -13,6 +13,8 @@ import AddToSubCategorie from "../components/page/SubCategorie/AddToSubCategorie
 import MySubCategorie from "../components/page/SubCategorie/MySubCategorie";
 import AddToDetails from "../components/page/AddToDetails/AddToDetails";
 import AddToCard from "../components/page/AddToCard/AddToCard";
+import PaymentSuccess from "../components/page/Payment/PaymentSuccess";
+import PaymentSummary from "../components/page/Payment/PaymentSummary";
 
 const router = createBrowserRouter([
   {
@@ -94,6 +96,22 @@ const router = createBrowserRouter([
         element: (
           <PrivateRouter>
             <AddToDetails />
+          </PrivateRouter>
+        ),
+      },
+      {
+        path: "/payment/success/:tranId",
+        element: (
+          <PrivateRouter>
+            <PaymentSuccess />
+          </PrivateRouter>
+        ),
+      },
+      {
+        path: "/payment/my_paymment_summery",
+        element: (
+          <PrivateRouter>
+            <PaymentSummary />
           </PrivateRouter>
         ),
       },

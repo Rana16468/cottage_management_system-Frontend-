@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-
+import { MdPayment } from "react-icons/md";
 import { Link } from "react-router-dom";
 import menuItems from "../../../utils/AppData";
 import AllCatagorie from "../../../utils/AllCatagorie";
@@ -112,6 +112,17 @@ const MenuDashbord = () => {
                   />
                 </svg>
                 Inbox
+              </Link>
+            </li>
+
+            <li className="mb-2 rounded hover:shadow hover:bg-gray-800">
+              <Link
+                to="/payment/my_paymment_summery"
+                className="inline-block w-full h-full px-3 py-2 font-bold text-white">
+                <div className="flex m-1">
+                  <MdPayment className="text-xl" />
+                  Payment Summery
+                </div>
               </Link>
             </li>
 

@@ -75,7 +75,7 @@ const AddToSubCategorie = () => {
           }
         })
         .catch((error) => {
-          console.log(error?.message);
+          toast.error(error?.message);
         });
     } else {
       toast.error("png,jpg,jpeg accespted Onter Types Not Accespted");

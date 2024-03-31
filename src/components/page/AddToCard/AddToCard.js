@@ -15,6 +15,8 @@ import {
 import { TiDeleteOutline } from "react-icons/ti";
 import Swal from "sweetalert2";
 import TimeCalculation from "../../../utils/TimeCalculation";
+import { FaAmazonPay } from "react-icons/fa6";
+import { Link } from "react-router-dom";
 
 const AddToCard = () => {
   const {
@@ -84,6 +86,8 @@ const AddToCard = () => {
 
     const name = element.name.value;
     const email = element.email.value;
+    const currency = element.currency.value;
+    const number = element.number.value;
     const shippingCost = Number(element.shippingCost.value);
     const date = element.date.value;
     const districtAnddelivery = element.district.value;
@@ -99,6 +103,8 @@ const AddToCard = () => {
     const orderSummery = {
       name,
       email,
+      currency,
+      number,
       shippingCost,
       date,
       district,
@@ -109,11 +115,32 @@ const AddToCard = () => {
       shippingTex,
       deliveryTotalCost,
       payableAmount,
-
-      status: "online",
     };
 
-    console.log(orderSummery);
+    if (orderSummery.actualamount > 0) {
+      fetch("http://localhost:3013/api/v1/order", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          authorization: localStorage.getItem("token"),
+        },
+        body: JSON.stringify(orderSummery),
+      })
+        .then((res) => {
+          if (!res.ok) {
+            throw new Error("API ERROR");
+          }
+          return res.json();
+        })
+        .then((data) => {
+          window.open(data?.url, "_blank");
+        })
+        .catch((error) => {
+          toast.error(error?.message);
+        });
+    } else {
+      toast.error("Add Your Product Quentity");
+    }
   };
 
   const handelDeleteItem = (id, count, email) => {
@@ -447,8 +474,8 @@ const AddToCard = () => {
                       <div className="flex items-center border-b border-gray-200">
                         <button
                           type="submit"
-                          className="rounded-full w-full bg-black py-3 px-4 text-white text-sm font-semibold text-center mb-8 transition-all duration-500 hover:bg-black/80">
-                          Apply
+                          className="btn btn-outline  bg-blue-100  btn-primary w-full btn-sm">
+                          Pay Now <FaAmazonPay className="text-xl" />
                         </button>
                       </div>
                     </form>
@@ -473,6 +500,10 @@ const AddToCard = () => {
                           25 * ProductCalculationLength(MyAddToCard) +
                           totalDeliveryCost}
                       </p>
+                      <Link to="/payment">
+                        {" "}
+                        <button>Payment Success</button>
+                      </Link>
                     </div>
                   </div>
                 </div>
