@@ -1,7 +1,7 @@
 import toast from "react-hot-toast";
 
 export const AddToCard = (addToProduct) => {
-  const { brandName, name, photo, price, _id } = addToProduct || {};
+  const { brandName, name, photo, price } = addToProduct || {};
 
   fetch("http://localhost:3013/api/v1/addToCard_Product", {
     method: "POST",
@@ -9,7 +9,13 @@ export const AddToCard = (addToProduct) => {
       "Content-Type": "application/json",
       authorization: localStorage.getItem("token"),
     },
-    body: JSON.stringify({ brandName, name, photo, price, _id }),
+    body: JSON.stringify({
+      brandName,
+      name,
+      photo,
+      price,
+      id: addToProduct?._id,
+    }),
   })
     .then((res) => {
       if (!res.ok) {

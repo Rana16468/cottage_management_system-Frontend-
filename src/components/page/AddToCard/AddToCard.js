@@ -115,6 +115,7 @@ const AddToCard = () => {
       shippingTex,
       deliveryTotalCost,
       payableAmount,
+      productId: MyAddToCard?.filter((v) => v?.count >= 1).map((v) => v?._id),
     };
 
     if (orderSummery.actualamount > 0) {
@@ -143,7 +144,7 @@ const AddToCard = () => {
     }
   };
 
-  const handelDeleteItem = (id, count, email) => {
+  const handelDeleteItem = (id, count, email, subcategorieId) => {
     Swal.fire({
       title: "Are you sure?",
       text: "You won't be able to revert this!",
@@ -165,7 +166,7 @@ const AddToCard = () => {
             "Content-Type": "application/json",
             authorization: localStorage.getItem("token"),
           },
-          body: JSON.stringify({ count, email }),
+          body: JSON.stringify({ count, email, subcategorieId }),
         })
           .then((res) => {
             if (!res.ok) {
@@ -246,7 +247,12 @@ const AddToCard = () => {
                               </h6>
                               <button
                                 onClick={() =>
-                                  handelDeleteItem(v?._id, v?.count, v?.email)
+                                  handelDeleteItem(
+                                    v?._id,
+                                    v?.count,
+                                    v?.email,
+                                    v?.subcategorieId
+                                  )
                                 }
                                 className="ml-3 btn btn-outline btn-error btn-xs">
                                 <TiDeleteOutline className="text-xl" />
