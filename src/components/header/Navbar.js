@@ -70,7 +70,7 @@ const Navbar = () => {
   const buyerAccountHolder = user?.photoURL === "buyer" && (
     <>
       <li>
-        <a href="...">NEW ARRIVALS</a>
+        <Link>NEW ARRIVALS</Link>
       </li>
       <li>
         <a href="....">GIFTS</a>

@@ -15,6 +15,7 @@ import AddToDetails from "../components/page/AddToDetails/AddToDetails";
 import AddToCard from "../components/page/AddToCard/AddToCard";
 import PaymentSuccess from "../components/page/Payment/PaymentSuccess";
 import PaymentSummary from "../components/page/Payment/PaymentSummary";
+import PaymentFailed from "../components/page/Payment/PaymentFailed";
 
 const router = createBrowserRouter([
   {
@@ -104,6 +105,14 @@ const router = createBrowserRouter([
         element: (
           <PrivateRouter>
             <PaymentSuccess />
+          </PrivateRouter>
+        ),
+      },
+      {
+        path: "/payment/fail/:tranId",
+        element: (
+          <PrivateRouter>
+            <PaymentFailed />
           </PrivateRouter>
         ),
       },

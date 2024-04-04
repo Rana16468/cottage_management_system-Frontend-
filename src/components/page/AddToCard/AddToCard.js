@@ -263,12 +263,16 @@ const AddToCard = () => {
                         <div className="flex items-center max-[500px]:justify-center h-full max-md:mt-3">
                           <div className="flex items-center h-full">
                             <button
-                              onClick={() => increment(v?._id, v?.count)}
+                              onClick={() =>
+                                increment(v?.subcategorieId, v?.count)
+                              }
                               className="group rounded-l-full px-5 py-[10px] border border-gray-200 flex items-center justify-center shadow-sm shadow-transparent transition-all duration-500 hover:bg-green-500 hover:border-gray-300 hover:shadow-gray-300 focus-within:outline-gray-300">
                               <FaPlusCircle className="text-2xl" />
                             </button>
                             <button
-                              onClick={() => decrement(v?._id, v?.count)}
+                              onClick={() =>
+                                decrement(v?.subcategorieId, v?.count)
+                              }
                               className="group rounded-r-full px-5   py-[10px] border border-gray-200 flex items-center justify-center shadow-sm shadow-transparent transition-all duration-500 hover:bg-red-500 hover:border-gray-300 hover:shadow-gray-300 focus-within:outline-gray-300">
                               <FaMinusCircle className="text-2xl" />
                             </button>

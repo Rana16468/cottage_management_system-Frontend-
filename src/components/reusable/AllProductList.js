@@ -12,10 +12,12 @@ import { GoCodeReview } from "react-icons/go";
 import { MdOutlineShoppingCart } from "react-icons/md";
 import { BiDetail } from "react-icons/bi";
 import { AddToCard } from "./AddToCard";
+import ReviewModal from "../CottageModal/ReviewModal";
 
 const AllProductList = ({ isLoading, error, categoricalProduct }) => {
   const { user } = useContext(AuthContext);
   const [specificSubCategorie, setSpecificSubCategorie] = useState({});
+  const [subcategorieId, setSubCategorieId] = useState("");
 
   return (
     <>
@@ -116,9 +118,18 @@ const AllProductList = ({ isLoading, error, categoricalProduct }) => {
                       <button className="btn btn-outline btn-sm ">
                         <GiEternalLove className="text-xl text-red-500" />
                       </button>
-                      <button className="btn btn-outline btn-sm ">
+
+                      {/* review Section  */}
+
+                      <button
+                        className="btn btn-outline  btn-sm"
+                        onClick={() => {
+                          document.getElementById("review_modal").showModal();
+                          setSubCategorieId(v?._id);
+                        }}>
                         <GoCodeReview className="text-xl text-pink-500" />
                       </button>
+                      <ReviewModal subcategorieId={subcategorieId} />
                     </>
                   )}
                   {/* You can open the modal using document.getElementById('ID').showModal() method */}
