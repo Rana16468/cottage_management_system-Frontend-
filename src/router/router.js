@@ -16,6 +16,8 @@ import AddToCard from "../components/page/AddToCard/AddToCard";
 import PaymentSuccess from "../components/page/Payment/PaymentSuccess";
 import PaymentSummary from "../components/page/Payment/PaymentSummary";
 import PaymentFailed from "../components/page/Payment/PaymentFailed";
+import AllProducts from "../components/page/Products/AllProducts";
+import BamboChane from "../components/page/Products/BamboChane";
 
 const router = createBrowserRouter([
   {
@@ -40,6 +42,14 @@ const router = createBrowserRouter([
         element: (
           <PrivateRouter>
             <Dashboard />
+          </PrivateRouter>
+        ),
+      },
+      {
+        path: "/all_produts",
+        element: (
+          <PrivateRouter>
+            <AllProducts />
           </PrivateRouter>
         ),
       },
@@ -121,6 +131,14 @@ const router = createBrowserRouter([
         element: (
           <PrivateRouter>
             <PaymentSummary />
+          </PrivateRouter>
+        ),
+      },
+      {
+        path: "/all_product_categories/:id",
+        element: (
+          <PrivateRouter>
+            <BamboChane />
           </PrivateRouter>
         ),
       },

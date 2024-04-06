@@ -70,7 +70,7 @@ const Navbar = () => {
   const buyerAccountHolder = user?.photoURL === "buyer" && (
     <>
       <li>
-        <Link>NEW ARRIVALS</Link>
+        <Link to="/all_produts">Products</Link>
       </li>
       <li>
         <a href="....">GIFTS</a>
@@ -94,6 +94,9 @@ const Navbar = () => {
   );
   const sellerAccountHolder = user?.photoURL === "seller" && (
     <>
+      <li>
+        <Link to="/all_produts">Products</Link>
+      </li>
       <li>
         <a href="...">AI</a>
       </li>
@@ -206,9 +209,16 @@ const Navbar = () => {
             <GiRoyalLove className="text-xl" />
           </a>
 
-          <Link className="btn btn-outline btn-sm m-3" to="/add_to_card">
-            <GiShoppingCart className="text-xl" />
-          </Link>
+          {user?.photoURL === "buyer" ? (
+            <Link className="btn btn-outline btn-sm m-3" to="/add_to_card">
+              <GiShoppingCart className="text-xl" />
+            </Link>
+          ) : (
+            <button disabled={true} className="btn btn-outline btn-sm m-3">
+              <GiShoppingCart className="text-xl" />
+            </button>
+          )}
+
           <label className="swap swap-rotate">
             {/* this hidden checkbox controls the state */}
 

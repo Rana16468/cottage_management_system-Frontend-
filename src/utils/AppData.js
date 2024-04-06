@@ -1,3 +1,6 @@
+import { Link } from "react-router-dom";
+import CategoriesName from "./CategoriesName";
+
 const menuItems = [
   // {
   //   title: "EXPORE",
@@ -12,8 +15,10 @@ const menuItems = [
     title: "MEN",
     subItems: [
       {
-        catagoties: "New & Featured",
-        items: ["Lifestyle", "Jordan", "AirMax", "Best Sellers"],
+        catagoties: "Cottage & Categorie",
+        items: CategoriesName?.map((v) => (
+          <Link to={`/all_product_categories/${v.id}`}>{v.categorieName}</Link>
+        )),
       },
       {
         catagoties: "All Clothing",
