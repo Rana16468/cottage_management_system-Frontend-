@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import CategoriesName from "./CategoriesName";
+import { allPotterySubCategorie } from "./AllSubCategorieName";
 
 const menuItems = [
   // {
@@ -12,7 +13,7 @@ const menuItems = [
   //   ],
   // },
   {
-    title: "MEN",
+    title: "Product Categories",
     subItems: [
       {
         catagoties: "Cottage & Categorie",
@@ -20,65 +21,16 @@ const menuItems = [
           <Link to={`/all_product_categories/${v.id}`}>{v.categorieName}</Link>
         )),
       },
-      {
-        catagoties: "All Clothing",
-        items: [
-          "Jordan",
-          "Big&Tall",
-          "Basketball",
-          "Fitness",
-          "Cricket",
-          "Football",
-        ],
-      },
-      {
-        catagoties: "Shop by Sport",
-        items: [
-          "Golf",
-          "Soccer",
-          "BasketBall",
-          "Tennies",
-          "Baseball",
-          "Football",
-          "Volleyball",
-          "Yoga",
-        ],
-      },
     ],
   },
   {
-    title: "WOMEN",
-    subItems: [
-      {
-        catagoties: "New & Featured",
-        items: ["Shoes", "Clothing", "Accessories", "Featured"],
-      },
-      {
-        catagoties: "New & Featured",
-        items: ["Shoes", "Clothing", "Accessories", "Featured"],
-      },
-      {
-        catagoties: "New & Featured",
-        items: ["Shoes", "Clothing", "Accessories", "Featured"],
-      },
-    ],
-  },
-  {
-    title: "KID",
-    subItems: [
-      {
-        catagoties: "Clothing",
-        items: ["Shoes", "Clothing", "Accessories", "Featured"],
-      },
-      {
-        catagoties: "Shoes",
-        items: ["Shoes", "Clothing", "Accessories", "Featured"],
-      },
-      {
-        catagoties: "Feature",
-        items: ["Shoes", "Clothing", "Accessories", "Featured"],
-      },
-    ],
+    title: "Product SubCategorie",
+    subItems: allPotterySubCategorie.map((v) => {
+      return {
+        catagoties: v.subCategorieName,
+        items: v.subCategorie,
+      };
+    }),
   },
 ];
 export default menuItems;

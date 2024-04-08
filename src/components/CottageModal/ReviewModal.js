@@ -19,11 +19,11 @@ const ReviewModal = ({ subcategorieId }) => {
   const url = `http://localhost:3013/api/v1/review_product/${subcategorieId}`;
 
   const {
-    data: AllReview = [],
+    data: AllReviews = [],
     isLoading,
     refetch,
   } = useQuery({
-    queryKey: ["AllReview", subcategorieId],
+    queryKey: ["AllReviews", subcategorieId],
     queryFn: async () => {
       try {
         const res = await fetch(url, {
@@ -115,7 +115,7 @@ const ReviewModal = ({ subcategorieId }) => {
           <div className="  flex justify-center">
             <div className="form-control">
               <div name="message" className="textarea textarea-success">
-                {AllReview?.map((v, index) => (
+                {AllReviews?.map((v, index) => (
                   <div key={index} className="chat chat-end">
                     {v?.email === email && (
                       <div className="flex justify-start">

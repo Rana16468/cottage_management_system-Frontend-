@@ -170,19 +170,23 @@ const MenuDashbord = () => {
                     {v.title}
                   </summary>
                   <ul>
-                    {v?.subItems?.map((v, index) => (
-                      <li key={index}>
+                    {v?.subItems?.map((sub, subIndex) => (
+                      <li key={subIndex}>
                         <details open>
                           <summary className="mb-2 rounded bg-slate-50 hover:shadow hover:bg-white">
-                            {v?.catagoties}
+                            {sub.catagoties}
                           </summary>
                           <hr />
                           <ul>
-                            {v?.items?.map((v, index) => (
+                            {sub?.items?.map((v, index) => (
                               <li
                                 className="mb-2 rounded hover:shadow hover:bg-gray-800"
                                 key={index}>
-                                <Link className="inline-block w-full h-full px-3 py-2 font-bold text-white">
+                                <Link
+                                  to={`/all_sub_categories/${
+                                    subIndex + 1
+                                  }/${index}`}
+                                  className="inline-block w-full h-full px-3 py-2 font-bold text-white">
                                   {v}
                                 </Link>
                               </li>

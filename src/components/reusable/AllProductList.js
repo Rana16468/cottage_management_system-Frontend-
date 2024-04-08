@@ -13,7 +13,7 @@ import { MdOutlineShoppingCart } from "react-icons/md";
 import { BiDetail } from "react-icons/bi";
 import { AddToCard } from "./AddToCard";
 import ReviewModal from "../CottageModal/ReviewModal";
-
+import { Spin } from "antd";
 const AllProductList = ({ isLoading, error, categoricalProduct }) => {
   const { user } = useContext(AuthContext);
   const [specificSubCategorie, setSpecificSubCategorie] = useState({});
@@ -23,11 +23,7 @@ const AllProductList = ({ isLoading, error, categoricalProduct }) => {
     <>
       <div className="w-full px-4 py-2  lg:w-full">
         <div className="grid lg:grid-cols-3 md:grid-cols-3  gap-2 sm:grid-cols-1">
-          {isLoading && (
-            <div className="flex justify-center items-center">
-              <span className="loading loading-bars loading-lg"></span>
-            </div>
-          )}
+          {isLoading && <Spin />}
 
           {/* second card  */}
           {error && <ErrorPage />}
