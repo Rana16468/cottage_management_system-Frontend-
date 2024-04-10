@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import TrandingCarosel from "./TrandingCarosel";
 
+import TrandingCarosel from "./TrandingCarosel";
+import { FcPrevious } from "react-icons/fc";
+import { FcNext } from "react-icons/fc";
 const ADVTime = () => {
-  const navigate = useNavigate();
   const advertisements = [
     {
       title: "New Styles Added: 20% Off Select Styles",
@@ -32,6 +32,34 @@ const ADVTime = () => {
       clearInterval(interval);
     };
   }, [advertisements.length]);
+
+  const images = [
+    "https://pbs.twimg.com/media/FZElJbAacAEooz9.jpg",
+    "https://greener-business.com/wp-content/uploads/2023/04/What-Is-Cottage-Industry-1024x585.jpg",
+    "https://greener-business.com/wp-content/uploads/2023/04/Cottage-Industry-Examples-1024x585.jpg",
+    "https://assets.website-files.com/61554cf1696635e97e823d26/61c5fa8ed8e88c9649430a65_IMG_6793.PNG",
+  ];
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+
+  // Automatically change image every 3 seconds
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentImageIndex((index) => (index + 1) % images.length);
+    }, 3000);
+
+    return () => clearInterval(interval);
+  }, [images.length]);
+
+  const goToPrevious = () => {
+    setCurrentImageIndex((index) =>
+      index === 0 ? images.length - 1 : index - 1
+    );
+  };
+
+  const goToNext = () => {
+    setCurrentImageIndex((index) => (index + 1) % images.length);
+  };
+
   return (
     <>
       {/* Carousel */}
@@ -58,19 +86,30 @@ const ADVTime = () => {
           ))}
         </div>
       </div>
+      <div className="relative">
+        <img
+          src={images[currentImageIndex]}
+          alt={`Slide ${currentImageIndex + 1}`}
+          className="block mx-auto w-full"
+        />
 
-      <div className="h-1/2">
-        <div className="hero min-h-screen bg-[url('https://cdn.educba.com/academy/wp-content/uploads/2022/11/Small-Scale-Manufacturer-1.jpg')]">
+        <div className="absolute inset-0 flex items-center justify-between px-4">
           <button
-            onClick={() => navigate("/all_product")}
-            className=" mt-80  btn btn-outline  btn-md rounded-full bg-black  text-white">
-            Show Now
+            onClick={goToPrevious}
+            className="btn btn-outline btn-sm bg-blue-900">
+            <FcPrevious className="text-xl text-white" />
+          </button>
+          <button
+            onClick={goToNext}
+            className="btn btn-outline btn-sm bg-blue-900">
+            <FcNext className="text-xl text-white" />
           </button>
         </div>
       </div>
+
       <br />
 
-      <div className="grid lg:grid-cols-3 md:grid-cols-3 sm:grid-cols-1">
+      {/* <div className="grid lg:grid-cols-3 md:grid-cols-3 sm:grid-cols-1">
         <a href="...">
           <img
             className="w-full h-full object-cover"
@@ -92,7 +131,7 @@ const ADVTime = () => {
             alt=""
           />
         </a>
-      </div>
+      </div> */}
 
       <br />
       <TrandingCarosel />

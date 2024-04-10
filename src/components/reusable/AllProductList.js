@@ -14,6 +14,7 @@ import { BiDetail } from "react-icons/bi";
 import { AddToCard } from "./AddToCard";
 import ReviewModal from "../CottageModal/ReviewModal";
 import { Spin } from "antd";
+import { AddToWishList } from "./AddToWishList";
 const AllProductList = ({ isLoading, error, categoricalProduct }) => {
   const { user } = useContext(AuthContext);
   const [specificSubCategorie, setSpecificSubCategorie] = useState({});
@@ -111,7 +112,9 @@ const AllProductList = ({ isLoading, error, categoricalProduct }) => {
                         className="btn btn-outline btn-sm ">
                         Add to <MdOutlineShoppingCart className="text-xl" />
                       </button>
-                      <button className="btn btn-outline btn-sm ">
+                      <button
+                        onClick={() => AddToWishList(v)}
+                        className="btn btn-outline btn-sm ">
                         <GiEternalLove className="text-xl text-red-500" />
                       </button>
 

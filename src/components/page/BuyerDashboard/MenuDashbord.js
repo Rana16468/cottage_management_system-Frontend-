@@ -5,6 +5,7 @@ import menuItems from "../../../utils/AppData";
 import AllCatagorie from "../../../utils/AllCatagorie";
 import { AuthContext } from "../../AuthProvider/AuthProvider";
 import { MdOutlineChat } from "react-icons/md";
+import { GiRoyalLove } from "react-icons/gi";
 const MenuDashbord = () => {
   const { user } = useContext(AuthContext);
   return (
@@ -119,8 +120,8 @@ const MenuDashbord = () => {
               <Link
                 to="/payment/my_paymment_summery"
                 className="inline-block w-full h-full px-3 py-2 font-bold text-white">
-                <div className="flex m-1">
-                  <MdPayment className="text-xl" />
+                <div className="flex">
+                  <MdPayment className="text-xl mr-3" />
                   Payment Summery
                 </div>
               </Link>
@@ -132,6 +133,16 @@ const MenuDashbord = () => {
                 className="inline-block w-full h-full px-3 py-2 font-bold text-white">
                 <MdOutlineChat className="inline-block text-2xl" />
                 -Chat Bot
+              </Link>
+            </li>
+            <li className="mb-2 rounded hover:shadow hover:bg-gray-800">
+              <Link
+                to="/wish_list"
+                className="inline-block w-full h-full px-3 py-2 font-bold text-white">
+                <div className="flex">
+                  <GiRoyalLove className="text-xl bg-red-600 rounded mr-3" />
+                  Wish List
+                </div>
               </Link>
             </li>
             {/* add To product List */}

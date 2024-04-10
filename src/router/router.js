@@ -19,6 +19,7 @@ import PaymentFailed from "../components/page/Payment/PaymentFailed";
 import AllProducts from "../components/page/Products/AllProducts";
 import BamboChane from "../components/page/Products/BamboChane";
 import AllSubCategorieProduct from "../components/page/Products/AllSubCategorieProduct";
+import WishList from "../components/page/WishList/WishList";
 
 const router = createBrowserRouter([
   {
@@ -148,6 +149,14 @@ const router = createBrowserRouter([
         element: (
           <PrivateRouter>
             <AllSubCategorieProduct />
+          </PrivateRouter>
+        ),
+      },
+      {
+        path: "/wish_list",
+        element: (
+          <PrivateRouter>
+            <WishList />
           </PrivateRouter>
         ),
       },

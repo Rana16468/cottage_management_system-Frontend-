@@ -205,9 +205,11 @@ const Navbar = () => {
           </ul>
         </div>
         <div className="navbar-end">
-          <a href="..." className="btn btn-outline bg-red-600 btn-sm m-3">
+          <Link
+            to="/wish_list"
+            className="btn btn-outline bg-red-600 btn-sm m-3">
             <GiRoyalLove className="text-xl" />
-          </a>
+          </Link>
 
           {user?.photoURL === "buyer" ? (
             <Link className="btn btn-outline btn-sm m-3" to="/add_to_card">

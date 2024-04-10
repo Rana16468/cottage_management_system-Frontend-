@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 
 import toast from "react-hot-toast";
 import { Link, useNavigate } from "react-router-dom";
+import Home from "./Home";
 
 const TrandingCarosel = () => {
   const [allProduct, setAllProduct] = useState([]);
@@ -41,6 +42,8 @@ const TrandingCarosel = () => {
   return (
     <>
       <br />
+
+      <Home />
 
       {isLoading && <h1>loading</h1>}
       {isError && <h1>error</h1>}
