@@ -8,6 +8,7 @@ import Swal from "sweetalert2";
 import { useForm } from "react-hook-form";
 import CategoriesName from "../../../utils/CategoriesName";
 import { Link } from "react-router-dom";
+import { TypeOfImage } from "../../../utils/ExtentionType";
 
 const SellerCategorie = () => {
   // pagination
@@ -67,6 +68,40 @@ const SellerCategorie = () => {
           })
           .catch((error) => {
             console.log(error?.message);
+          });
+      } else if (result.isDenied) {
+        Swal.fire("Changes are not saved", "", "info");
+      }
+    });
+  };
+
+  const handelDeleteProductCatagorie = (id) => {
+    Swal.fire({
+      title: "Do you want to save the changes?",
+      showDenyButton: true,
+      showCancelButton: true,
+      confirmButtonText: "Delete",
+      denyButtonText: `Don't Delete`,
+    }).then((result) => {
+      /* Read more about isConfirmed, isDenied below */
+      if (result.isConfirmed) {
+        fetch(`http://localhost:3013/api/v1/delete_categorie_list/${id}`, {
+          method: "DELETE",
+          headers: {
+            authorization: localStorage.getItem("token"),
+          },
+        })
+          .then((res) => {
+            if (!res.ok) {
+              toast.error("API ERROR");
+            }
+            return res.json();
+          })
+          .then((data) => {
+            toast.success(data?.message);
+          })
+          .catch((error) => {
+            toast.error(error?.message);
           });
       } else if (result.isDenied) {
         Swal.fire("Changes are not saved", "", "info");
@@ -178,10 +213,12 @@ const SellerCategorie = () => {
           {
             title: "Delete",
             key: "x",
-            render: () => {
+            render: (item) => {
               return (
                 <Space>
-                  <Button>Delete</Button>
+                  <Button onClick={() => handelDeleteProductCatagorie(item.id)}>
+                    Delete
+                  </Button>
                 </Space>
               );
             },
@@ -190,7 +227,7 @@ const SellerCategorie = () => {
             title: "Update Image",
             key: "x",
             render: (item) => {
-              return <UpdateProductModal item={item} />;
+              return <UpdateProductModal item={item} refetch={refetch} />;
             },
           },
         ];
@@ -363,13 +400,66 @@ const UpdateModal = ({ item, refetch }) => {
   );
 };
 
-const UpdateProductModal = ({ item }) => {
+const UpdateProductModal = ({ item, refetch }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const { handleSubmit, register } = useForm();
 
-  const onSubmit = (updatedata) => {
-    console.log(updatedata);
+  const onSubmit = (data) => {
+    // start the work
+
+    let image = data.photo[0];
+
+    if (TypeOfImage.includes(image?.name?.split(".")?.pop()?.toLowerCase())) {
+      const image = data.photo[0];
+      const formData = new FormData();
+      formData.append("image", image);
+      const url = `https://api.imgbb.com/1/upload?key=${process.env.REACT_APP_IMAGE_KEY}`;
+      fetch(url, {
+        method: "POST",
+        body: formData,
+      })
+        .then((res) => {
+          if (!res?.ok) {
+            throw new Error("API ERROR");
+          }
+          return res.json();
+        })
+        .then((imgData) => {
+          if (imgData?.success) {
+            const photo = imgData?.data?.url;
+            // fatching
+            fetch(
+              `http://localhost:3013/api/v1/update_productList_images/${item.id}`,
+              {
+                method: "PATCH",
+                headers: {
+                  "Content-Type": "application/json",
+                  authorization: localStorage.getItem("token"),
+                },
+                body: JSON.stringify({ photo }),
+              }
+            )
+              .then((res) => {
+                if (!res.ok) {
+                  throw new Error("API ERROR");
+                }
+                return res.json();
+              })
+              .then((data) => {
+                toast.success(data?.message);
+                refetch();
+              })
+              .catch((error) => {
+                toast.error(error?.message);
+              });
+          } else {
+            toast.error("Image BB Server Issues");
+          }
+        });
+    } else {
+      toast.error("png,jpg,jpeg accespted Onter Types Not Accespted");
+    }
   };
 
   const showModal = () => {
@@ -403,6 +493,11 @@ const UpdateProductModal = ({ item }) => {
             readOnly
             placeholder="title*"
           />
+          <div className="avatar">
+            <div className="w-full rounded">
+              <img src={item?.photo} alt="" />
+            </div>
+          </div>
           <input
             className="block w-full text-lg text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
             id="photo"
@@ -412,13 +507,12 @@ const UpdateProductModal = ({ item }) => {
               required: "'photo is required",
             })}
             type="file"
-            multiple
           />
 
           <Button
-            className="bg-blue-900 text-white btn btn-outline "
+            className="bg-blue-900 text-white btn btn-outline btn-sm "
             htmlType="submit">
-            Uodate
+            Update
           </Button>
         </form>
       </Modal>

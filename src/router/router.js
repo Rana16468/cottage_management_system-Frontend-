@@ -20,6 +20,8 @@ import AllProducts from "../components/page/Products/AllProducts";
 import BamboChane from "../components/page/Products/BamboChane";
 import AllSubCategorieProduct from "../components/page/Products/AllSubCategorieProduct";
 import WishList from "../components/page/WishList/WishList";
+import AdminDashboard from "../components/page/Dashboard/AdminDashboard";
+import Profile from "../components/Profile/Profile";
 
 const router = createBrowserRouter([
   {
@@ -160,7 +162,24 @@ const router = createBrowserRouter([
           </PrivateRouter>
         ),
       },
+      {
+        path: "/my_profile",
+        element: (
+          <PrivateRouter>
+            <Profile />
+          </PrivateRouter>
+        ),
+      },
     ],
+  },
+  {
+    path: "/dashboard",
+    element: (
+      <PrivateRouter>
+        <AdminDashboard />
+      </PrivateRouter>
+    ),
+    children: [{ path: "/dashboard", element: <div>Comming Soon</div> }],
   },
 ]);
 

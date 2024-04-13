@@ -1,9 +1,8 @@
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import MenuDashbord from "../BuyerDashboard/MenuDashbord";
 import toast from "react-hot-toast";
 import { useQuery } from "@tanstack/react-query";
 import { Link } from "react-router-dom";
-import { AuthContext } from "../../AuthProvider/AuthProvider";
 
 const AllProducts = () => {
   const [page, setPage] = useState(0);
@@ -11,7 +10,6 @@ const AllProducts = () => {
   const pages = Math.ceil(75 / size);
 
   const url = `http://localhost:3013/api/v1/all_product?page=${page}&limit=${size}`;
-  const { user } = useContext(AuthContext);
 
   const {
     data: allProduct = [],
@@ -86,66 +84,31 @@ const AllProducts = () => {
 
           {allProduct?.map((item, index) => (
             <div key={index}>
-              <div className="grid lg:grid-cols-3 md:grid-cols-2 gap-2 sm:grid-cols-1 m-3">
+              <div className="grid lg:grid-cols-5 md:grid-cols-3 gap-2 sm:grid-cols-1 m-3">
                 {item?.products?.map((v, index) => {
                   return (
                     <div
                       key={index}
                       className="w-full bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
-                      {item?.email === user?.email &&
-                        user?.photoURL === "seller" && (
-                          <>
-                            <Link
-                              to={`/buyer_dashboard/${item?.categorieId}/${v?.id}`}>
-                              <img
-                                className="w-full h-72 object-cover rounded"
-                                src={v?.photo}
-                                alt={v?.tittle}
-                              />
-                            </Link>
-                            <div className="p-5">
-                              <Link
-                                to={`/buyer_dashboard/${item?.categorieId}/${v?.id}`}>
-                                <h5 className="text-center mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
-                                  {v?.tittle}
-                                </h5>
-                              </Link>
-                              <Link
-                                to={`/buyer_dashboard/${item?.categorieId}/${v?.id}`}>
-                                <h5 className="text-center mb-2 text-xl font-serif tracking-tight text-gray-900 dark:text-white">
-                                  Categorie :{item?._id}
-                                </h5>
-                              </Link>
-                            </div>
-                          </>
-                        )}
-
-                      {user?.photoURL === "buyer" && (
-                        <>
-                          <Link
-                            to={`/buyer_dashboard/${item?.categorieId}/${v?.id}`}>
-                            <img
-                              className="w-full h-72 object-cover rounded"
-                              src={v?.photo}
-                              alt={v?.tittle}
-                            />
-                          </Link>
-                          <div className="p-5">
-                            <Link
-                              to={`/buyer_dashboard/${item?.categorieId}/${v?.id}`}>
-                              <h5 className="text-center mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
-                                {v?.tittle}
-                              </h5>
-                            </Link>
-                            <Link
-                              to={`/buyer_dashboard/${item?.categorieId}/${v?.id}`}>
-                              <h5 className="text-center mb-2 text-xl font-serif tracking-tight text-gray-900 dark:text-white">
-                                Categorie :{item?._id}
-                              </h5>
-                            </Link>
-                          </div>
-                        </>
-                      )}
+                      <Link to={`/buyer_dashboard/${item?._id}/${v?.id}`}>
+                        <img
+                          className="w-full h-72 object-cover rounded"
+                          src={v?.photo}
+                          alt={v?.tittle}
+                        />
+                      </Link>
+                      <div className="p-5">
+                        <Link to={`/buyer_dashboard/${item?._id}/${v?.id}`}>
+                          <h5 className="text-center mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+                            {v?.tittle}
+                          </h5>
+                        </Link>
+                        <Link to={`/buyer_dashboard/${item?._id}/${v?.id}`}>
+                          <h5 className="text-center mb-2 text-xl font-serif tracking-tight text-gray-900 dark:text-white">
+                            Categorie :{item?.categorieId}
+                          </h5>
+                        </Link>
+                      </div>
                     </div>
                   );
                 })}

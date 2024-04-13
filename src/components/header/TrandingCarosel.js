@@ -110,7 +110,7 @@ const TrandingCarosel = () => {
                 <div
                   key={index}
                   className="w-full bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
-                  <Link to={`/buyer_dashboard/${item?.categorieId}/${v?.id}`}>
+                  <Link to={`/buyer_dashboard/${item?._id}/${v?.id}`}>
                     <img
                       className="w-full h-72 object-cover rounded"
                       src={v?.photo}
@@ -118,14 +118,14 @@ const TrandingCarosel = () => {
                     />
                   </Link>
                   <div className="p-5">
-                    <Link to={`/buyer_dashboard/${item?.categorieId}/${v?.id}`}>
+                    <Link to={`/buyer_dashboard/${item?._id}/${v?.id}`}>
                       <h5 className="text-center mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
                         {v?.tittle}
                       </h5>
                     </Link>
-                    <Link to={`/buyer_dashboard/${item?.categorieId}/${v?.id}`}>
+                    <Link to={`/buyer_dashboard/${item?._id}/${v?.id}`}>
                       <h5 className="text-center mb-2 text-xl font-serif tracking-tight text-gray-900 dark:text-white">
-                        Categorie :{item?._id}
+                        Categorie :{item?.categorieId}
                       </h5>
                     </Link>
                   </div>

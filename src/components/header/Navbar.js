@@ -6,7 +6,8 @@ import { GiRoyalLove } from "react-icons/gi";
 import { GiShoppingCart } from "react-icons/gi";
 
 import { AuthContext } from "../AuthProvider/AuthProvider";
-
+import { GrUserAdmin } from "react-icons/gr";
+import { CgProfile } from "react-icons/cg";
 const Navbar = () => {
   const { user, logOut } = useContext(AuthContext);
 
@@ -45,6 +46,15 @@ const Navbar = () => {
           onClick={handelLogOut}
           className="block py-2 pl-3 pr-4 hover:bg-slate-300 btn-sm rounded-lg">
           LogOut <samp> | </samp>
+        </Link>
+      </li>
+      <li>
+        <Link
+          to="/my_profile"
+          className="block py-2 pl-3 pr-4 hover:bg-slate-300 btn-sm rounded-lg">
+          <div className="flex">
+            Profile <CgProfile className="text-xl ml-3" />
+          </div>
         </Link>
       </li>
     </>
@@ -110,6 +120,9 @@ const Navbar = () => {
         <Link>Company</Link>
       </li>
       <li>
+        <Link to="/dashboard">Admin</Link>
+      </li>
+      <li>
         <a href="....">Contract</a>
       </li>
       <li>
@@ -123,7 +136,7 @@ const Navbar = () => {
 
   return (
     <>
-      <nav className=" bg-gray-100 justify-between hidden lg:flex ">
+      <nav className=" bg-[#efb7d9] justify-between hidden lg:flex ">
         <div className="avatar">
           <div className="w-10 ml-2 rounded-full">
             <img src={logo1} alt="" />
@@ -159,7 +172,7 @@ const Navbar = () => {
         </ul>
       </nav>
 
-      <div className="navbar ">
+      <div className="navbar bg-[#ee42ac]">
         <div className="navbar-start">
           <div className="dropdown">
             <label tabIndex={0} className="btn btn-ghost lg:hidden">
@@ -241,6 +254,12 @@ const Navbar = () => {
               viewBox="0 0 24 24">
               <path d="M21.64,13a1,1,0,0,0-1.05-.14,8.05,8.05,0,0,1-3.37.73A8.15,8.15,0,0,1,9.08,5.49a8.59,8.59,0,0,1,.25-2A1,1,0,0,0,8,2.36,10.14,10.14,0,1,0,22,14.05,1,1,0,0,0,21.64,13Zm-9.5,6.69A8.14,8.14,0,0,1,7.08,5.22v.27A10.15,10.15,0,0,0,17.22,15.63a9.79,9.79,0,0,0,2.1-.22A8.11,8.11,0,0,1,12.14,19.73Z" />
             </svg>
+          </label>
+
+          <label
+            htmlFor="my-drawer-2"
+            className="text-green-700 hover:text-blue-900 border border-blue-700 hover:bg-blue-900 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-3 py-1.5 text-center mr-2 mb-2 dark:border-blue-400 dark:text-blue-400 dark:hover:text-blue-900 dark:hover:bg-blue-900 dark:focus:ring-purple-900 lg:hidden mt-2">
+            <GrUserAdmin className="text-xs text-white" />
           </label>
         </div>
       </div>
