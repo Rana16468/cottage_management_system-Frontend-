@@ -7,25 +7,24 @@ const AdminDashboard = () => {
   //const { user: { email } } = useSelector((state) => state.auth);
   //const { data } = useFind_by_isitAdminQuery(email, { refetchOnMountOrArgChange: true });
   const AdminAccessRouter = [
-    { name: "Admin Dashboard", path: "/dashboard/setting/dash_board" },
-    { name: "All Employeer", path: "/dashboard/setting/all_employeer_user" },
-    { name: "All Candidate", path: "/dashboard/setting/All_Candidate" },
-    { name: "NON ORG", path: "/dashboard/setting/all_Non_Org_data" },
-    { name: "Content JOB", path: "/dashboard/setting/all_content_jobdata" },
-    { name: "ORG JOB", path: "/dashboard/setting/all_Org_data" },
-    { name: "Device Details", path: "/dashboard/setting/all_device_info" },
-    { name: "Complain Box", path: "/contract" },
-    { name: "Complain List", path: "/dashboard/setting/complain_list" },
-    { name: "Translation", path: "/dashboard/translation" },
-    { name: "AI CHAT", path: "/dashboard/chatbot" },
-    { name: "Application", path: "/dashboard/image-generator" },
+    { name: "All User", path: "/dashboard/all_user" },
+    { name: "All Categorie", path: "/dashboard/all_product_categorie" },
+    { name: "Product Zone", path: "/dashboard/admin_product_zone" },
+    { name: "Reviews", path: "/dashboard/reviwes" },
+    { name: "Wish List", path: "/dashboard/wish_list" },
+    { name: "Add To Cards", path: "/dashboard/add_to_cards" },
+    { name: "All Payments", path: "/dashboard/payment_details" },
+    { name: "All Delivery Reports", path: "/dashboard/delivery_report" },
+    { name: "Payment Schedule", path: "/dashboard/paymentSchedule" },
+    { name: "Delivery Schedule", path: "/dashboard/setting/complain_list" },
+    { name: "Report", path: "/dashboard/translation" },
   ];
   return (
     <>
       <Navbar />
       <div className="drawer lg:drawer-open">
         <input id="my-drawer-2" type="checkbox" className="drawer-toggle" />
-        <div className="drawer-content flex flex-col items-center justify-center">
+        <div className="drawer-content ">
           {/* Page content here */}
           <Outlet />
         </div>
@@ -43,31 +42,7 @@ const AdminDashboard = () => {
               </Link>
               <h1 className="text-xl">Admin Panel</h1>
             </div>
-            <li className="m-1">
-              <Link className="btn btn-outline btn-sm text-white" to="">
-                Dashboard
-              </Link>
-            </li>
-            <li className="m-1">
-              <Link className="btn btn-outline btn-sm text-white" to="">
-                Dashboard
-              </Link>
-            </li>
-            <li className="m-1">
-              <Link className="btn btn-outline btn-sm text-white" to="">
-                Dashboard
-              </Link>
-            </li>
-            <li className="m-1">
-              <Link className="btn btn-outline btn-sm text-white" to="">
-                Dashboard
-              </Link>
-            </li>
-            <li className="m-1">
-              <Link className="btn btn-outline btn-sm text-white" to="">
-                Dashboard
-              </Link>
-            </li>
+
             <li className="m-1">
               <Link className="btn btn-outline btn-sm text-white" to="">
                 Dashboard

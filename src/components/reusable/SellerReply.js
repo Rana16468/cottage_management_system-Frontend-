@@ -161,7 +161,7 @@ const SellerReply = ({ detailsId }) => {
                             {new Date().toString().slice(16, 23)}
                           </time>
                         </div>
-                        <div className="chat-bubble text-white text-xl font-serif">
+                        <div className="chat-bubble max-w-full   text-white text-xl font-serif">
                           {chatMessage?.message}
 
                           <div className="gap-2 relative left-5">
@@ -221,13 +221,13 @@ const SellerReply = ({ detailsId }) => {
                           </div>
                           <form
                             onSubmit={replyMessage}
-                            className="chat-bubble w-full ">
+                            className="chat-bubble ">
                             <div className="flex justify-between">
                               <input
                                 type="text"
                                 name="replymessage"
                                 placeholder="Type here"
-                                className="input input-bordered input-info  w-full  text-black text-xl mr-3"
+                                className="input input-bordered input-info  max-w-full  text-black text-xl mr-3"
                               />
 
                               <button

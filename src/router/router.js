@@ -7,7 +7,6 @@ import Dashboard from "../components/page/BuyerDashboard/Dashboard";
 import PrivateRouter from "./PrivateRouter";
 import ProductDetails from "../components/page/BuyerDashboard/ProductDetails";
 import PotteryCategorie from "../components/page/Categories/PotteryCategorie";
-import SellerCategorie from "../components/page/Categories/SellerCategorie";
 import AddToProduct from "../components/page/Categories/AddToProduct";
 import AddToSubCategorie from "../components/page/SubCategorie/AddToSubCategorie";
 import MySubCategorie from "../components/page/SubCategorie/MySubCategorie";
@@ -22,6 +21,17 @@ import AllSubCategorieProduct from "../components/page/Products/AllSubCategorieP
 import WishList from "../components/page/WishList/WishList";
 import AdminDashboard from "../components/page/Dashboard/AdminDashboard";
 import Profile from "../components/Profile/Profile";
+import AdminHomePage from "../components/Admin/AdminHomePage";
+import AllUser from "../components/Admin/AllUser";
+import AllProductCategorie from "../components/Admin/AllProductCategorie";
+import AllUserProductZone from "../components/Admin/AllUserProductZone";
+import SellerCategorieApi from "../components/page/Categories/SellerCategorieApi";
+import AllReviwes from "../components/Admin/AllReviwes";
+import AllWishList from "../components/Admin/AllWishList";
+import AllAddToCard from "../components/Admin/AllAddToCard";
+import AllPaymentInfo from "../components/Admin/AllPaymentInfo";
+import AllDeliveryDetails from "../components/Admin/AllDeliveryDetails";
+import PaymentSchedule from "../components/Admin/PaymentSchedule";
 
 const router = createBrowserRouter([
   {
@@ -77,7 +87,7 @@ const router = createBrowserRouter([
         path: "/specific_seller_categorie",
         element: (
           <PrivateRouter>
-            <SellerCategorie />
+            <SellerCategorieApi />
           </PrivateRouter>
         ),
       },
@@ -179,7 +189,42 @@ const router = createBrowserRouter([
         <AdminDashboard />
       </PrivateRouter>
     ),
-    children: [{ path: "/dashboard", element: <div>Comming Soon</div> }],
+    children: [
+      { path: "/dashboard", element: <AdminHomePage /> },
+      { path: "/dashboard/all_user", element: <AllUser /> },
+      {
+        path: "/dashboard/all_product_categorie",
+        element: <AllProductCategorie />,
+      },
+      {
+        path: "/dashboard/admin_product_zone",
+        element: <AllUserProductZone />,
+      },
+      {
+        path: "/dashboard/reviwes",
+        element: <AllReviwes />,
+      },
+      {
+        path: "/dashboard/wish_list",
+        element: <AllWishList />,
+      },
+      {
+        path: "/dashboard/add_to_cards",
+        element: <AllAddToCard />,
+      },
+      {
+        path: "/dashboard/payment_details",
+        element: <AllPaymentInfo />,
+      },
+      {
+        path: "/dashboard/delivery_report",
+        element: <AllDeliveryDetails />,
+      },
+      {
+        path: "/dashboard/paymentSchedule",
+        element: <PaymentSchedule />,
+      },
+    ],
   },
 ]);
 
