@@ -58,6 +58,11 @@ const AllPaymentInfo = () => {
       key: "address",
     },
     {
+      title: "Number",
+      dataIndex: "number",
+      key: "number",
+    },
+    {
       title: "Delivery_Cost",
       dataIndex: "delivery",
       key: "delivery",

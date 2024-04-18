@@ -100,6 +100,9 @@ const Navbar = () => {
       <li>
         <a href="....">Kids</a>
       </li>
+      <li>
+        <Link to="/complean_box">Complain</Link>
+      </li>
     </>
   );
   const sellerAccountHolder = user?.photoURL === "seller" && (
@@ -130,6 +133,9 @@ const Navbar = () => {
       </li>
       <li>
         <a href="....">Kids</a>
+      </li>
+      <li>
+        <Link to="/complean_box">Complain</Link>
       </li>
     </>
   );

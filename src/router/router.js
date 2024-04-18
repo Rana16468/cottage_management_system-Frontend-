@@ -32,6 +32,8 @@ import AllAddToCard from "../components/Admin/AllAddToCard";
 import AllPaymentInfo from "../components/Admin/AllPaymentInfo";
 import AllDeliveryDetails from "../components/Admin/AllDeliveryDetails";
 import PaymentSchedule from "../components/Admin/PaymentSchedule";
+import DeliverySchedule from "../components/Admin/DeliverySchedule";
+import ComplenBox from "../components/page/ComplenBox/ComplenBox";
 
 const router = createBrowserRouter([
   {
@@ -180,6 +182,14 @@ const router = createBrowserRouter([
           </PrivateRouter>
         ),
       },
+      {
+        path: "/complean_box",
+        element: (
+          <PrivateRouter>
+            <ComplenBox />
+          </PrivateRouter>
+        ),
+      },
     ],
   },
   {
@@ -223,6 +233,10 @@ const router = createBrowserRouter([
       {
         path: "/dashboard/paymentSchedule",
         element: <PaymentSchedule />,
+      },
+      {
+        path: "/dashboard/delivery_schedule",
+        element: <DeliverySchedule />,
       },
     ],
   },
