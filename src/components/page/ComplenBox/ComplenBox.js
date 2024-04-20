@@ -1,32 +1,29 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
+import CommonContruct from "./CommonContruct";
+import { AuthContext } from "../../AuthProvider/AuthProvider";
+import SystemComplain from "./SystemComplain";
 
 const ComplenBox = () => {
-  // const information = {
-  //     email: user?.email,
-  //     role: user?.role,
-  //     photo: user?.photoURL,
-  //     date: new Date().toString(),
-  //     name: user?.displayName,
-
-  // }
+  const { user } = useContext(AuthContext);
+  const information = {
+    email: user?.email,
+    role: user?.photoURL,
+    name: user?.displayName,
+    date: new Date().toString(),
+  };
 
   const accordionItems = [
     {
-      title: ` Complaint Section`,
-      content: "",
+      title:
+        user?.photoURL === "seller"
+          ? "Seller Complain Section"
+          : "Buyer Complain Section",
+      content: <CommonContruct information={information} />,
     },
 
     {
       title: "System Complaint Section",
-      content: "",
-    },
-    {
-      title: "Application FOR Change Authority ( Candidate To Employeer )",
-      content: "",
-    },
-    {
-      title: "Application FOR Change Authority (Employeer To Candidate)",
-      content: "",
+      content: <SystemComplain information={information} />,
     },
   ];
 

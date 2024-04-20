@@ -218,6 +218,10 @@ const Navbar = () => {
             <li>
               <Link to="">Home</Link>
             </li>
+
+            <li>
+              <Link to="/industry_report">Industry Report</Link>
+            </li>
             {buyerAccountHolder}
             {sellerAccountHolder}
             <ul className="flex space-x-2"></ul>

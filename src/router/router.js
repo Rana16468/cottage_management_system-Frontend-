@@ -34,6 +34,7 @@ import AllDeliveryDetails from "../components/Admin/AllDeliveryDetails";
 import PaymentSchedule from "../components/Admin/PaymentSchedule";
 import DeliverySchedule from "../components/Admin/DeliverySchedule";
 import ComplenBox from "../components/page/ComplenBox/ComplenBox";
+import IndustryReport from "../components/page/IndustryReport/IndustryReport";
 
 const router = createBrowserRouter([
   {
@@ -44,6 +45,7 @@ const router = createBrowserRouter([
       { path: "/", element: <ADVTime /> },
       { path: "/register", element: <Register /> },
       { path: "/login", element: <Login /> },
+      { path: "/industry_report", element: <IndustryReport /> },
       {
         path: "/add_to_card",
         element: (
