@@ -1,5 +1,6 @@
 import React from "react";
 import { useForm } from "react-hook-form";
+import toast from "react-hot-toast";
 import { AiOutlineSend } from "react-icons/ai";
 const CommonContruct = ({ information }) => {
   const {
@@ -9,7 +10,26 @@ const CommonContruct = ({ information }) => {
     formState: { errors },
   } = useForm();
   const onSubmit = (data) => {
-    console.log(data);
+    fetch("http://localhost:3013/api/v1/report", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        authorization: localStorage.getItem("token"),
+      },
+      body: JSON.stringify(data),
+    })
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error("API ERROR");
+        }
+        return res.json();
+      })
+      .then((data) => {
+        toast.success(data?.message);
+      })
+      .catch((error) => {
+        toast.error(error?.message);
+      });
     reset();
   };
   return (
@@ -31,7 +51,7 @@ const CommonContruct = ({ information }) => {
               />
               {errors.date && <p role="alert">{errors?.date?.message}</p>}
               <label
-                for="date"
+                htmlFor="date"
                 className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
                 Apply Date
               </label>
@@ -49,7 +69,7 @@ const CommonContruct = ({ information }) => {
               />
               {errors.email && <p role="alert">{errors?.email?.message}</p>}
               <label
-                for="email"
+                htmlFor="email"
                 className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
                 Email Address
               </label>
@@ -69,7 +89,7 @@ const CommonContruct = ({ information }) => {
               />
               {errors.user && <p role="alert">{errors?.user?.message}</p>}
               <label
-                for="username"
+                htmlFor="username"
                 className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
                 User Name
               </label>
@@ -79,28 +99,6 @@ const CommonContruct = ({ information }) => {
           {information?.role === "seller" && (
             <>
               <div className="grid md:grid-cols-2 md:gap-6">
-                <div className="relative z-0 w-full mb-6 group">
-                  <div className="relative z-0 w-full mb-6 group">
-                    <input
-                      type="text"
-                      name="buyerName"
-                      id="buyerName"
-                      {...register("buyerName")}
-                      className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-black dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-                      placeholder=" "
-                      required
-                    />
-                    {errors.buyerName && (
-                      <p role="alert">{errors?.buyerName?.message}</p>
-                    )}
-                    <label
-                      for="Buyer Name"
-                      className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
-                      Buyer Name
-                    </label>
-                  </div>
-                </div>
-
                 <div className="relative z-0 w-full mb-6 group">
                   <input
                     type="email"
@@ -115,7 +113,7 @@ const CommonContruct = ({ information }) => {
                     <p role="alert">{errors?.buyerEmail?.message}</p>
                   )}
                   <label
-                    for="candidateemail"
+                    htmlFor="candidateemail"
                     className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
                     Buyer Email Address
                   </label>
@@ -124,7 +122,7 @@ const CommonContruct = ({ information }) => {
 
               <div className="relative z-0 w-full mb-6 group">
                 <label
-                  for="details"
+                  htmlFor="details"
                   className="block mb-2 text-sm font-medium text-gray-900 dark:text-black">
                   Complain Details
                 </label>
@@ -133,6 +131,7 @@ const CommonContruct = ({ information }) => {
                   {...register("details")}
                   rows="4"
                   maxLength={150}
+                  required
                   className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                   placeholder="Write your complain details here...(Maximun Length 150 Word)"></textarea>
                 {errors.details && (
@@ -147,7 +146,7 @@ const CommonContruct = ({ information }) => {
               <div className="grid md:grid-cols-2 md:gap-6">
                 <div className="relative z-0 w-full mb-6 group">
                   <input
-                    type="email"
+                    type="text"
                     name="transactionID"
                     id="transactionID"
                     {...register("transactionID")}
@@ -159,7 +158,7 @@ const CommonContruct = ({ information }) => {
                     <p role="alert">{errors?.transactionID?.message}</p>
                   )}
                   <label
-                    for="employeeremail"
+                    htmlFor="employeeremail"
                     className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
                     Transaction ID
                   </label>
@@ -179,7 +178,7 @@ const CommonContruct = ({ information }) => {
                     <p role="alert">{errors?.productId?.message}</p>
                   )}
                   <label
-                    for="Product Id"
+                    htmlFor="Product Id"
                     className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
                     Product Id
                   </label>
@@ -187,7 +186,7 @@ const CommonContruct = ({ information }) => {
 
                 <div className="relative z-0 w-full mb-6 group mt-2">
                   <label
-                    for="details"
+                    htmlFor="details"
                     className="block mb-2 text-sm font-medium text-gray-900 dark:text-black">
                     System Complain Details
                   </label>
@@ -195,6 +194,7 @@ const CommonContruct = ({ information }) => {
                     id="details"
                     {...register("details")}
                     maxLength={150}
+                    required
                     rows="4"
                     className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     placeholder="Write your System Complaint details here...(Maximun Length 150 Word)"></textarea>

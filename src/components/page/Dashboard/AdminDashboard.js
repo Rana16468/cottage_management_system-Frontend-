@@ -27,6 +27,8 @@ const AdminDashboard = () => {
     { name: "Payment Schedule", path: "/dashboard/paymentSchedule" },
     { name: "Delivery Schedule", path: "/dashboard/delivery_schedule" },
     { name: "Report", path: "/dashboard/translation" },
+    { name: "Forgot Password", path: "/forget_password" },
+    { name: "Reset Password", path: "/reset_password" },
   ];
   return (
     <>

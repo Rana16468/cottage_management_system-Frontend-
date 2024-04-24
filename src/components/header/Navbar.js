@@ -113,27 +113,14 @@ const Navbar = () => {
       <li>
         <a href="...">AI</a>
       </li>
-      <li>
-        <Link to="">Home</Link>
-      </li>
-      <li>
-        <a href="....">Service</a>
-      </li>
+
       <li onMouseOver={() => setClickbutton(!clickButton)}>
         <Link>Company</Link>
       </li>
       <li>
         <Link to="/dashboard">Admin</Link>
       </li>
-      <li>
-        <a href="....">Contract</a>
-      </li>
-      <li>
-        <a href="....">Help</a>
-      </li>
-      <li>
-        <a href="....">Kids</a>
-      </li>
+
       <li>
         <Link to="/complean_box">Complain</Link>
       </li>
@@ -216,12 +203,25 @@ const Navbar = () => {
         <div className="navbar-center hidden lg:flex">
           <ul className="menu menu-horizontal px-1">
             <li>
-              <Link to="">Home</Link>
+              <Link to="/">Home</Link>
             </li>
 
             <li>
               <Link to="/industry_report">Industry Report</Link>
             </li>
+            <li>
+              <Link to="/about">About</Link>
+            </li>
+            <li>
+              <Link to="/service">Service</Link>
+            </li>
+            <li>
+              <Link to="/blog">Blog</Link>
+            </li>
+            <li>
+              <Link to="/blog">Help</Link>
+            </li>
+
             {buyerAccountHolder}
             {sellerAccountHolder}
             <ul className="flex space-x-2"></ul>

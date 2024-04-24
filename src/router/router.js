@@ -35,6 +35,11 @@ import PaymentSchedule from "../components/Admin/PaymentSchedule";
 import DeliverySchedule from "../components/Admin/DeliverySchedule";
 import ComplenBox from "../components/page/ComplenBox/ComplenBox";
 import IndustryReport from "../components/page/IndustryReport/IndustryReport";
+import About from "../components/page/About/About";
+import Service from "../components/page/Services/Service";
+import Blog from "../components/page/Blog/Blog";
+import ResetPassword from "../components/page/ResetPassword/ResetPassword";
+import ForgotPassword from "../components/page/ForgotPassword/ForgotPassword";
 
 const router = createBrowserRouter([
   {
@@ -46,6 +51,34 @@ const router = createBrowserRouter([
       { path: "/register", element: <Register /> },
       { path: "/login", element: <Login /> },
       { path: "/industry_report", element: <IndustryReport /> },
+      {
+        path: "/about",
+        element: <About />,
+      },
+      {
+        path: "/service",
+        element: <Service />,
+      },
+      {
+        path: "/blog",
+        element: <Blog />,
+      },
+      {
+        path: "/reset_password",
+        element: (
+          <PrivateRouter>
+            <ResetPassword />
+          </PrivateRouter>
+        ),
+      },
+      {
+        path: "/forget_password",
+        element: (
+          <PrivateRouter>
+            <ForgotPassword />
+          </PrivateRouter>
+        ),
+      },
       {
         path: "/add_to_card",
         element: (

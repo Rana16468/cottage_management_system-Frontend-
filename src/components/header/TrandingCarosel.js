@@ -1,20 +1,17 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
+import { useQuery } from "@tanstack/react-query";
 
-import toast from "react-hot-toast";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import Home from "./Home";
+import { Spin } from "antd";
+import ErrorPage from "../error/ErrorPage";
 
 const TrandingCarosel = () => {
-  const [allProduct, setAllProduct] = useState([]);
-  const [isLoading, setLoading] = useState(true);
-  const [isError, setError] = useState("");
-  const navigate = useNavigate();
-  // pagination
   const [page, setPage] = useState(0);
   const [size, setSize] = useState(10);
   const pages = Math.ceil(75 / size);
 
-  useEffect(() => {
+  /*useEffect(() => {
     fetch(
       `http://localhost:3013/api/v1/all_product?page=${page}&limit=${size}`,
       {
@@ -37,7 +34,29 @@ const TrandingCarosel = () => {
       .catch((error) => {
         setError(error);
       });
-  }, [navigate, page, size]);
+  }, [navigate, page, size]);*/
+
+  const {
+    data: allProduct = [],
+    error,
+    isLoading,
+  } = useQuery({
+    queryKey: ["paymentSummery"],
+    queryFn: async () => {
+      const res = await fetch(
+        `http://localhost:3013/api/v1/all_product?page=${page}&limit=${size}`,
+        {
+          method: "GET",
+          headers: {
+            authorization: localStorage.getItem("token"),
+          },
+        }
+      );
+      const data = await res.json();
+      return data?.data;
+    },
+    refetchInterval: 1000,
+  });
 
   return (
     <>
@@ -45,8 +64,8 @@ const TrandingCarosel = () => {
 
       <Home />
 
-      {isLoading && <h1>loading</h1>}
-      {isError && <h1>error</h1>}
+      {isLoading && <Spin />}
+      {error && <ErrorPage />}
       <h1 className="mb-5 text-6xl font-serif text-black text-center">
         Tranding Product
       </h1>

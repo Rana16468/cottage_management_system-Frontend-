@@ -9,6 +9,10 @@ import {
   signInWithPopup,
   signOut,
   updateProfile,
+  updatePassword,
+  EmailAuthProvider,
+  reauthenticateWithCredential,
+  sendPasswordResetEmail,
 } from "firebase/auth";
 import app from "../../firebase/firebase.config";
 
@@ -39,6 +43,27 @@ const AuthProvider = ({ children }) => {
     return signInWithPopup(auth, GoogleProvider);
   };
 
+  const UpdatePassword = async (currentPassword, newPassword) => {
+    const user = auth.currentUser;
+    const credential = EmailAuthProvider.credential(
+      user.email,
+      currentPassword
+    );
+    const varification = await reauthenticateWithCredential(user, credential);
+
+    if (!varification?.user) {
+      throw new Error("Validation Error");
+    }
+
+    await updatePassword(user, newPassword);
+
+    return "Successfully Reset";
+  };
+
+  const ResetPassword = (email) => {
+    return sendPasswordResetEmail(auth, email);
+  };
+
   const logOut = () => {
     return signOut(auth);
   };
@@ -65,7 +90,9 @@ const AuthProvider = ({ children }) => {
     updateUserProfile,
     EmailVarification,
     googleLogin,
+    UpdatePassword,
     logOut,
+    ResetPassword,
   };
   return (
     <div>

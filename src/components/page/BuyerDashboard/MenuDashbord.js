@@ -6,6 +6,8 @@ import AllCatagorie from "../../../utils/AllCatagorie";
 import { AuthContext } from "../../AuthProvider/AuthProvider";
 import { MdOutlineChat } from "react-icons/md";
 import { GiRoyalLove } from "react-icons/gi";
+import { MdLockReset } from "react-icons/md";
+import { RiLockPasswordFill } from "react-icons/ri";
 const MenuDashbord = () => {
   const { user } = useContext(AuthContext);
   return (
@@ -142,6 +144,28 @@ const MenuDashbord = () => {
                 <div className="flex">
                   <GiRoyalLove className="text-xl bg-red-600 rounded mr-3" />
                   Wish List
+                </div>
+              </Link>
+            </li>
+
+            <li className="mb-2 rounded hover:shadow hover:bg-gray-800">
+              <Link
+                to="/reset_password"
+                className="inline-block w-full h-full px-3 py-2 font-bold text-white">
+                <div className="flex">
+                  <MdLockReset className="text-xl bg-blue-900 rounded mr-3" />
+                  Reset Password
+                </div>
+              </Link>
+            </li>
+
+            <li className="mb-2 rounded hover:shadow hover:bg-gray-800">
+              <Link
+                to="/forget_password"
+                className="inline-block w-full h-full px-3 py-2 font-bold text-white">
+                <div className="flex">
+                  <RiLockPasswordFill className="text-xl bg-blue-900 rounded mr-3" />
+                  Forget Password
                 </div>
               </Link>
             </li>

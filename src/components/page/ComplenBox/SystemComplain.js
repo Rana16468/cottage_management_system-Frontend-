@@ -1,6 +1,8 @@
 import React from "react";
 import { useForm } from "react-hook-form";
+import toast from "react-hot-toast";
 import { AiOutlineSend } from "react-icons/ai";
+
 const SystemComplain = ({ information }) => {
   const {
     handleSubmit,
@@ -29,7 +31,26 @@ const SystemComplain = ({ information }) => {
   ];
 
   const onSubmit = (data) => {
-    console.log(data);
+    fetch("http://localhost:3013/api/v1/report", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        authorization: localStorage.getItem("token"),
+      },
+      body: JSON.stringify(data),
+    })
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error("API ERROR");
+        }
+        return res.json();
+      })
+      .then((data) => {
+        toast.success(data?.message);
+      })
+      .catch((error) => {
+        toast.error(error?.message);
+      });
     reset();
   };
   return (
@@ -51,7 +72,7 @@ const SystemComplain = ({ information }) => {
               />
               {errors.date && <p role="alert">{errors?.date?.message}</p>}
               <label
-                for="date"
+                htmlFor="date"
                 className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
                 Apply Date
               </label>
@@ -69,7 +90,7 @@ const SystemComplain = ({ information }) => {
               />
               {errors.email && <p role="alert">{errors?.email?.message}</p>}
               <label
-                for="email"
+                htmlFor="email"
                 className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
                 Email Address
               </label>
@@ -125,6 +146,7 @@ const SystemComplain = ({ information }) => {
               {...register("details")}
               maxLength={150}
               rows="4"
+              required
               className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
               placeholder="Write your System Complaint details here...(Maximun Length 150 Word)"></textarea>
             {errors.details && <p role="alert">{errors?.details?.message}</p>}
@@ -132,7 +154,6 @@ const SystemComplain = ({ information }) => {
 
           <div className="flex justify-end">
             <button className="btn btn-outline btn-md">
-              {" "}
               <AiOutlineSend className=" text-sm"></AiOutlineSend> Submit System
               Complain
             </button>
