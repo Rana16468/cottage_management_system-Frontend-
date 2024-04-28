@@ -15,15 +15,18 @@ import EditChat from "../CottageModal/EditChat";
 import Swal from "sweetalert2";
 import SellerReply from "./SellerReply";
 import ChatBotValidateInput from "../../utils/ChatBotValidateInput";
+import useTitle from "../hook/useTitle";
 
 const ProductDetailsCard = ({ productDetails, refetch }) => {
   const { user } = useContext(AuthContext);
   const [editmessage, setEditMessage] = useState({});
   const [DetailsId, setDetailsId] = useState("");
   const { SubcategorieId } = useParams();
-  const { _id } = productDetails?.data?.find(
-    (v) => v.SubcategorieId === SubcategorieId
-  );
+  const { _id } =
+    productDetails?.data?.find((v) => v.SubcategorieId === SubcategorieId) ||
+    {};
+
+  useTitle("Producr Details");
 
   /*
 const product=[
@@ -312,7 +315,6 @@ const product=[
                                   </div>
 
                                   <div className="chat-header">
-                                    Buyer Message
                                     <time className="text-xs opacity-50 m-2">
                                       {new Date().toString().slice(16, 23)}
                                     </time>
@@ -427,7 +429,7 @@ const product=[
                             type="text"
                             name="textMessage"
                             placeholder="Type here"
-                            className="input input-bordered input-info w-full max-w-4xl text-black text-xl mr-3"
+                            className="input input-bordered input-info w-full max-w-full text-black text-xl mr-3"
                           />
 
                           <button

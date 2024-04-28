@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import { AuthContext } from "../../AuthProvider/AuthProvider";
+
 const Login = () => {
   const { signIn, googleLogin } = useContext(AuthContext);
   const [error, setError] = useState(null);
@@ -11,12 +12,16 @@ const Login = () => {
   const { handleSubmit, register, reset } = useForm();
   const location = useLocation();
   const navigate = useNavigate();
+
   const form = location.state?.from?.pathname || "/";
 
   const onSubmit = (data) => {
     signIn(data?.email, data?.password)
       .then(async (result) => {
         const user = await result?.user;
+
+        // validation checking
+        //user.emailVerified
         if (user) {
           try {
             const response = await fetch(
@@ -39,21 +44,22 @@ const Login = () => {
             const accessToken = data?.data;
             localStorage.setItem("token", accessToken);
             // Call your other function here
+            toast.success("Successfully Login");
+            const userInoformation = {
+              lastLogin: user?.metadata?.lastLoginAt,
+              lastSignInTime: user?.metadata?.lastSignInTime,
+            };
+            console.log(userInoformation);
+
+            setLogain(true);
+            setError("");
+            navigate(form, { replace: true });
           } catch (error) {
             console.error("Error fetching token:", error);
           }
+        } else {
+          console.log("Not Varified");
         }
-
-        toast.success("Successfully Login");
-        const userInoformation = {
-          lastLogin: user?.metadata?.lastLoginAt,
-          lastSignInTime: user?.metadata?.lastSignInTime,
-        };
-        console.log(userInoformation);
-
-        setLogain(true);
-        setError("");
-        navigate(form, { replace: true });
       })
       .catch((error) => {
         setError(error.message);

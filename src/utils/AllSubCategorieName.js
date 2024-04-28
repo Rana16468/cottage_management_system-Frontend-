@@ -195,13 +195,13 @@ export const allPotterySubCategorie = [
     subCategorie: [],
   },
   {
-    id: 25,
+    id: 24,
     subCategorieName: "Jute apparel",
     subCategorie: [],
   },
   //categories :Embroidered Quilts
   {
-    id: 26,
+    id: 25,
     subCategorieName: "Applique Quilts",
     subCategorie: [
       "Reverse Appliqu",
@@ -212,99 +212,99 @@ export const allPotterySubCategorie = [
     ],
   },
   {
-    id: 27,
+    id: 26,
     subCategorieName: "Crazy Quilts",
     subCategorie: [],
   },
   {
-    id: 28,
+    id: 27,
     subCategorieName: "Japanese Boro Stitching",
     subCategorie: [],
   },
   {
-    id: 29,
+    id: 28,
     subCategorieName: "Trapunto Quilts",
     subCategorie: [],
   },
   {
-    id: 30,
+    id: 29,
     subCategorieName: "Redwork Quilts",
     subCategorie: [],
   },
   {
-    id: 31,
+    id: 30,
     subCategorieName: "Shadow Quilting",
     subCategorie: [],
   },
   //categorie Cool Mat
   {
-    id: 32,
+    id: 31,
     subCategorieName: "Floral Motifs",
     subCategorie: [],
   },
   {
-    id: 33,
+    id: 32,
     subCategorieName: "Geometric Designs",
     subCategorie: [],
   },
   {
-    id: 34,
+    id: 33,
     subCategorieName: "Animal Motifs",
     subCategorie: [],
   },
   {
-    id: 35,
+    id: 34,
     subCategorieName: "Natural Color Mats",
     subCategorie: [],
   },
   {
-    id: 36,
+    id: 35,
     subCategorieName: "Dyed Mats",
     subCategorie: [],
   },
   // categorie : Oraments
   {
-    id: 37,
+    id: 36,
     subCategorieName: "Earring",
     subCategorie: [],
   },
   {
-    id: 38,
+    id: 37,
     subCategorieName: "Necklace",
     subCategorie: [],
   },
   {
-    id: 39,
+    id: 38,
     subCategorieName: "Bridal jewellery",
     subCategorie: [],
   },
   {
-    id: 40,
+    id: 39,
     subCategorieName: "Fashion jewelry",
     subCategorie: [],
   },
   {
-    id: 41,
+    id: 40,
     subCategorieName: "Rings",
     subCategorie: [],
   },
   {
-    id: 42,
+    id: 41,
     subCategorieName: "Bead jewellery",
     subCategorie: [],
   },
   {
-    id: 43,
+    id: 42,
     subCategorieName: "Bracelet",
     subCategorie: [],
   },
   {
-    id: 44,
+    id: 43,
     subCategorieName: "Filigree jewellery",
     subCategorie: [],
   },
   {
-    id: 45,
+    id: 44,
     subCategorieName: "Anklet",
     subCategorie: [],
   },

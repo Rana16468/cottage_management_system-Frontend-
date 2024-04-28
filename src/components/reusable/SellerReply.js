@@ -133,15 +133,15 @@ const SellerReply = ({ detailsId }) => {
     <>
       {isError && <ErrorPage />}
       <div className=" m-3 flex justify-center">
-        <div className="card">
-          <div className="card-body">
+        <div className="">
+          <div className="">
             <div className="form-control">
               <label className="label">
                 <span className="label-text text-xl">
                   Seller - Reaply Message
                 </span>
               </label>
-              <div name="message" className="textarea textarea-success">
+              <div name="message" className=" w-full textarea textarea-success">
                 {sellerReplyMessage?.map((chat, index) => (
                   <div key={index}>
                     {chat?.queries?.map((chatMessage, index) => (
@@ -221,13 +221,13 @@ const SellerReply = ({ detailsId }) => {
                           </div>
                           <form
                             onSubmit={replyMessage}
-                            className="chat-bubble ">
-                            <div className="flex justify-between">
+                            className=" chat-bubble w-full ">
+                            <div className="flex justify-around ">
                               <input
                                 type="text"
                                 name="replymessage"
                                 placeholder="Type here"
-                                className="input input-bordered input-info  max-w-full  text-black text-xl mr-3"
+                                className="  input input-bordered input-info w-full  text-black text-xl mr-3"
                               />
 
                               <button

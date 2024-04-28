@@ -42,7 +42,8 @@ const SellerCategorie = ({ productCategories, isLoading, error, refetch }) => {
             return res.json();
           })
           .then((data) => {
-            console.log(data);
+            toast.success(data?.message);
+            refetch();
           })
           .catch((error) => {
             console.log(error?.message);

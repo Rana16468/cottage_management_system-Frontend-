@@ -37,7 +37,7 @@ const SystemComplain = ({ information }) => {
         "Content-Type": "application/json",
         authorization: localStorage.getItem("token"),
       },
-      body: JSON.stringify(data),
+      body: JSON.stringify({ ...data, ...information }),
     })
       .then((res) => {
         if (!res.ok) {
@@ -63,7 +63,6 @@ const SystemComplain = ({ information }) => {
                 type="text"
                 name="date"
                 id="date"
-                {...register("date")}
                 defaultValue={information?.date}
                 readOnly
                 className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-black dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
@@ -101,7 +100,6 @@ const SystemComplain = ({ information }) => {
                 type="text"
                 name="username"
                 id="username"
-                {...register("username")}
                 defaultValue={information?.name}
                 readOnly
                 className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-black dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"

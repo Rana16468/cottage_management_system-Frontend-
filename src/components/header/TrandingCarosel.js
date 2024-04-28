@@ -41,7 +41,7 @@ const TrandingCarosel = () => {
     error,
     isLoading,
   } = useQuery({
-    queryKey: ["paymentSummery"],
+    queryKey: ["allProduct"],
     queryFn: async () => {
       const res = await fetch(
         `http://localhost:3013/api/v1/all_product?page=${page}&limit=${size}`,
@@ -53,9 +53,8 @@ const TrandingCarosel = () => {
         }
       );
       const data = await res.json();
-      return data?.data;
+      return data;
     },
-    refetchInterval: 1000,
   });
 
   return (
@@ -98,7 +97,7 @@ const TrandingCarosel = () => {
           <p>
             Current Page : {page + 1} and Size:{size}
           </p>
-          {[...Array(pages).keys()].map((number) => (
+          {[...Array(pages).keys()]?.map((number) => (
             <button
               className="mr-3 text-xl btn btn-outline btn-sm"
               key={number}
@@ -121,39 +120,40 @@ const TrandingCarosel = () => {
         </div>
       </div>
 
-      {allProduct?.map((item, index) => (
-        <div key={index}>
-          <div className="grid lg:grid-cols-5 md:grid-cols-3 gap-2 sm:grid-cols-1 m-3">
-            {item?.products?.map((v, index) => {
-              return (
-                <div
-                  key={index}
-                  className="w-full bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
-                  <Link to={`/buyer_dashboard/${item?._id}/${v?.id}`}>
-                    <img
-                      className="w-full h-72 object-cover rounded"
-                      src={v?.photo}
-                      alt={v?.tittle}
-                    />
-                  </Link>
-                  <div className="p-5">
+      {allProduct?.success &&
+        allProduct?.data?.map((item, index) => (
+          <div key={index}>
+            <div className="grid lg:grid-cols-5 md:grid-cols-3 gap-2 sm:grid-cols-1 m-3">
+              {item?.products?.map((v, index) => {
+                return (
+                  <div
+                    key={index}
+                    className="w-full bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
                     <Link to={`/buyer_dashboard/${item?._id}/${v?.id}`}>
-                      <h5 className="text-center mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
-                        {v?.tittle}
-                      </h5>
+                      <img
+                        className="w-full h-72 object-cover rounded"
+                        src={v?.photo}
+                        alt={v?.tittle}
+                      />
                     </Link>
-                    <Link to={`/buyer_dashboard/${item?._id}/${v?.id}`}>
-                      <h5 className="text-center mb-2 text-xl font-serif tracking-tight text-gray-900 dark:text-white">
-                        Categorie :{item?.categorieId}
-                      </h5>
-                    </Link>
+                    <div className="p-5">
+                      <Link to={`/buyer_dashboard/${item?._id}/${v?.id}`}>
+                        <h5 className="text-center mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+                          {v?.tittle}
+                        </h5>
+                      </Link>
+                      <Link to={`/buyer_dashboard/${item?._id}/${v?.id}`}>
+                        <h5 className="text-center mb-2 text-xl font-serif tracking-tight text-gray-900 dark:text-white">
+                          Categorie :{item?.categorieId}
+                        </h5>
+                      </Link>
+                    </div>
                   </div>
-                </div>
-              );
-            })}
+                );
+              })}
+            </div>
           </div>
-        </div>
-      ))}
+        ))}
 
       {/* <ProductCarasal items={items} product={allProduct} /> */}
     </>

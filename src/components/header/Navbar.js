@@ -82,24 +82,11 @@ const Navbar = () => {
       <li>
         <Link to="/all_produts">Products</Link>
       </li>
-      <li>
-        <a href="....">GIFTS</a>
-      </li>
-      <li>
-        <a href="....">COUTURE</a>
-      </li>
+
       <li onMouseOver={() => setClickbutton(!clickButton)}>
         <Link>Company</Link>
       </li>
-      <li>
-        <a href="....">Man</a>
-      </li>
-      <li>
-        <a href="....">Weman</a>
-      </li>
-      <li>
-        <a href="....">Kids</a>
-      </li>
+
       <li>
         <Link to="/complean_box">Complain</Link>
       </li>

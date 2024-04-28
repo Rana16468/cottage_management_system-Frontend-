@@ -15,10 +15,12 @@ import { AddToCard } from "./AddToCard";
 import ReviewModal from "../CottageModal/ReviewModal";
 import { Spin } from "antd";
 import { AddToWishList } from "./AddToWishList";
+import useTitle from "../hook/useTitle";
 const AllProductList = ({ isLoading, error, categoricalProduct }) => {
   const { user } = useContext(AuthContext);
   const [specificSubCategorie, setSpecificSubCategorie] = useState({});
   const [subcategorieId, setSubCategorieId] = useState("");
+  useTitle("All-Product-List");
 
   return (
     <>

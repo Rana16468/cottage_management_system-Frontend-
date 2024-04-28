@@ -64,7 +64,9 @@ const MenuDashbord = () => {
               </Link>
             </li>
             <li className="mb-2 bg-gray-800 rounded shadow">
-              <Link className="inline-block w-full h-full px-3 py-2 font-bold text-white">
+              <Link
+                to="/blog"
+                className="inline-block w-full h-full px-3 py-2 font-bold text-white">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   className="inline-block w-6 h-6 mr-2 -mt-2"
@@ -120,33 +122,37 @@ const MenuDashbord = () => {
 
             <li className="mb-2 rounded hover:shadow hover:bg-gray-800">
               <Link
-                to="/payment/my_paymment_summery"
-                className="inline-block w-full h-full px-3 py-2 font-bold text-white">
-                <div className="flex">
-                  <MdPayment className="text-xl mr-3" />
-                  Payment Summery
-                </div>
-              </Link>
-            </li>
-
-            <li className="mb-2 rounded hover:shadow hover:bg-gray-800">
-              <Link
                 to="/"
                 className="inline-block w-full h-full px-3 py-2 font-bold text-white">
                 <MdOutlineChat className="inline-block text-2xl" />
                 -Chat Bot
               </Link>
             </li>
-            <li className="mb-2 rounded hover:shadow hover:bg-gray-800">
-              <Link
-                to="/wish_list"
-                className="inline-block w-full h-full px-3 py-2 font-bold text-white">
-                <div className="flex">
-                  <GiRoyalLove className="text-xl bg-red-600 rounded mr-3" />
-                  Wish List
-                </div>
-              </Link>
-            </li>
+
+            {user?.photoURL === "buyer" && (
+              <>
+                <li className="mb-2 rounded hover:shadow hover:bg-gray-800">
+                  <Link
+                    to="/payment/my_paymment_summery"
+                    className="inline-block w-full h-full px-3 py-2 font-bold text-white">
+                    <div className="flex">
+                      <MdPayment className="text-xl mr-3" />
+                      Payment Summery
+                    </div>
+                  </Link>
+                </li>
+                <li className="mb-2 rounded hover:shadow hover:bg-gray-800">
+                  <Link
+                    to="/wish_list"
+                    className="inline-block w-full h-full px-3 py-2 font-bold text-white">
+                    <div className="flex">
+                      <GiRoyalLove className="text-xl bg-red-600 rounded mr-3" />
+                      Wish List
+                    </div>
+                  </Link>
+                </li>
+              </>
+            )}
 
             <li className="mb-2 rounded hover:shadow hover:bg-gray-800">
               <Link
@@ -177,9 +183,10 @@ const MenuDashbord = () => {
               {user?.photoURL === "seller" &&
                 AllCatagorie?.map((v, index) => (
                   <details open key={index}>
-                    <summary className="mb-2 text-white  font-serif rounded hover:shadow hover:bg-gray-800">
+                    <summary className="mb-2 rounded bg-slate-50 hover:shadow hover:bg-white">
                       {v?.categorie}
                     </summary>
+                    <hr />
                     <ul>
                       {v?.executeCatagorie?.map((v, index) => (
                         <li

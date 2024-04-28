@@ -61,9 +61,7 @@ const Register = () => {
     };
 
     updateUserProfile(photoURL)
-      .then(() => {
-        console.log("successfuly-profile-update");
-      })
+      .then(() => {})
       .catch((error) => {
         setError(error.message);
       });

@@ -11,7 +11,10 @@ import {
   Legend,
   Bar,
 } from "recharts";
+import useTitle from "../../hook/useTitle";
 const IndustryReport = () => {
+  useTitle("Indistrial_Report");
+
   return (
     <>
       <div className="w-full mx-auto">

@@ -40,6 +40,7 @@ import Service from "../components/page/Services/Service";
 import Blog from "../components/page/Blog/Blog";
 import ResetPassword from "../components/page/ResetPassword/ResetPassword";
 import ForgotPassword from "../components/page/ForgotPassword/ForgotPassword";
+import AllReports from "../components/Admin/AllReports";
 
 const router = createBrowserRouter([
   {
@@ -272,6 +273,10 @@ const router = createBrowserRouter([
       {
         path: "/dashboard/delivery_schedule",
         element: <DeliverySchedule />,
+      },
+      {
+        path: "/dashboard/report",
+        element: <AllReports />,
       },
     ],
   },

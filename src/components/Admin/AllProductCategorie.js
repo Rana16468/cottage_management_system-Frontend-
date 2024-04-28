@@ -32,7 +32,7 @@ const AllProductCategorie = () => {
         const data = await res.json();
 
         if (data && data.data) {
-          return data.data; // Return the reviews array
+          return data; // Return the reviews array
         } else {
           toast.error("Data structure from API is invalid");
         }
@@ -95,40 +95,41 @@ const AllProductCategorie = () => {
               </tr>
             </thead>
             <tbody>
-              {allProduct.map((item) => (
-                <tr key={item?._id} className="border-t">
-                  <td className="py-2 px-3">{item?.categorieId}</td>
-                  <td className="py-2 px-3">{item?.count}</td>
-                  <td className="py-2 px-3">
-                    <div className="flex flex-wrap">
-                      {item.products.map((v) => (
-                        <div
-                          key={v?.id}
-                          className="w-full sm:w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/6 p-2">
-                          <div className="border rounded-lg overflow-hidden">
-                            <img
-                              src={v?.photo}
-                              alt={v?.title}
-                              className="w-full h-32 object-cover"
-                            />
-                            <div className="p-2">
-                              <p className="text-sm font-semibold">
-                                {v?.tittle}
-                                <Link
-                                  to={`/buyer_dashboard/${item?._id}/${v?.id}`}>
-                                  <h5 className="text-sm font-semibold btn btn-xs flex justify-end btn-outline bg-blue-200">
-                                    click
-                                  </h5>
-                                </Link>
-                              </p>
+              {allProduct?.success &&
+                allProduct?.data?.map((item) => (
+                  <tr key={item?._id} className="border-t">
+                    <td className="py-2 px-3">{item?.categorieId}</td>
+                    <td className="py-2 px-3">{item?.count}</td>
+                    <td className="py-2 px-3">
+                      <div className="flex flex-wrap">
+                        {item.products.map((v) => (
+                          <div
+                            key={v?.id}
+                            className="w-full sm:w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/6 p-2">
+                            <div className="border rounded-lg overflow-hidden">
+                              <img
+                                src={v?.photo}
+                                alt={v?.title}
+                                className="w-full h-32 object-cover"
+                              />
+                              <div className="p-2">
+                                <p className="text-sm font-semibold">
+                                  {v?.tittle}
+                                  <Link
+                                    to={`/buyer_dashboard/${item?._id}/${v?.id}`}>
+                                    <h5 className="text-sm font-semibold btn btn-xs flex justify-end btn-outline bg-blue-200">
+                                      click
+                                    </h5>
+                                  </Link>
+                                </p>
+                              </div>
                             </div>
                           </div>
-                        </div>
-                      ))}
-                    </div>
-                  </td>
-                </tr>
-              ))}
+                        ))}
+                      </div>
+                    </td>
+                  </tr>
+                ))}
             </tbody>
           </table>
         </div>

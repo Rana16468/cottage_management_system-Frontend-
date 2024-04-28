@@ -5,7 +5,7 @@ const AllCatagorie = [
     executeCatagorie: [
       {
         id: 1,
-        name: "Create Prottery Categorie",
+        name: "Create Categorie",
         element: "/create_categorie",
       },
       {
