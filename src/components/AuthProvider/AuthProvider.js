@@ -13,11 +13,13 @@ import {
   EmailAuthProvider,
   reauthenticateWithCredential,
   sendPasswordResetEmail,
+  deleteUser,
 } from "firebase/auth";
 import app from "../../firebase/firebase.config";
 
 export const AuthContext = createContext();
 const auth = getAuth(app);
+
 const GoogleProvider = new GoogleAuthProvider();
 
 const AuthProvider = ({ children }) => {
@@ -60,6 +62,10 @@ const AuthProvider = ({ children }) => {
     return "Successfully Reset";
   };
 
+  const DeleteAccount = () => {
+    return deleteUser(auth.currentUser);
+  };
+
   const ResetPassword = (email) => {
     return sendPasswordResetEmail(auth, email);
   };
@@ -93,6 +99,7 @@ const AuthProvider = ({ children }) => {
     UpdatePassword,
     logOut,
     ResetPassword,
+    DeleteAccount,
   };
   return (
     <div>

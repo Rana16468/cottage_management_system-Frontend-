@@ -8,6 +8,7 @@ import { MdOutlineChat } from "react-icons/md";
 import { GiRoyalLove } from "react-icons/gi";
 import { MdLockReset } from "react-icons/md";
 import { RiLockPasswordFill } from "react-icons/ri";
+import { MdDeleteSweep } from "react-icons/md";
 const MenuDashbord = () => {
   const { user } = useContext(AuthContext);
   return (
@@ -126,6 +127,17 @@ const MenuDashbord = () => {
                 className="inline-block w-full h-full px-3 py-2 font-bold text-white">
                 <MdOutlineChat className="inline-block text-2xl" />
                 -Chat Bot
+              </Link>
+            </li>
+
+            <li className="mb-2 rounded hover:shadow hover:bg-gray-800">
+              <Link
+                className="inline-block w-full h-full px-3 py-2 font-bold text-white"
+                to="/delete_account">
+                <div className="flex">
+                  <MdDeleteSweep className="text-2xl rounded-full mr-3 bg-red-700" />{" "}
+                  Delete Account
+                </div>
               </Link>
             </li>
 

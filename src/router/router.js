@@ -41,6 +41,8 @@ import Blog from "../components/page/Blog/Blog";
 import ResetPassword from "../components/page/ResetPassword/ResetPassword";
 import ForgotPassword from "../components/page/ForgotPassword/ForgotPassword";
 import AllReports from "../components/Admin/AllReports";
+import AIImageGenerator from "../components/page/AI/AIImageGenerator";
+import DeleteAccount from "../components/DeleteAccount/DeleteAccount";
 
 const router = createBrowserRouter([
   {
@@ -65,6 +67,10 @@ const router = createBrowserRouter([
         element: <Blog />,
       },
       {
+        path: "/delete_account",
+        element: <DeleteAccount />,
+      },
+      {
         path: "/reset_password",
         element: (
           <PrivateRouter>
@@ -77,6 +83,14 @@ const router = createBrowserRouter([
         element: (
           <PrivateRouter>
             <ForgotPassword />
+          </PrivateRouter>
+        ),
+      },
+      {
+        path: "/ai_image_generator",
+        element: (
+          <PrivateRouter>
+            <AIImageGenerator />
           </PrivateRouter>
         ),
       },

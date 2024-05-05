@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-
+import isUrl from "is-url";
 import logo1 from "./../image/logo.jfif";
 import { GiRoyalLove } from "react-icons/gi";
 import { GiShoppingCart } from "react-icons/gi";
@@ -98,7 +98,7 @@ const Navbar = () => {
         <Link to="/all_produts">Products</Link>
       </li>
       <li>
-        <a href="...">AI</a>
+        <Link to="/ai_image_generator">AI</Link>
       </li>
 
       <li onMouseOver={() => setClickbutton(!clickButton)}>
@@ -106,6 +106,23 @@ const Navbar = () => {
       </li>
       <li>
         <Link to="/dashboard">Admin</Link>
+      </li>
+
+      <li>
+        <Link to="/complean_box">Complain</Link>
+      </li>
+    </>
+  );
+
+  const optionalLogin = (isUrl(user?.photoURL) ||
+    user?.photoUR?.length === 0) && (
+    <>
+      <li>
+        <Link to="/all_produts">Products</Link>
+      </li>
+
+      <li onMouseOver={() => setClickbutton(!clickButton)}>
+        <Link>Company</Link>
       </li>
 
       <li>
@@ -178,6 +195,7 @@ const Navbar = () => {
               </li>
               {buyerAccountHolder}
               {sellerAccountHolder}
+              {optionalLogin}
 
               <ul className="space-x-2"></ul>
             </ul>
@@ -211,6 +229,7 @@ const Navbar = () => {
 
             {buyerAccountHolder}
             {sellerAccountHolder}
+            {optionalLogin}
             <ul className="flex space-x-2"></ul>
           </ul>
         </div>
