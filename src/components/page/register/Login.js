@@ -71,14 +71,57 @@ const Login = () => {
   const handelGoogleSinIn = () => {
     // store in user Information
     googleLogin()
-      .then((result) => {
+      .then(async (result) => {
         const user = result.user;
         console.log(user);
+        //uid
+        if (user) {
+          // create token
+          if (user) {
+            const res = await fetch(
+              "http://localhost:3013/api/v1/create_token",
+              {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                  role: process.env.REACT_APP_buyer,
+                  email: user?.email,
+                }),
+              }
+            );
+            const accessToken = await res.json();
+            localStorage.setItem("token", accessToken?.data);
+            // store information data in the mongodb database
 
-        setLogain(true);
-        setError("");
-        navigate(form, { replace: true });
-        toast.success("Successfully Login");
+            fetch("http://localhost:3013/api/v1/user_information", {
+              method: "POST", // or 'PUT'
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({
+                username: user?.displayName,
+                email: user?.email,
+                role: process.env.REACT_APP_buyer,
+                password: user?.uid,
+                photo: user?.photoURL,
+              }),
+            })
+              .then((res) => res.json())
+              .then((data) => {
+                toast.success(data?.message);
+                setLogain(true);
+                setError("");
+                navigate(form, { replace: true });
+              })
+              .catch((error) => {
+                console.log(error.message);
+              });
+          }
+        } else {
+          console.log("Not Varified");
+        }
       })
       .catch((error) => {
         setError(error.message);
@@ -92,7 +135,7 @@ const Login = () => {
           <div className="relative hidden xl:block xl:w-1/2 h-full">
             <img
               className="w-full object-cover"
-              src="https://as1.ftcdn.net/v2/jpg/02/35/82/64/1000_F_235826468_w2HW7U7EWjEdwTFIvJCeLzd9LZYJTH0G.jpg"
+              src="https://i.pinimg.com/474x/88/12/90/881290f78d367304d64f9b4498de1369.jpg"
               alt="my zomato"
             />
           </div>

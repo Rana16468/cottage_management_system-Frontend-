@@ -69,44 +69,6 @@ const DeleteAccount = () => {
     });
   };
 
-  /*fetch("http://localhost:3013/api/v1/delete_user_Account", {
-          method: "DELETE",
-          headers: {
-            authorization: localStorage.getItem("token"),
-          },
-        })
-          .then((res) => {
-            if (!res.ok) {
-              throw new Error("API ERROR");
-            }
-            return res.json();
-          })
-          .then((data) => {
-            toast.success(data?.message);
-          })
-          .catch((error) => {
-            toast.error(error?.message);
-          });
- */
-
-  /* DeleteAccount()
-          .then(() => {
-            // system logout
-            logOut()
-              .then(() => {
-                localStorage.setItem("token", null);
-                navigate("/");
-              })
-              .catch((error) => {
-                toast.error(error?.message);
-              })
-              .catch((error) => {
-                toast.error(error.message);
-              });
-          })
-          .catch((error) => {
-            toast.error(error?.message);
-          }); */
   return (
     <>
       <div className="flex">

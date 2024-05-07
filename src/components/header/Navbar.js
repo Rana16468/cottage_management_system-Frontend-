@@ -114,8 +114,7 @@ const Navbar = () => {
     </>
   );
 
-  const optionalLogin = (isUrl(user?.photoURL) ||
-    user?.photoUR?.length === 0) && (
+  const optionalLogin = (isUrl(user?.photoURL) || user?.photoUR === null) && (
     <>
       <li>
         <Link to="/all_produts">Products</Link>
@@ -169,7 +168,7 @@ const Navbar = () => {
         </ul>
       </nav>
 
-      <div className="navbar bg-[#ee42ac] w-full">
+      <div className="navbar bg-blue-900 w-full text-white">
         <div className="navbar-start">
           <div className="dropdown">
             <label tabIndex={0} className="btn btn-ghost lg:hidden">
@@ -240,8 +239,12 @@ const Navbar = () => {
             <GiRoyalLove className="text-xl" />
           </Link>
 
-          {user?.photoURL === "buyer" ? (
-            <Link className="btn btn-outline btn-sm m-3" to="/add_to_card">
+          {user?.photoURL === "buyer" ||
+          isUrl(user?.photoURL) ||
+          user?.photoUR === null ? (
+            <Link
+              className="btn btn-outline bg-[#ee42ac]  btn-sm m-3"
+              to="/add_to_card">
               <GiShoppingCart className="text-xl" />
             </Link>
           ) : (

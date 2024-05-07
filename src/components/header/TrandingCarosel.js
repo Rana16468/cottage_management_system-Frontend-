@@ -55,6 +55,7 @@ const TrandingCarosel = () => {
       const data = await res.json();
       return data;
     },
+    refetchInterval: 30,
   });
 
   return (

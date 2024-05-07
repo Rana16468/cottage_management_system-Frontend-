@@ -42,6 +42,7 @@ const AllProducts = () => {
         toast.error(`Failed to fetch reviews: ${error.message}`);
       }
     },
+    refetchInterval: 30,
   });
 
   return (

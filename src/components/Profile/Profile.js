@@ -119,7 +119,13 @@ const Profile = () => {
             </h1>
             <div className="avatar flex justify-center">
               <div className="w-52 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
-                <img src={specific_user?.data?.photo} alt="" />
+                <img
+                  src={
+                    specific_user?.data?.photo ||
+                    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQzF32lbq4BoRPJ3bZ4FrQiFe9uhw5tRZBqxzt7G00uhbmqTW3f-PeYpIMOUzFCsYpuOMI&usqp=CAU"
+                  }
+                  alt=""
+                />
               </div>
             </div>
 

@@ -88,7 +88,7 @@ const Register = () => {
     <>
       <section className="bg-gray-100 min-h-screen flex items-center justify-center">
         <div className="bg-white flex rounded-2xl shadow-lg max-w-5xl p-5 items-center mt-4 mb-6">
-          <div className="md:w-8/12 lg:w-6/12  flex">
+          <div className="relative hidden xl:block xl:w-1/2 h-full">
             <img
               src="https://ik.imagekit.io/7hdidvbes/illustrations/become_expert_2.svg?tr=w-1920,q-75"
               className="w-full "

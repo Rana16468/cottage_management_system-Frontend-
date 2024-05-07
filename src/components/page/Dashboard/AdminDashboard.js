@@ -28,6 +28,7 @@ const AdminDashboard = () => {
     { name: "Delivery Schedule", path: "/dashboard/delivery_schedule" },
     { name: "Forgot Password", path: "/forget_password" },
     { name: "Reset Password", path: "/reset_password" },
+    { name: "Delete Account", path: "/delete_account" },
     { name: "Report", path: "/dashboard/report" },
   ];
   return (
