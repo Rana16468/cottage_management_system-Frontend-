@@ -30,6 +30,7 @@ const AdminDashboard = () => {
     { name: "Reset Password", path: "/reset_password" },
     { name: "Delete Account", path: "/delete_account" },
     { name: "Report", path: "/dashboard/report" },
+    { name: "AI", path: "/ai_image_generator" },
   ];
   return (
     <>

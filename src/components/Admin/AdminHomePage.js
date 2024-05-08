@@ -12,6 +12,7 @@ import { VscPreview } from "react-icons/vsc";
 import { MdPayment } from "react-icons/md";
 import { GiLoveMystery } from "react-icons/gi";
 import { TbReport } from "react-icons/tb";
+import useAdmin from "../hook/useAdmin";
 import {
   XAxis,
   YAxis,
@@ -22,8 +23,11 @@ import {
   Legend,
   Bar,
 } from "recharts";
+import { useNavigate } from "react-router-dom";
 
 const AdminHomePage = () => {
+  const { isAdmin } = useAdmin();
+
   const {
     data: allCollection = [],
     error,
@@ -58,6 +62,12 @@ const AdminHomePage = () => {
       return data?.data;
     },
   });
+
+  const navigate = useNavigate();
+
+  if (!isAdmin?.isAdmin) {
+    return navigate("/");
+  }
 
   return (
     <div>

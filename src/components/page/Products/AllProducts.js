@@ -4,11 +4,13 @@ import toast from "react-hot-toast";
 import { useQuery } from "@tanstack/react-query";
 import { Link } from "react-router-dom";
 import useTitle from "../../hook/useTitle";
+import CategoricalProduct from "../../../utils/CategoricalProduct";
 
 const AllProducts = () => {
   const [page, setPage] = useState(0);
   const [size, setSize] = useState(10);
   const pages = Math.ceil(75 / size);
+  const [search, setSearch] = useState("");
 
   useTitle("ALL-PRODUCT");
 
@@ -54,16 +56,40 @@ const AllProducts = () => {
 
           {isLoading && <h1>loading</h1>}
           {error && <h1>error</h1>}
-          <h1 className="mb-5 text-6xl font-serif text-black text-center">
-            ALL Categoriacl Products
-          </h1>
 
-          <div className="flex justify-end">
-            <div>
+          <div className="grid lg:grid-cols-2 md:grid-cols-3 sm:grid-cols-1 ">
+            <div className="flex items-center justify-center">
+              <select
+                onChange={(e) => setSearch(e.target.value)}
+                className="rounded-r-sm bg-pink-200 h-14">
+                <option disabled selected>
+                  Caragories
+                </option>
+                {CategoricalProduct?.map((v, index) => (
+                  <option key={index} value={v.categorieName}>
+                    {v?.categorieName}
+                  </option>
+                ))}
+              </select>
+              <input
+                type="search"
+                id="default-search"
+                onChange={(e) => setSearch(e.target.value)}
+                className="block w-full p-4 pl-10 text-sm text-gray-900 border border-gray-300 rounded-r-lg  focus:ring-blue-500 focus:border-blue-500 bg-blue-900 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                placeholder="Find Categorie / Srach Your product Name "
+                required
+              />
+            </div>
+
+            <div
+              style={{
+                marginLeft: "200px",
+                marginBottom: "50px",
+              }}>
               <p>
                 Current Page : {page + 1} and Size:{size}
               </p>
-              {[...Array(pages).keys()].map((number) => (
+              {[...Array(pages).keys()]?.map((number) => (
                 <button
                   className="mr-3 text-xl btn btn-outline btn-sm"
                   key={number}
@@ -87,36 +113,48 @@ const AllProducts = () => {
           </div>
 
           {allProduct?.success &&
-            allProduct?.data?.map((item, index) => (
+            allProduct?.data?.map((items, index) => (
               <div key={index}>
                 <div className="grid lg:grid-cols-5 md:grid-cols-3 gap-2 sm:grid-cols-1 m-3">
-                  {item?.products?.map((v, index) => {
-                    return (
-                      <div
-                        key={index}
-                        className="w-full bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
-                        <Link to={`/buyer_dashboard/${item?._id}/${v?.id}`}>
-                          <img
-                            className="w-full h-72 object-cover rounded"
-                            src={v?.photo}
-                            alt={v?.tittle}
-                          />
-                        </Link>
-                        <div className="p-5">
-                          <Link to={`/buyer_dashboard/${item?._id}/${v?.id}`}>
-                            <h5 className="text-center mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
-                              {v?.tittle}
-                            </h5>
+                  {items?.products
+                    ?.filter((item) => {
+                      return search.toLowerCase() === ""
+                        ? item
+                        : items?.categorieId
+                            ?.toLowerCase()
+                            .includes(search.toLowerCase()) ||
+                            item?.tittle?.toLowerCase() ===
+                              search?.toLowerCase();
+                    })
+                    .map((v, index) => {
+                      return (
+                        <div
+                          key={index}
+                          className="w-full bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+                          <Link to={`/buyer_dashboard/${items?._id}/${v?.id}`}>
+                            <img
+                              className="w-full h-72 object-cover rounded"
+                              src={v?.photo}
+                              alt={v?.tittle}
+                            />
                           </Link>
-                          <Link to={`/buyer_dashboard/${item?._id}/${v?.id}`}>
-                            <h5 className="text-center mb-2 text-xl font-serif tracking-tight text-gray-900 dark:text-white">
-                              Categorie :{item?.categorieId}
-                            </h5>
-                          </Link>
+                          <div className="p-5">
+                            <Link
+                              to={`/buyer_dashboard/${items?._id}/${v?.id}`}>
+                              <h5 className="text-center mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+                                {v?.tittle}
+                              </h5>
+                            </Link>
+                            <Link
+                              to={`/buyer_dashboard/${items?._id}/${v?.id}`}>
+                              <h5 className="text-center mb-2 text-xl font-serif tracking-tight text-gray-900 dark:text-white">
+                                Categorie :{items?.categorieId}
+                              </h5>
+                            </Link>
+                          </div>
                         </div>
-                      </div>
-                    );
-                  })}
+                      );
+                    })}
                 </div>
               </div>
             ))}

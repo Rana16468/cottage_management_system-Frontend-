@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import MenuDashbord from "../BuyerDashboard/MenuDashbord";
 import { useQuery } from "@tanstack/react-query";
 import { Spin } from "antd";
@@ -6,7 +6,9 @@ import ErrorPage from "../../error/ErrorPage";
 import { TbListDetails } from "react-icons/tb";
 import { GrTransaction } from "react-icons/gr";
 import { AiFillPrinter } from "react-icons/ai";
+import { ReactToPrint } from "react-to-print";
 const PaymentSummary = () => {
+  const componentRef = useRef();
   const {
     data: paymentSummery = [],
     error,
@@ -56,6 +58,7 @@ const PaymentSummary = () => {
               paymentSummery?.data?.map((order, index) => (
                 <div
                   key={order?._id}
+                  ref={componentRef}
                   className="border border-gray-300 rounded p-4">
                   <h3 className="flex  justify-between text-lg font-semibold mb-2">
                     Payment Details {index + 1}
@@ -90,14 +93,26 @@ const PaymentSummary = () => {
                       "Not Paid"
                     )}
                   </p>
+                  <p className="grid lg:grid-cols-1 sm:grid-cols-1">
+                    {order?.productId?.map((v, index) => (
+                      <li className=" underline" key={index}>
+                        pId : {v}
+                      </li>
+                    ))}
+                  </p>
                   <p className="flex justify-between">
                     Transaction ID: {order?.transactionID}
                     <GrTransaction className="text-3xl bg-green-400 rounded" />
                   </p>
                   <div className="flex justify-center">
-                    <button className="btn btn-outline btn-accent btn-sm">
-                      <AiFillPrinter className="text-xl" />
-                    </button>
+                    <ReactToPrint
+                      trigger={() => (
+                        <button className="btn btn-outline btn-accent btn-sm">
+                          <AiFillPrinter className="text-xl" />
+                        </button>
+                      )}
+                      content={() => componentRef.current} // Function to return the component to be printed
+                    />
                   </div>
                 </div>
               ))}
