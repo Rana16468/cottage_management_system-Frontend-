@@ -1,5 +1,5 @@
 import React from "react";
-
+import { Link } from "react-router-dom";
 const ErrorPage = () => {
   return (
     <>
@@ -7,7 +7,7 @@ const ErrorPage = () => {
         <div className="container mx-auto">
           <div className="-mx-4 flex">
             <div className="w-full px-4">
-              <div className="mx-auto max-w-[400px] text-center">
+              <div className="mx-auto max-w-full h-full text-center">
                 <h2 className="mb-2 text-[50px] font-bold leading-none text-white sm:text-[80px] md:text-[100px]">
                   404
                 </h2>
@@ -17,11 +17,11 @@ const ErrorPage = () => {
                 <p className="mb-8 text-lg text-white">
                   The page you are looking for it maybe deleted
                 </p>
-                <a
-                  href=".."
+                <Link
+                  to="/"
                   className="inline-block rounded-lg border border-white px-8 py-3 text-center text-base font-semibold text-white transition hover:bg-white hover:text-primary">
                   Go To Home
-                </a>
+                </Link>
               </div>
             </div>
           </div>
