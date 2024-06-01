@@ -27,24 +27,23 @@ const AIImageGenerator = () => {
   };
 
   const onSubmit = (data) => {
-    console.log(data);
-    reset();
-    /*fetch(`https://interior-design-seven-psi.vercel.app/AI_image_generate`, {
-          method: "POST", // or 'PUT'
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(data),
-        })
-          .then((res) => res.json())
-          .then((data) => {
-            setGeneratedImage(data.result);
-            reset();
-            toast.success(data?.message);
-          })
-          .catch((error) => {
-            console.log(error.message);
-          });*/
+    fetch(`http://localhost:3013/api/v1/AI_image_generate`, {
+      method: "POST", // or 'PUT'
+      headers: {
+        "Content-Type": "application/json",
+        authorization: localStorage.getItem("token"),
+      },
+      body: JSON.stringify(data),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        setGeneratedImage(data?.result);
+        reset();
+        toast.success(data?.message);
+      })
+      .catch((error) => {
+        console.log(error.message);
+      });
   };
   return (
     <>
@@ -133,7 +132,7 @@ const AIImageGenerator = () => {
                   </div>
                 </div>
                 <select
-                  {...register("industry")}
+                  // {...register("industry")}
                   className="select select-success  w-full max-w-full">
                   <option disabled selected>
                     All Industries

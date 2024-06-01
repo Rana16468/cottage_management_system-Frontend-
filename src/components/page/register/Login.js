@@ -9,7 +9,12 @@ const Login = () => {
   const { signIn, googleLogin } = useContext(AuthContext);
   const [error, setError] = useState(null);
   const [login, setLogain] = useState(false);
-  const { handleSubmit, register, reset } = useForm();
+  const {
+    handleSubmit,
+    register,
+    reset,
+    formState: { errors },
+  } = useForm();
   const location = useLocation();
   const navigate = useNavigate();
 
