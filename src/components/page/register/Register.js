@@ -11,7 +11,7 @@ const Register = () => {
   const [error, setError] = useState(null);
   const [isRegister, setRegister] = useState(false);
   const navigate = useNavigate();
-  const { createUser, updateUserProfile, EmailVarification } =
+  const { createUser, updateUserProfile, EmailVarification, logOut } =
     useContext(AuthContext);
 
   const onSubmit = async (data) => {
@@ -45,7 +45,6 @@ const Register = () => {
         EmailVarification();
         toast.success("Checked Your Email and Varified");
         await storeUserInformation(data);
-        navigate("/");
 
         reset();
       })
@@ -78,6 +77,14 @@ const Register = () => {
       .then((res) => res.json())
       .then((data) => {
         toast.success(data?.message);
+        logOut()
+          .then(() => {
+            localStorage.setItem("token", null);
+            navigate("/login");
+          })
+          .catch((error) => {
+            console.log(error.message);
+          });
       })
       .catch((error) => {
         console.log(error.message);

@@ -58,7 +58,7 @@ const ForgotPassword = () => {
                   <div
                     className="w-full h-auto bg-gray-400 hidden lg:block lg:w-1/2 bg-cover rounded-l-lg"
                     style={{
-                      backgroundImage: `url("https://source.unsplash.com/oWTW-jNGl9I/600x800")`,
+                      backgroundImage: `url("https://i.pinimg.com/736x/76/38/69/763869a33c8ac9e99a59500992c11127.jpg")`,
                     }}></div>
 
                   <div className="w-full lg:w-1/2 bg-white p-5 rounded-lg lg:rounded-l-none">

@@ -44,7 +44,6 @@ const AllProducts = () => {
         toast.error(`Failed to fetch reviews: ${error.message}`);
       }
     },
-    refetchInterval: 30,
   });
 
   return (
@@ -57,59 +56,28 @@ const AllProducts = () => {
           {isLoading && <h1>loading</h1>}
           {error && <h1>error</h1>}
 
-          <div className="grid lg:grid-cols-2 md:grid-cols-3 sm:grid-cols-1 ">
-            <div className="flex items-center justify-center">
-              <select
-                onChange={(e) => setSearch(e.target.value)}
-                className="rounded-r-sm bg-pink-200 h-14">
-                <option disabled selected>
-                  Caragories
+          <div className="flex items-center justify-center ">
+            <select
+              onChange={(e) => setSearch(e.target.value)}
+              className="rounded-l-md bg-blue-900 h-14 text-center text-white">
+              <option disabled selected>
+                Caragories
+              </option>
+              <option value="">All</option>
+              {CategoricalProduct?.map((v, index) => (
+                <option key={index} value={v.categorieName}>
+                  {v?.categorieName}
                 </option>
-                {CategoricalProduct?.map((v, index) => (
-                  <option key={index} value={v.categorieName}>
-                    {v?.categorieName}
-                  </option>
-                ))}
-              </select>
-              <input
-                type="search"
-                id="default-search"
-                onChange={(e) => setSearch(e.target.value)}
-                className="block w-full p-4 pl-10 text-sm text-gray-900 border border-gray-300 rounded-r-lg  focus:ring-blue-500 focus:border-blue-500 bg-blue-900 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                placeholder="Find Categorie / Srach Your product Name "
-                required
-              />
-            </div>
-
-            <div
-              style={{
-                marginLeft: "200px",
-                marginBottom: "50px",
-              }}>
-              <p>
-                Current Page : {page + 1} and Size:{size}
-              </p>
-              {[...Array(pages).keys()]?.map((number) => (
-                <button
-                  className="mr-3 text-xl btn btn-outline btn-sm"
-                  key={number}
-                  onClick={() => {
-                    setPage(number);
-                  }}>
-                  {number + 1}
-                </button>
               ))}
-              <select
-                className="rounded-full btn btn-outline btn-sm"
-                onChange={(event) => setSize(event.target.value)}>
-                <option value="10" defaultValue={10}>
-                  10
-                </option>
-                <option value="15">15</option>
-                <option value="20">20</option>
-                <option value="25">25</option>
-              </select>
-            </div>
+            </select>
+            <input
+              type="search"
+              id="default-search"
+              onChange={(e) => setSearch(e.target.value)}
+              className="block w-full p-4 pl-10 text-sm text-gray-900 border border-gray-300 rounded-r-lg  focus:ring-blue-500 focus:border-blue-500 bg-white dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              placeholder="Find Categorie / Srach Your product Name "
+              required
+            />
           </div>
 
           {allProduct?.success &&
@@ -158,6 +126,37 @@ const AllProducts = () => {
                 </div>
               </div>
             ))}
+
+          <div
+            style={{
+              marginLeft: "200px",
+              marginBottom: "50px",
+            }}
+            className="flex justify-end">
+            <p>
+              Current Page : {page + 1} and Size:{size}
+            </p>
+            {[...Array(pages).keys()]?.map((number) => (
+              <button
+                className="mr-3 text-xl btn btn-outline btn-sm"
+                key={number}
+                onClick={() => {
+                  setPage(number);
+                }}>
+                {number + 1}
+              </button>
+            ))}
+            <select
+              className="rounded-full btn btn-outline btn-sm"
+              onChange={(event) => setSize(event.target.value)}>
+              <option value="10" defaultValue={10}>
+                10
+              </option>
+              <option value="15">15</option>
+              <option value="20">20</option>
+              <option value="25">25</option>
+            </select>
+          </div>
 
           {/* <ProductCarasal items={items} product={allProduct} /> */}
         </div>

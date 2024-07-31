@@ -1,19 +1,6 @@
 import React from "react";
 import BlogData from "../../../utils/BlogData.json";
 const Blog = () => {
-  /*const [blog, setBlog] = useState([]);
-  const latestArticles = BlogData.articles.sort((a, b) => {
-    return new Date(b.timestamp) - new Date(a.timestamp);
-  });
-
-  //   // For demonstration, let's assume the first half of the articles are the most recent
-  const numPopularArticles = Math.floor(BlogData.articles.length / 2); // Half of the total articles
-
-  //   // 'popularArticles' will be the first half of the sorted articles array (by timestamp)
-  const popularArticles = latestArticles.slice(0, numPopularArticles);
-
-  console.log(blog);*/
-
   return (
     <>
       <section className="px-5 py-10  dark:text-gray-800">
@@ -116,10 +103,6 @@ const Blog = () => {
           </div>
           {/*  middle points  */}
           <div className="  col-span-12  bg-center bg-no-repeat bg-cover xl:col-span-6 lg:col-span-5 md:col-span-9  ">
-            <span className="absolute px-1 pb-2 text-xs font-bold uppercase border-b-2 left-6 top-6 dark:text-white dark:border-violet-600">
-              paris, france
-            </span>
-
             <div className="hero min-h-screen ">
               <div className="hero-content text-center">
                 <div className="grid grid-cols-1 gap-2">

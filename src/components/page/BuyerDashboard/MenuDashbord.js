@@ -13,7 +13,7 @@ const MenuDashbord = () => {
   const { user } = useContext(AuthContext);
   return (
     <>
-      <div className=" lg:px-4 lg:py-2  bg-indigo-600 lg:w-1/4 sm:w-full">
+      <div className=" lg:px-4 lg:py-2  bg-blue-900 lg:w-1/4 sm:w-full">
         <div className="hidden lg:block">
           <div className="my-2 mb-6">
             <h1 className="text-2xl font-serif text-white">
@@ -84,7 +84,7 @@ const MenuDashbord = () => {
             </li>
             <li className="mb-2 rounded hover:shadow hover:bg-gray-800">
               <Link
-                href=" "
+                to="/complean_box"
                 className="inline-block w-full h-full px-3 py-2 font-bold text-white">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"

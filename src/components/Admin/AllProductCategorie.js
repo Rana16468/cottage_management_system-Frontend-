@@ -42,7 +42,6 @@ const AllProductCategorie = () => {
         toast.error(`Failed to fetch reviews: ${error.message}`);
       }
     },
-    refetchInterval: 30,
   });
 
   return (
@@ -53,62 +52,30 @@ const AllProductCategorie = () => {
         ALL Categoriacl Products
       </h1>
 
-      <div className="grid lg:grid-cols-2 md:grid-cols-3 sm:grid-cols-1">
-        <div className="flex items-center justify-center m-3">
-          <select
-            onChange={(e) => setSearch(e.target.value)}
-            className="rounded-l-xl bg-pink-200 h-14">
-            <option disabled selected>
-              Caragories
-            </option>
-            {CategoricalProduct?.map((v, index) => (
-              <>
-                <option key={index} value={v.categorieName}>
-                  {v?.categorieName}
-                </option>
-                <option value="">All Product</option>
-              </>
-            ))}
-          </select>
-          <input
-            type="search"
-            id="default-search"
-            onChange={(e) => setSearch(e.target.value)}
-            className="block w-full p-4 pl-10 text-sm text-gray-900 border border-gray-300 rounded-r-lg  focus:ring-blue-500 focus:border-blue-500 bg-blue-900 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            placeholder="Find Categorie / Srach Your product Name "
-            required
-          />
-        </div>
-
-        <div
-          style={{
-            marginLeft: "200px",
-            marginBottom: "50px",
-          }}>
-          <p>
-            Current Page : {page + 1} and Size:{size}
-          </p>
-          {[...Array(pages).keys()]?.map((number) => (
-            <button
-              className="mr-3 text-xl btn btn-outline btn-sm"
-              key={number}
-              onClick={() => {
-                setPage(number);
-              }}>
-              {number + 1}
-            </button>
+      <div className="flex items-center justify-center m-3">
+        <select
+          onChange={(e) => setSearch(e.target.value)}
+          className="rounded-l-xl bg-blue-900 text-center text-white h-14">
+          <option disabled selected>
+            Caragories
+          </option>
+          {CategoricalProduct?.map((v, index) => (
+            <>
+              <option key={index} value={v.categorieName}>
+                {v?.categorieName}
+              </option>
+              <option value="">All Product</option>
+            </>
           ))}
-          <select
-            className="rounded-full btn btn-outline btn-sm"
-            onChange={(event) => setSize(event.target.value)}>
-            <option value="10" defaultValue={10}>
-              10
-            </option>
-            <option value="15">15</option>
-            <option value="20">20</option>
-            <option value="25">25</option>
-          </select>
-        </div>
+        </select>
+        <input
+          type="search"
+          id="default-search"
+          onChange={(e) => setSearch(e.target.value)}
+          className="block w-full p-4 pl-10 text-sm text-gray-900 border border-gray-300 rounded-r-lg  focus:ring-blue-500 focus:border-blue-500 bg-blue-900 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+          placeholder="Find Categorie / Srach Your product Name "
+          required
+        />
       </div>
 
       <div className="container mx-auto px-4 py-8">
@@ -172,36 +139,43 @@ const AllProductCategorie = () => {
                               </div>
                             );
                           })}
-                        {/* {item?.products?.map((v) => (
-                          <div
-                            key={v?.id}
-                            className="w-full sm:w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/6 p-2">
-                            <div className="border rounded-lg overflow-hidden">
-                              <img
-                                src={v?.photo}
-                                alt={v?.title}
-                                className="w-full h-32 object-cover"
-                              />
-                              <div className="p-2">
-                                <p className="text-sm font-semibold">
-                                  {v?.tittle}
-                                  <Link
-                                    to={`/buyer_dashboard/${item?._id}/${v?.id}`}>
-                                    <h5 className="text-sm font-semibold btn btn-xs flex justify-end btn-outline bg-blue-200">
-                                      click
-                                    </h5>
-                                  </Link>
-                                </p>
-                              </div>
-                            </div>
-                          </div>
-                        ))} */}
                       </div>
                     </td>
                   </tr>
                 ))}
             </tbody>
           </table>
+
+          <div
+            style={{
+              marginLeft: "200px",
+              marginBottom: "50px",
+            }}
+            className="flex justify-end">
+            <p>
+              Current Page : {page + 1} and Size:{size}
+            </p>
+            {[...Array(pages).keys()]?.map((number) => (
+              <button
+                className="mr-3 text-xl btn btn-outline btn-sm"
+                key={number}
+                onClick={() => {
+                  setPage(number);
+                }}>
+                {number + 1}
+              </button>
+            ))}
+            <select
+              className="rounded-full btn btn-outline btn-sm"
+              onChange={(event) => setSize(event.target.value)}>
+              <option value="10" defaultValue={10}>
+                10
+              </option>
+              <option value="15">15</option>
+              <option value="20">20</option>
+              <option value="25">25</option>
+            </select>
+          </div>
         </div>
       </div>
     </>

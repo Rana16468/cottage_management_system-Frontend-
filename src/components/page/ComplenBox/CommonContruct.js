@@ -2,6 +2,7 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { AiOutlineSend } from "react-icons/ai";
+
 const CommonContruct = ({ information }) => {
   const {
     handleSubmit,
@@ -9,6 +10,7 @@ const CommonContruct = ({ information }) => {
     reset,
     formState: { errors },
   } = useForm();
+
   const onSubmit = (data) => {
     fetch("http://localhost:3013/api/v1/report", {
       method: "POST",
@@ -32,9 +34,10 @@ const CommonContruct = ({ information }) => {
       });
     reset();
   };
+
   return (
     <>
-      <div className="bg-secondary/10 shadow-lg p-10 rounded-2xl m-3">
+      <div className="bg-gradient-to-b from-black via-black p-10 rounded-2xl m-3">
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="grid md:grid-cols-3 md:gap-6">
             <div className="relative z-0 w-full mb-6 group">
@@ -44,14 +47,18 @@ const CommonContruct = ({ information }) => {
                 id="date"
                 defaultValue={information?.date}
                 readOnly
-                className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-black dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                className="block py-2.5 px-0 w-full text-sm text-white bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                 placeholder=" "
                 required
               />
-              {errors.date && <p role="alert">{errors?.date?.message}</p>}
+              {errors.date && (
+                <p role="alert" className="text-white">
+                  {errors?.date?.message}
+                </p>
+              )}
               <label
                 htmlFor="date"
-                className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
+                className="peer-focus:font-medium absolute text-sm text-white dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
                 Apply Date
               </label>
             </div>
@@ -62,14 +69,18 @@ const CommonContruct = ({ information }) => {
                 id="email"
                 readOnly
                 defaultValue={information?.email}
-                className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-black dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                className="block py-2.5 px-0 w-full text-sm text-white bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                 placeholder=" "
                 required
               />
-              {errors.email && <p role="alert">{errors?.email?.message}</p>}
+              {errors.email && (
+                <p role="alert" className="text-white">
+                  {errors?.email?.message}
+                </p>
+              )}
               <label
                 htmlFor="email"
-                className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
+                className="peer-focus:font-medium absolute text-sm text-white dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
                 Email Address
               </label>
             </div>
@@ -81,14 +92,18 @@ const CommonContruct = ({ information }) => {
                 id="username"
                 defaultValue={information?.name}
                 readOnly
-                className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-black dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                className="block py-2.5 px-0 w-full text-sm text-white bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                 placeholder=" "
                 required
               />
-              {errors.user && <p role="alert">{errors?.user?.message}</p>}
+              {errors.user && (
+                <p role="alert" className="text-white">
+                  {errors?.user?.message}
+                </p>
+              )}
               <label
                 htmlFor="username"
-                className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
+                className="peer-focus:font-medium absolute text-sm text-white dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
                 User Name
               </label>
             </div>
@@ -103,16 +118,18 @@ const CommonContruct = ({ information }) => {
                     name="buyerEmail"
                     id="buyerEmail"
                     {...register("buyerEmail")}
-                    className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-black dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                    className="block py-2.5 px-0 w-full text-sm text-white bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                     placeholder=" "
                     required
                   />
                   {errors.buyerEmail && (
-                    <p role="alert">{errors?.buyerEmail?.message}</p>
+                    <p role="alert" className="text-white">
+                      {errors?.buyerEmail?.message}
+                    </p>
                   )}
                   <label
-                    htmlFor="candidateemail"
-                    className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
+                    htmlFor="buyerEmail"
+                    className="peer-focus:font-medium absolute text-sm text-white dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
                     Buyer Email Address
                   </label>
                 </div>
@@ -121,7 +138,7 @@ const CommonContruct = ({ information }) => {
               <div className="relative z-0 w-full mb-6 group">
                 <label
                   htmlFor="details"
-                  className="block mb-2 text-sm font-medium text-gray-900 dark:text-black">
+                  className="block mb-2 text-sm font-medium text-white dark:text-black">
                   Complain Details
                 </label>
                 <textarea
@@ -130,10 +147,12 @@ const CommonContruct = ({ information }) => {
                   rows="4"
                   maxLength={150}
                   required
-                  className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  className="block p-2.5 w-full text-sm text-white bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                   placeholder="Write your complain details here...(Maximun Length 150 Word)"></textarea>
                 {errors.details && (
-                  <p role="alert">{errors?.details?.message}</p>
+                  <p role="alert" className="text-white">
+                    {errors?.details?.message}
+                  </p>
                 )}
               </div>
             </>
@@ -148,16 +167,18 @@ const CommonContruct = ({ information }) => {
                     name="transactionID"
                     id="transactionID"
                     {...register("transactionID")}
-                    className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-black dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                    className="block py-2.5 px-0 w-full text-sm text-white bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                     placeholder=" "
                     required
                   />
                   {errors.transactionID && (
-                    <p role="alert">{errors?.transactionID?.message}</p>
+                    <p role="alert" className="text-white">
+                      {errors?.transactionID?.message}
+                    </p>
                   )}
                   <label
-                    htmlFor="employeeremail"
-                    className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
+                    htmlFor="transactionID"
+                    className="peer-focus:font-medium absolute text-sm text-white dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
                     Transaction ID
                   </label>
                 </div>
@@ -168,16 +189,18 @@ const CommonContruct = ({ information }) => {
                     name="productId"
                     id="productId"
                     {...register("productId")}
-                    className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-black dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                    className="block py-2.5 px-0 w-full text-sm text-white bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                     placeholder=" "
                     required
                   />
                   {errors.productId && (
-                    <p role="alert">{errors?.productId?.message}</p>
+                    <p role="alert" className="text-white">
+                      {errors?.productId?.message}
+                    </p>
                   )}
                   <label
-                    htmlFor="Product Id"
-                    className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
+                    htmlFor="productId"
+                    className="peer-focus:font-medium absolute text-sm text-white dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
                     Product Id
                   </label>
                 </div>
@@ -185,7 +208,7 @@ const CommonContruct = ({ information }) => {
                 <div className="relative z-0 w-full mb-6 group mt-2">
                   <label
                     htmlFor="details"
-                    className="block mb-2 text-sm font-medium text-gray-900 dark:text-black">
+                    className="block mb-2 text-sm font-medium text-white dark:text-black">
                     System Complain Details
                   </label>
                   <textarea
@@ -194,10 +217,12 @@ const CommonContruct = ({ information }) => {
                     maxLength={150}
                     required
                     rows="4"
-                    className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    className="block p-2.5 w-full text-sm text-white bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     placeholder="Write your System Complaint details here...(Maximun Length 150 Word)"></textarea>
                   {errors.details && (
-                    <p role="alert">{errors?.details?.message}</p>
+                    <p role="alert" className="text-white">
+                      {errors?.details?.message}
+                    </p>
                   )}
                 </div>
               </div>
@@ -205,7 +230,7 @@ const CommonContruct = ({ information }) => {
           )}
 
           <div className="flex justify-end">
-            <button className="btn btn-outline btn-md">
+            <button className="btn btn-outline btn-md text-white">
               <AiOutlineSend className="m-2 text-xl"></AiOutlineSend> Submit
             </button>
           </div>

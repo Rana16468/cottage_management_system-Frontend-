@@ -1,35 +1,58 @@
+import { useQuery } from "@tanstack/react-query";
 import { Image, Space, Spin, Table } from "antd";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 
 const PaymentSchedule = () => {
-  const [paymentReport, SetPaymentReport] = useState({});
-  const [isLoading, setLoading] = useState(true);
+  const [report, setReport] = useState("");
 
-  const handelPaymentSchedule = (report) => {
-    fetch(
-      `http://localhost:3013/api/v1/admin/payment_schedule_information?interval=${report}`,
-      {
-        method: "GET",
-        headers: {
-          authorization: localStorage.getItem("token"),
-        },
-      }
-    )
-      .then((res) => {
-        if (!res.ok) {
-          throw new Error("API Error");
+  const fetchPayments = async () => {
+    try {
+      const res = await fetch(
+        `http://localhost:3013/api/v1/admin/payment_schedule_information?interval=${report}`,
+        {
+          method: "GET",
+          headers: {
+            authorization: localStorage.getItem("token"),
+          },
         }
-        return res.json();
-      })
-      .then((data) => {
-        SetPaymentReport(data);
-        setLoading(false);
-      })
-      .catch((error) => {
-        toast.error(error.message);
-      });
+      );
+      if (!res.ok) {
+        throw new Error("Network response was not ok");
+      }
+      const data = await res.json();
+      return data;
+    } catch (error) {
+      toast.error(`Failed to fetch payments: ${error?.message}`);
+      throw error; // Ensure errors are thrown for query to handle them
+    }
   };
+
+  const {
+    data: paymentReport = [],
+    isLoading,
+    error,
+    refetch,
+  } = useQuery({
+    queryKey: ["paymentReport", report],
+    queryFn: fetchPayments,
+    enabled: !!report, // Query is enabled only if `report` has a value
+  });
+
+  useEffect(() => {
+    if (report) {
+      refetch(); // Trigger refetch when `report` changes
+    }
+  }, [report, refetch]);
+
+  if (isLoading) {
+    return <Spin />;
+  }
+
+  if (error) {
+    return <p>Error: {error.message}</p>;
+  }
+
   const columns = [
     {
       title: "Success",
@@ -89,7 +112,7 @@ const PaymentSchedule = () => {
       key: "shippingTex",
     },
     {
-      title: "Delivery_Total ",
+      title: "Delivery_Total",
       dataIndex: "deliveryTotalCost",
       key: "deliveryTotalCost",
     },
@@ -109,7 +132,6 @@ const PaymentSchedule = () => {
           </span>
         ) : (
           <span className="px-2 py-1 font-semibold leading-tight text-red-700 bg-red-100 rounded-sm">
-            {" "}
             Unpaid
           </span>
         ),
@@ -154,51 +176,55 @@ const PaymentSchedule = () => {
         <select
           id="tabs"
           name="selectedJob"
-          className=" border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-30 p-2.5  bg-blue-900 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-          <option value="none">All Sales </option>
-          <option value="Internship">Deaily Sales</option>
-          <option value="Fresher">Weekly Sales</option>
-          <option value="Semi-Experiences">Monthly Sales</option>
-          <option value="Experiences">Yearly Sales</option>
+          className="border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-30 p-2.5 bg-blue-900 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+          onChange={(e) => setReport(e.target.value)}>
+          <option value="">All Sales</option>
+          <option value="daily">Daily Sales</option>
+          <option value="weekly">Weekly Sales</option>
+          <option value="monthly">Monthly Sales</option>
+          <option value="yearly">Yearly Sales</option>
         </select>
       </div>
-      <ul className="mb-3 hidden text-sm font-medium text-center bg-blue-900 text-gray-500 divide-x divide-gray-200  shadow sm:flex dark:divide-gray-700 dark:text-gray-400">
+      <ul className="mb-3 hidden text-sm font-medium text-center bg-blue-900 text-gray-500 divide-x divide-gray-200 shadow sm:flex dark:divide-gray-700 dark:text-gray-400">
         <li className="w-full">
           <button
-            onClick={() => handelPaymentSchedule("daily")}
-            className="inline-block w-full p-4 text-gray-900  focus:ring-4 focus:ring-blue-300 active focus:outline-none  bg-blue-900 dark:text-white hover:bg-primary"
+            onClick={() => setReport("daily")}
+            className="inline-block w-full p-4 text-gray-900 focus:ring-4 focus:ring-blue-300 active focus:outline-none bg-blue-900 dark:text-white hover:bg-primary"
             aria-current="page">
-            Deaily Sales
+            Daily Sales
           </button>
         </li>
         <li className="w-full">
           <button
-            onClick={() => handelPaymentSchedule("weekly")}
-            className="inline-block w-full p-4  hover:text-gray-700 hover:bg-gray-50 focus:ring-4 focus:ring-blue-300 focus:outline-none dark:hover:text-white bg-blue-900 dark:hover:bg-blue-700">
+            onClick={() => setReport("weekly")}
+            className="inline-block w-full p-4 hover:text-gray-700 hover:bg-gray-50 focus:ring-4 focus:ring-blue-300 focus:outline-none dark:hover:text-white bg-blue-900 dark:hover:bg-blue-700">
             Weekly Sales
           </button>
         </li>
         <li className="w-full">
           <button
-            onClick={() => handelPaymentSchedule("monthly")}
-            className="inline-block w-full p-4 hover:text-gray-700 hover:bg-gray-50 focus:ring-4 focus:ring-blue-300 focus:outline-none dark:hover:text-white  bg-blue-900 dark:hover:bg-blue-700">
+            onClick={() => setReport("monthly")}
+            className="inline-block w-full p-4 hover:text-gray-700 hover:bg-gray-50 focus:ring-4 focus:ring-blue-300 focus:outline-none dark:hover:text-white bg-blue-900 dark:hover:bg-blue-700">
             Monthly Sales
           </button>
         </li>
         <li className="w-full">
           <button
-            onClick={() => handelPaymentSchedule("yearly")}
-            className="inline-block w-full p-4  rounded-r-lg hover:text-gray-700 hover:bg-gray-50 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:hover:text-white  bg-blue-900 dark:hover:bg-blue-700">
+            onClick={() => setReport("yearly")}
+            className="inline-block w-full p-4 rounded-r-lg hover:text-gray-700 hover:bg-gray-50 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:hover:text-white bg-blue-900 dark:hover:bg-blue-700">
             Yearly Sales
           </button>
         </li>
       </ul>
-      {isLoading && <Spin />}
-      {isLoading && (
-        <img
-          className="w-full"
-          src="https://www.firmofthefuture.com/oidam/intuit/sbseg/en_us/Blog/Photography/Stock/invoicing-quickbooks-online-advanced-part-2.png"
-          alt=""></img>
+
+      {paymentReport?.length === 0 && (
+        <div className="flex justify-center">
+          <img
+            className="max-w-3xl"
+            src="https://media.istockphoto.com/id/911803402/photo/graphs-and-charts-elements-on-tablet-screen.jpg?s=612x612&w=0&k=20&c=VuFW-vNoe1aY4HoJgRlW0oR9Kcb48bngVG6xQKvicc8="
+            alt=""
+          />
+        </div>
       )}
       {paymentReport?.status && (
         <Table

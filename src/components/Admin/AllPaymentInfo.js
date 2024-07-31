@@ -1,9 +1,10 @@
 import { useQuery } from "@tanstack/react-query";
 import { Image, Space, Spin, Table } from "antd";
-import React from "react";
+import React, { useState } from "react";
 import ErrorPage from "../error/ErrorPage";
 
 const AllPaymentInfo = () => {
+  const [search, setSearchTerm] = useState("");
   const {
     data: paymentSummery = [],
     error,
@@ -145,14 +146,40 @@ const AllPaymentInfo = () => {
     },
   ];
 
+  const filteredData = paymentSummery?.data?.filter((item) => {
+    if (!item) return false;
+
+    const emailMatch = item?.email
+      ?.toLowerCase()
+      .includes(search.toLowerCase());
+    const numberMatch = item?.number?.toString().includes(search);
+    const transactionIDMatch = (item?.transactionID || "")
+      .toString()
+      .includes(search);
+    const nameMatch = item?.name?.toLowerCase().includes(search.toLowerCase());
+
+    return emailMatch || numberMatch || transactionIDMatch || nameMatch;
+  });
   return (
     <>
       {isLoading && <Spin />}
       {error && <ErrorPage />}
+
+      <div className="flex items-center justify-center mb-8 m-1">
+        <input
+          type="search"
+          id="default-search"
+          onChange={(e) => setSearchTerm(e.target.value)}
+          className="block w-full p-4 pl-10 text-sm text-white border border-gray-300 rounded-md  focus:ring-blue-500 focus:border-blue-500 bg-blue-900 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+          placeholder="Search by Email, Number, Name, Transaction Id"
+          required
+        />
+      </div>
+
       {paymentSummery?.status && (
         <Table
           columns={columns}
-          dataSource={paymentSummery?.data}
+          dataSource={filteredData}
           rowKey="_id"
           pagination={{ pageSize: 10 }}
           scroll={{ x: 1500 }} // Optional: Set horizontal scroll if needed

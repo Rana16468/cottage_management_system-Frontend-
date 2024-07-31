@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import React from "react";
 import SellerCategorie from "./SellerCategorie";
-import MenuDashbord from "../BuyerDashboard/MenuDashbord";
+//import MenuDashbord from "../BuyerDashboard/MenuDashbord";
 
 const SellerCategorieApi = () => {
   const url = `http://localhost:3013/api/v1/specific_user_product`;
@@ -27,15 +27,12 @@ const SellerCategorieApi = () => {
 
   return (
     <>
-      <div className="flex">
-        <MenuDashbord />,
-        <SellerCategorie
-          productCategories={productCategories}
-          isLoading={isLoading}
-          error={error}
-          refetch={refetch}
-        />
-      </div>
+      <SellerCategorie
+        productCategories={productCategories}
+        isLoading={isLoading}
+        error={error}
+        refetch={refetch}
+      />
     </>
   );
 };

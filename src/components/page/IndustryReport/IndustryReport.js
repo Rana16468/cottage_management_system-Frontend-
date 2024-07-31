@@ -69,7 +69,7 @@ const IndustryReport = () => {
             {/* Example Cards with Images */}
             <div className="bg-white rounded-lg shadow-md p-4">
               <img
-                src="https://fastercapital.com/i/Handmade-Haven--The-Cottage-Industry-s-Resurgence--The-Challenges-of-Running-a-Cottage-Industry-Business.webp"
+                src="https://fastercapital.com/i/Cottage-Industry-Innovations--Modernizing-Traditional-Trades--The-Future-of-Cottage-Industry-in-the-Global-Market.webp"
                 alt="Featured Insight"
                 className="h-96 w-full object-cover mb-4 rounded-lg"
               />
@@ -77,7 +77,7 @@ const IndustryReport = () => {
             </div>
             <div className="bg-white rounded-lg shadow-md p-4">
               <img
-                src="https://fastercapital.com/i/Cottage-Industry-Conundrum--Challenges-and-Solutions--The-Way-Forward-for-Cottage-Industry.webp"
+                src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSObeqk68fQJ0S0FbdO-ff90L5C5s2GUTitfvbhjeDQt3EF2t5VipVN2-JTo0M3te1sQsg&usqp=CAU"
                 alt="Featured Insight"
                 className="h-96 w-full object-cover mb-4 rounded-lg"
               />
@@ -85,7 +85,7 @@ const IndustryReport = () => {
             </div>
             <div className="bg-white rounded-lg shadow-md p-4">
               <img
-                src="https://fastercapital.com/i/Cottage-Industry-2-0--Integrating-Technology-for-Growth--Benefits-of-Integrating-Technology-in-Cottage-Industry.webp"
+                src="https://fastercapital.com/i/Cottage-Industry-Innovations--Modernizing-Traditional-Trades--The-Future-of-Cottage-Industry-in-the-Global-Market.webp"
                 alt="Featured Insight"
                 className="h-96 w-full object-cover mb-4 rounded-lg"
               />

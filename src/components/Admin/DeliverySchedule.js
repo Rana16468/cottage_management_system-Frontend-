@@ -4,44 +4,60 @@ import toast from "react-hot-toast";
 import yourhandle from "countrycitystatejson";
 import { useReactToPrint } from "react-to-print";
 import { TbTruckDelivery } from "react-icons/tb";
-const DeliverySchedule = () => {
-  const [deliveryReport, SetDeliverReport] = useState({});
-  const [isLoading, setLoading] = useState(true);
-  const [country, setCountries] = useState([]);
+import { useQuery } from "@tanstack/react-query";
 
-  const handelPaymentSchedule = (report) => {
-    fetch(
-      `http://localhost:3013/api/v1/admin/payment_schedule_information?interval=${report}`,
-      {
-        method: "GET",
-        headers: {
-          authorization: localStorage.getItem("token"),
-        },
-      }
-    )
-      .then((res) => {
-        if (!res.ok) {
-          throw new Error("API Error");
+const DeliverySchedule = () => {
+  const [country, setCountries] = useState([]);
+  const [report, setReport] = useState("");
+
+  const fetchPayments = async () => {
+    try {
+      const res = await fetch(
+        `http://localhost:3013/api/v1/admin/payment_schedule_information?interval=${report}`,
+        {
+          method: "GET",
+          headers: {
+            authorization: localStorage.getItem("token"),
+          },
         }
-        return res.json();
-      })
-      .then((data) => {
-        SetDeliverReport(data);
-        setLoading(false);
-      })
-      .catch((error) => {
-        toast.error(error.message);
-      });
+      );
+      if (!res.ok) {
+        throw new Error("Network response was not ok");
+      }
+      const data = await res.json();
+      return data;
+    } catch (error) {
+      toast.error(`Failed to fetch payments: ${error?.message}`);
+      throw error;
+    }
   };
+
+  const {
+    data: deliveryReport = [],
+    isLoading,
+    error,
+  } = useQuery({
+    queryKey: ["deliveryReport", report],
+    queryFn: fetchPayments,
+    enabled: !!report,
+  });
 
   useEffect(() => {
     fetch("https://restcountries.com/v3.1/all")
       .then((res) => res.json())
       .then((data) => setCountries(data))
       .catch((error) => {
-        toast.error("Country App Error");
+        toast.error(error?.message);
       });
   }, []);
+
+  const componentRef = useRef(null);
+  const handlePrint = useReactToPrint({
+    content: () => componentRef.current,
+    documentTitle: "Delivery Report",
+    copyStyles: true,
+  });
+
   const userTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
   const distractName = userTimeZone.split("/")[1];
 
@@ -103,9 +119,8 @@ const DeliverySchedule = () => {
       dataIndex: "totalproduct",
       key: "totalproduct",
     },
-
     {
-      title: "Delivery_Total ",
+      title: "Delivery_Total",
       dataIndex: "deliveryTotalCost",
       key: "deliveryTotalCost",
     },
@@ -143,98 +158,83 @@ const DeliverySchedule = () => {
       title: "Open_Street_Maps",
       dataIndex: "district",
       key: "district",
-      render: (district) => {
-        return (
-          <a
-            target="_blank"
-            rel="noreferrer"
-            className="px-2 py-1 font-semibold leading-tight text-green-700 bg-green-100 rounded-sm"
-            href={`https://www.openstreetmap.org/search?query=${district}`}>
-            Open Street
-          </a>
-        );
-      },
+      render: (district) => (
+        <a
+          target="_blank"
+          rel="noreferrer"
+          className="px-2 py-1 font-semibold leading-tight text-green-700 bg-green-100 rounded-sm"
+          href={`https://www.openstreetmap.org/search?query=${district}`}>
+          Open Street
+        </a>
+      ),
     },
   ];
-
-  const componentRef = useRef(null);
-  const handlePrint = useReactToPrint({
-    content: () => componentRef.current,
-    documentTitle: "Ant Design Table (Printed)",
-    copyStyles: true,
-  });
 
   return (
     <>
       <div className="sm:hidden">
         <label htmlFor="tabs" className="sr-only">
-          Select your country
+          Select report type
         </label>
         <select
           id="tabs"
           name="selectedJob"
-          className=" border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-30 p-2.5  bg-blue-900 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-          <option value="none">All Sales </option>
-          <option value="Internship">Deaily Sales</option>
-          <option value="Fresher">Weekly Sales</option>
-          <option value="Semi-Experiences">Monthly Sales</option>
-          <option value="Experiences">Yearly Sales</option>
+          className="border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-30 p-2.5 bg-blue-900 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+          onChange={(e) => setReport(e.target.value)}>
+          <option value="none">All Sales</option>
+          <option value="daily">Daily Sales</option>
+          <option value="weekly">Weekly Sales</option>
+          <option value="monthly">Monthly Sales</option>
+          <option value="yearly">Yearly Sales</option>
         </select>
       </div>
-      <ul className="mb-3 hidden text-sm font-medium text-center bg-blue-900 text-gray-900 divide-x divide-gray-200  shadow sm:flex dark:divide-blue-700 dark:text-gray-400">
+
+      <ul className="mb-3 hidden text-sm font-medium text-center bg-blue-900 text-gray-900 divide-x divide-gray-200 shadow sm:flex dark:divide-blue-700 dark:text-gray-400">
         <li className="w-full">
           <button
-            onClick={() => handelPaymentSchedule("daily")}
-            className="inline-block w-full p-4 text-gray-900  focus:ring-4 focus:ring-blue-300 active focus:outline-none  bg-blue-900 dark:text-white hover:bg-primary"
+            onClick={() => setReport("daily")}
+            className="inline-block w-full p-4 text-gray-900 focus:ring-4 focus:ring-blue-300 active focus:outline-none bg-blue-900 dark:text-white hover:bg-primary"
             aria-current="page">
-            Deaily Delivery
+            Daily Delivery
           </button>
         </li>
         <li className="w-full">
           <button
-            onClick={() => handelPaymentSchedule("weekly")}
-            className="inline-block w-full p-4  hover:text-gray-700 hover:bg-gray-50 focus:ring-4 focus:ring-blue-300 focus:outline-none dark:hover:text-white bg-blue-900 dark:hover:bg-blue-700">
+            onClick={() => setReport("weekly")}
+            className="inline-block w-full p-4 hover:text-gray-700 hover:bg-gray-50 focus:ring-4 focus:ring-blue-300 focus:outline-none dark:hover:text-white bg-blue-900 dark:hover:bg-blue-700">
             Weekly Delivery
           </button>
         </li>
         <li className="w-full">
           <button
-            onClick={() => handelPaymentSchedule("monthly")}
-            className="inline-block w-full p-4 hover:text-gray-700 hover:bg-gray-50 focus:ring-4 focus:ring-blue-300 focus:outline-none dark:hover:text-white  bg-blue-900 dark:hover:bg-blue-700">
+            onClick={() => setReport("monthly")}
+            className="inline-block w-full p-4 hover:text-gray-700 hover:bg-gray-50 focus:ring-4 focus:ring-blue-300 focus:outline-none dark:hover:text-white bg-blue-900 dark:hover:bg-blue-700">
             Monthly Delivery
           </button>
         </li>
         <li className="w-full">
           <button
-            onClick={() => handelPaymentSchedule("yearly")}
-            className="inline-block w-full p-4  rounded-r-lg hover:text-gray-700 hover:bg-gray-50 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:hover:text-white  bg-blue-900 dark:hover:bg-blue-700">
+            onClick={() => setReport("yearly")}
+            className="inline-block w-full p-4 rounded-r-lg hover:text-gray-700 hover:bg-gray-50 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:hover:text-white bg-blue-900 dark:hover:bg-blue-700">
             Yearly Delivery
           </button>
         </li>
       </ul>
 
       {isLoading && <Spin />}
-      {isLoading && (
-        <>
-          <section className="bg-center bg-no-repeat bg-[url('https://c8.alamy.com/comp/2BH5JYH/shopping-online-concept-cargo-truck-and-delivery-report-and-pencil-over-white-background-colorful-design-vector-illustration-2BH5JYH.jpg')] bg-pink-00 bg-blend-multiply">
-            <div className="px-4 mx-auto max-w-screen-xl text-center py-24 lg:py-56"></div>
-          </section>
-          <img
-            className="w-full"
-            src="https://cdn3.vectorstock.com/i/1000x1000/96/12/delivery-report-line-icon-parcel-documents-sign-vector-46429612.jpg"
-            alt=""></img>
-        </>
-      )}
+      {error && <p>Error: {error.message}</p>}
 
       <Table dataSource={deliveryReport?.data} columns={columns} />
-      <div className=" flex justify-center">
+
+      <div className="flex justify-center mt-4">
         <Button
-          className=" btn bg-sky-200 btn-outline btn-md"
+          className="btn bg-sky-200 btn-outline btn-md"
           type="primary"
           onClick={handlePrint}>
           Generate Delivery Report <TbTruckDelivery className="text-3xl" />
         </Button>
       </div>
+
       <div style={{ display: "none" }}>
         <ComponentToPrint ref={componentRef}>
           <div className="overflow-x-auto">

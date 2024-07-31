@@ -74,20 +74,20 @@ const AllUser = () => {
       {error && <ErrorPage />}
 
       <div className="container mx-auto p-6 font-mono ">
-        <div className="flex items-center justify-center">
+        <div className="flex items-center justify-center text-center text-white">
           <select
             onChange={(e) => setSearch(e.target.value)}
-            className="rounded-l-xl bg-pink-500 h-14">
+            className="rounded-l-md bg-blue-900 h-14">
             <option disabled={true}>User Role</option>
+            <option value="">All User Role</option>
             <option value="buyer">Buyer</option>
             <option value="seller">Seller</option>
-            <option value="">All</option>
           </select>
           <input
             type="search"
             id="default-search"
             onChange={(e) => setSearch(e.target.value)}
-            className="block w-full p-4 pl-10 text-sm text-gray-900 border border-gray-300 rounded-r-lg  focus:ring-blue-500 focus:border-blue-500 bg-blue-900 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            className="block w-full p-4 pl-10 text-sm text-gray-900 border border-gray-300 rounded-r-lg  focus:ring-blue-500 focus:border-blue-500 bg-white dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             placeholder="Find  User Account Type / Srach User Email Address"
             required
           />

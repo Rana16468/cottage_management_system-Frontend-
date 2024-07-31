@@ -9,16 +9,13 @@ import { Link } from "react-router-dom";
 import { TypeOfImage } from "../../../utils/ExtentionType";
 
 const SellerCategorie = ({ productCategories, isLoading, error, refetch }) => {
-  // pagination
+  // Pagination
   const [page, setPage] = useState(0);
   const [size, setSize] = useState(10);
   const pages = Math.ceil(75 / size);
 
-  // delete categorie
-
-  ///api/v1/delete_categorie
-
-  const handelDeleteCategorie = (id) => {
+  // Delete category
+  const handleDeleteCategory = (id) => {
     Swal.fire({
       title: "Do you want to save the changes?",
       showDenyButton: true,
@@ -26,7 +23,6 @@ const SellerCategorie = ({ productCategories, isLoading, error, refetch }) => {
       confirmButtonText: "Delete",
       denyButtonText: `Don't Delete`,
     }).then((result) => {
-      /* Read more about isConfirmed, isDenied below */
       if (result.isConfirmed) {
         fetch(`http://localhost:3013/api/v1/delete_categorie?id=${id}`, {
           method: "DELETE",
@@ -46,7 +42,7 @@ const SellerCategorie = ({ productCategories, isLoading, error, refetch }) => {
             refetch();
           })
           .catch((error) => {
-            console.log(error?.message);
+            toast.error(error?.message);
           });
       } else if (result.isDenied) {
         Swal.fire("Changes are not saved", "", "info");
@@ -54,7 +50,7 @@ const SellerCategorie = ({ productCategories, isLoading, error, refetch }) => {
     });
   };
 
-  const handelDeleteProductCatagorie = (id) => {
+  const handleDeleteProductCategory = (id) => {
     Swal.fire({
       title: "Do you want to save the changes?",
       showDenyButton: true,
@@ -62,7 +58,6 @@ const SellerCategorie = ({ productCategories, isLoading, error, refetch }) => {
       confirmButtonText: "Delete",
       denyButtonText: `Don't Delete`,
     }).then((result) => {
-      /* Read more about isConfirmed, isDenied below */
       if (result.isConfirmed) {
         fetch(`http://localhost:3013/api/v1/delete_categorie_list/${id}`, {
           method: "DELETE",
@@ -105,41 +100,35 @@ const SellerCategorie = ({ productCategories, isLoading, error, refetch }) => {
     {
       title: "Status",
       dataIndex: "isCreated",
-      render: (data) => {
-        return data ? (
-          <Button className="">Active</Button>
-        ) : (
-          <Button>InActive</Button>
-        );
-      },
+      render: (data) => (
+        <Button
+          className={`${data ? "bg-green-500" : "bg-red-500"} text-white`}>
+          {data ? "Active" : "Inactive"}
+        </Button>
+      ),
     },
     {
       title: "Action",
       key: "x",
-      render: (item) => {
-        return (
-          <Space>
-            <Link
-              to={`/addToProduct/${item?.categorie_name
-                ?.split(" ")
-                .join("_")}/${item?._id}`}>
-              <Button>Add To Product</Button>
-            </Link>
-            <Button onClick={() => handelDeleteCategorie(item?._id)}>
-              Delete
-            </Button>
-          </Space>
-        );
-      },
+      render: (item) => (
+        <Space>
+          <Link
+            to={`/addToProduct/${item?.categorie_name?.split(" ").join("_")}/${
+              item?._id
+            }`}>
+            <Button>Add To Product</Button>
+          </Link>
+          <Button onClick={() => handleDeleteCategory(item?._id)}>
+            Delete
+          </Button>
+        </Space>
+      ),
     },
     {
       title: "Action",
       key: "x",
-      render: (item) => {
-        return <UpdateModal item={item} refetch={refetch} />;
-      },
+      render: (item) => <UpdateModal item={item} refetch={refetch} />,
     },
-
     {
       title: "Sub Categorie",
       key: "x",
@@ -150,76 +139,68 @@ const SellerCategorie = ({ productCategories, isLoading, error, refetch }) => {
             dataIndex: "tittle",
           },
           {
-            title: "image",
+            title: "Image",
             dataIndex: "photo",
             key: "photo",
-            render: (photo) => {
-              return (
-                <img
-                  className="rounded-md "
-                  src={photo}
-                  alt=""
-                  style={{ width: 100 }}
-                />
-              );
-            },
+            render: (photo) => (
+              <img
+                className="rounded-md"
+                src={photo}
+                alt=""
+                style={{ width: 100 }}
+              />
+            ),
           },
           {
             title: "Add To Categories",
             key: "x",
-            render: (item) => {
-              return (
-                <Link
-                  to={`/add_to_categorie/${item?.tittle
-                    ?.split(" ")
-                    .join("_")}/${subitem?._id}/${item?.id}`}>
-                  <Button>Sub Categories</Button>
-                </Link>
-              );
-            },
+            render: (item) => (
+              <Link
+                to={`/add_to_categorie/${item?.tittle?.split(" ").join("_")}/${
+                  subitem?._id
+                }/${item?.id}`}>
+                <Button>Sub Categories</Button>
+              </Link>
+            ),
           },
           {
             title: "Sub_Categorie",
             key: "x",
-            render: (item) => {
-              return (
-                <Link to={`/your_sub_categorie/${subitem?._id}/${item?.id}`}>
-                  <Button>Sub Categorie</Button>
-                </Link>
-              );
-            },
+            render: (item) => (
+              <Link to={`/your_sub_categorie/${subitem?._id}/${item?.id}`}>
+                <Button>Sub Categorie</Button>
+              </Link>
+            ),
           },
           {
             title: "Delete",
             key: "x",
-            render: (item) => {
-              return (
-                <Space>
-                  <Button onClick={() => handelDeleteProductCatagorie(item.id)}>
-                    Delete
-                  </Button>
-                </Space>
-              );
-            },
+            render: (item) => (
+              <Space>
+                <Button onClick={() => handleDeleteProductCategory(item.id)}>
+                  Delete
+                </Button>
+              </Space>
+            ),
           },
           {
             title: "Update Image",
             key: "x",
-            render: (item) => {
-              return <UpdateProductModal item={item} refetch={refetch} />;
-            },
+            render: (item) => (
+              <UpdateProductModal item={item} refetch={refetch} />
+            ),
           },
         ];
 
         return (
           <Table
             columns={columns}
-            dataSource={subitem?.productList?.map((item) => {
-              return {
-                ...item,
-                key: item.id,
-              };
-            })}
+            dataSource={subitem?.productList?.map((item) => ({
+              ...item,
+              key: item.id,
+            }))}
+            pagination={false}
+            scroll={{ x: true }}
           />
         );
       },
@@ -228,7 +209,7 @@ const SellerCategorie = ({ productCategories, isLoading, error, refetch }) => {
 
   return (
     <>
-      <div className="w-full px-4 py-2 md:w-full  lg:w-full ">
+      <div className="w-full p-4">
         {isLoading && <Spin />}
         {error && <ErrorPage />}
 
@@ -239,20 +220,18 @@ const SellerCategorie = ({ productCategories, isLoading, error, refetch }) => {
             ...item,
             key: item._id,
           }))}
+          pagination={false}
+          scroll={{ x: true }}
         />
 
-        <div className="flex justify-end">
-          <div
-            style={{
-              marginLeft: "200px",
-              marginBottom: "50px",
-            }}>
-            <p>
-              Current Page : {page + 1} and Size:{size}
-            </p>
+        <div className="flex flex-col items-end mt-4 space-y-2">
+          <p>
+            Current Page : {page + 1} and Size: {size}
+          </p>
+          <div className="flex items-center space-x-2">
             {[...Array(pages).keys()].map((number) => (
               <button
-                className="m-3 text-xl btn btn-outline btn-sm"
+                className="m-2 text-xl btn btn-outline btn-sm"
                 key={number}
                 onClick={() => {
                   setPage(number);
@@ -262,10 +241,9 @@ const SellerCategorie = ({ productCategories, isLoading, error, refetch }) => {
             ))}
             <select
               className="rounded-full btn btn-outline btn-sm"
-              onChange={(event) => setSize(event.target.value)}>
-              <option value="10" defaultValue={10}>
-                10
-              </option>
+              onChange={(event) => setSize(event.target.value)}
+              value={size}>
+              <option value="10">10</option>
               <option value="15">15</option>
               <option value="20">20</option>
               <option value="25">25</option>
@@ -495,4 +473,5 @@ const UpdateProductModal = ({ item, refetch }) => {
     </>
   );
 };
+
 export default SellerCategorie;

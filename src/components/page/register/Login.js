@@ -9,16 +9,9 @@ const Login = () => {
   const { signIn, googleLogin } = useContext(AuthContext);
   const [error, setError] = useState(null);
   const [login, setLogain] = useState(false);
-  const {
-    handleSubmit,
-    register,
-    reset,
-    formState: { errors },
-  } = useForm();
+  const { handleSubmit, register, reset } = useForm();
   const location = useLocation();
   const navigate = useNavigate();
-
-  const form = location.state?.from?.pathname || "/";
 
   const onSubmit = (data) => {
     signIn(data?.email, data?.password)
@@ -58,7 +51,14 @@ const Login = () => {
 
             setLogain(true);
             setError("");
-            navigate(form, { replace: true });
+            if (user?.emailVerified) {
+              console.log("varified");
+              console.log(user?.emailVerified);
+              const form = location.state?.from?.pathname || "/";
+              navigate(form, { replace: true });
+            } else {
+              toast.error("You Are Not Varified User");
+            }
           } catch (error) {
             console.error("Error fetching token:", error);
           }
@@ -118,10 +118,16 @@ const Login = () => {
                 toast.success(data?.message);
                 setLogain(true);
                 setError("");
-                navigate(form, { replace: true });
+                if (user?.emailVerified) {
+                  const form = location.state?.from?.pathname || "/";
+                  console.log("va");
+                  navigate(form, { replace: true });
+                } else {
+                  toast.error("You Are Not Varified User");
+                }
               })
               .catch((error) => {
-                console.log(error.message);
+                setError(error.message);
               });
           }
         } else {

@@ -2,9 +2,9 @@ import React, { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import isUrl from "is-url";
 import logo1 from "./../image/logo.jfif";
-import { GiRoyalLove } from "react-icons/gi";
-import { GiShoppingCart } from "react-icons/gi";
 
+import { GiShoppingCart } from "react-icons/gi";
+import { FaHeart } from "react-icons/fa";
 import { AuthContext } from "../AuthProvider/AuthProvider";
 import { GrUserAdmin } from "react-icons/gr";
 import { CgProfile } from "react-icons/cg";
@@ -39,111 +39,116 @@ const Navbar = () => {
     document.querySelector("html").setAttribute("data-theme", localTheme);
   }, [theme]);
 
-  const logoutHandelar = user?.email ? (
-    <>
-      <li>
-        <Link
-          onClick={handelLogOut}
-          className="block py-2 pl-3 pr-4 hover:bg-slate-300 btn-sm rounded-lg">
-          LogOut <samp> | </samp>
-        </Link>
-      </li>
-      <li>
-        <Link
-          to="/my_profile"
-          className="block py-2 pl-3 pr-4 hover:bg-slate-300 btn-sm rounded-lg">
-          <div className="flex">
-            Profile <CgProfile className="text-xl ml-3" />
-          </div>
-        </Link>
-      </li>
-    </>
-  ) : (
-    <>
-      <li>
-        <Link
-          to="/login"
-          className="block py-2 pl-3 pr-4 hover:bg-slate-300 btn-sm rounded-lg">
-          Join Us <samp> | </samp>
-        </Link>
-      </li>
-      <li>
-        <Link
-          to="/register"
-          className="block py-2 pl-3 pr-4 hover:bg-slate-300 btn-sm rounded-lg">
-          Sing In{" "}
-        </Link>
-      </li>
-    </>
-  );
+  const logoutHandelar =
+    user?.emailVerified && user?.email ? (
+      <>
+        <li>
+          <Link
+            onClick={handelLogOut}
+            className="block py-2 pl-3 pr-4 hover:bg-slate-300 btn-sm rounded-lg">
+            LogOut <samp> | </samp>
+          </Link>
+        </li>
+        <li>
+          <Link
+            to="/my_profile"
+            className="block py-2 pl-3 pr-4 hover:bg-slate-300 btn-sm rounded-lg">
+            <div className="flex">
+              Profile <CgProfile className="text-xl ml-3" />
+            </div>
+          </Link>
+        </li>
+      </>
+    ) : (
+      <>
+        <li>
+          <Link
+            to="/login"
+            className="block py-2 pl-3 pr-4 hover:bg-slate-300 btn-sm rounded-lg">
+            Join Us <samp> | </samp>
+          </Link>
+        </li>
+        <li>
+          <Link
+            to="/register"
+            className="block py-2 pl-3 pr-4 hover:bg-slate-300 btn-sm rounded-lg">
+            Sing In{" "}
+          </Link>
+        </li>
+      </>
+    );
 
-  const buyerAccountHolder = user?.photoURL === "buyer" && (
-    <>
-      <li>
-        <Link to="/all_produts">Products</Link>
-      </li>
+  const buyerAccountHolder = user?.emailVerified &&
+    user?.photoURL === "buyer" && (
+      <>
+        <li>
+          <Link to="/all_produts">Products</Link>
+        </li>
 
-      <li onMouseOver={() => setClickbutton(!clickButton)}>
-        <Link>Company</Link>
-      </li>
+        <li onMouseOver={() => setClickbutton(!clickButton)}>
+          <Link>Company</Link>
+        </li>
 
-      <li>
-        <Link to="/complean_box">Complain</Link>
-      </li>
-    </>
-  );
-  const sellerAccountHolder = user?.photoURL === "seller" && (
-    <>
-      <li>
-        <Link to="/all_produts">Products</Link>
-      </li>
-      <li>
-        <Link to="/ai_image_generator">AI</Link>
-      </li>
+        <li>
+          <Link to="/complean_box">Complain</Link>
+        </li>
+      </>
+    );
+  const sellerAccountHolder = user?.emailVerified &&
+    user?.photoURL === "seller" && (
+      <>
+        <li>
+          <Link to="/all_produts">Products</Link>
+        </li>
+        <li>
+          <Link to="/ai_image_generator">AI</Link>
+        </li>
 
-      <li onMouseOver={() => setClickbutton(!clickButton)}>
-        <Link>Company</Link>
-      </li>
-      <li>
-        <Link to="/dashboard">Admin</Link>
-      </li>
+        <li onMouseOver={() => setClickbutton(!clickButton)}>
+          <Link>Company</Link>
+        </li>
+        <li>
+          <Link to="/dashboard">Admin</Link>
+        </li>
 
-      <li>
-        <Link to="/complean_box">Complain</Link>
-      </li>
-    </>
-  );
+        <li>
+          <Link to="/complean_box">Complain</Link>
+        </li>
+      </>
+    );
 
-  const optionalLogin = (isUrl(user?.photoURL) || user?.photoUR === null) && (
-    <>
-      <li>
-        <Link to="/all_produts">Products</Link>
-      </li>
+  const optionalLogin = user?.emailVerified &&
+    (isUrl(user?.photoURL) || user?.photoUR === null) && (
+      <>
+        <li>
+          <Link to="/all_produts">Products</Link>
+        </li>
 
-      <li onMouseOver={() => setClickbutton(!clickButton)}>
-        <Link>Company</Link>
-      </li>
+        <li onMouseOver={() => setClickbutton(!clickButton)}>
+          <Link>Company</Link>
+        </li>
 
-      <li>
-        <Link to="/complean_box">Complain</Link>
-      </li>
-    </>
-  );
+        <li>
+          <Link to="/complean_box">Complain</Link>
+        </li>
+      </>
+    );
 
   return (
     <>
-      <nav className=" bg-[#efb7d9] justify-between hidden lg:flex ">
-        <div className="avatar">
-          <div className="w-10 ml-2 rounded-full">
-            <img src={logo1} alt="" />
-          </div>
-        </div>
+      <nav className=" bg-white justify-between hidden lg:flex ">
+        <span className="text-2xl font-serif m-1">
+          <span className="text-red-600">C</span>reativ
+          <span className="text-green-700">E</span>{" "}
+          <span className="text-green-700">C</span>raftin
+          <span className="text-red-600">G</span>
+        </span>
         <ul className="flex flex-row font-medium rounded-lg  ml-3 ">
           <li>
             <a
               href="..."
               className="block py-2 pl-3 pr-4 hover:bg-slate-300 btn-sm rounded-lg ">
-              NikeRefurbished <samp> |</samp>
+              C C Refurbished <samp> |</samp>
             </a>
           </li>
           <li>
@@ -170,6 +175,11 @@ const Navbar = () => {
 
       <div className="navbar bg-blue-900 w-full text-white">
         <div className="navbar-start">
+          <div className="avatar">
+            <div className="w-14 ml-2 rounded-sm">
+              <img src={logo1} alt="" />
+            </div>
+          </div>
           <div className="dropdown">
             <label tabIndex={0} className="btn btn-ghost lg:hidden">
               <svg
@@ -222,9 +232,6 @@ const Navbar = () => {
             <li>
               <Link to="/blog">Blog</Link>
             </li>
-            <li>
-              <Link to="/blog">Help</Link>
-            </li>
 
             {buyerAccountHolder}
             {sellerAccountHolder}
@@ -233,10 +240,8 @@ const Navbar = () => {
           </ul>
         </div>
         <div className="navbar-end">
-          <Link
-            to="/wish_list"
-            className="btn btn-outline bg-red-600 btn-sm m-3">
-            <GiRoyalLove className="text-xl" />
+          <Link to="/wish_list" className="btn btn-outline bg-white btn-sm m-3">
+            <FaHeart className="text-xl" />
           </Link>
 
           {user?.photoURL === "buyer" ||
@@ -248,7 +253,7 @@ const Navbar = () => {
               <GiShoppingCart className="text-xl" />
             </Link>
           ) : (
-            <button disabled={true} className="btn btn-outline btn-sm m-3">
+            <button className="btn btn-outline text-white btn-sm m-3">
               <GiShoppingCart className="text-xl" />
             </button>
           )}

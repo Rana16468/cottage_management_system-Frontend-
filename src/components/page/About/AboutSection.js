@@ -10,7 +10,7 @@ const AboutSection = () => {
               <div className="flex flex-wrap">
                 <div className="w-full px-4 md:w-1/2">
                   <img
-                    src="https://i.postimg.cc/YCJW7jv8/pexels-fauxels-3184357.jpg"
+                    src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRJ4q72-mZ4NnfnsCShPbwTqXR9nl2rP_KQVA&s"
                     alt=""
                     className="object-cover w-full mb-6 rounded-lg h-80"
                   />

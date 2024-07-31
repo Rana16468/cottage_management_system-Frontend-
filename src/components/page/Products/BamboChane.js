@@ -44,6 +44,8 @@ const BamboChane = () => {
     },
   });
 
+  console.log(SpecificCategorie);
+
   return (
     <>
       <div className="flex">
@@ -51,16 +53,44 @@ const BamboChane = () => {
         <div className="w-full px-4 py-2 md:w-full  lg:w-full ">
           {isLoading && <Spin />}
           {error && <ErrorPage />}
-          {SpecificCategorie?.map((item, index) => (
-            <div key={index}>
-              <div className="grid lg:grid-cols-3 md:grid-cols-2 gap-2 sm:grid-cols-1 m-3">
-                {item?.productList?.map((v, index) => {
-                  return (
-                    <div
-                      key={index}
-                      className="w-full bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
-                      {item?.email === user?.email &&
-                        user?.photoURL === "seller" && (
+          {!isLoading &&
+            SpecificCategorie?.map((item, index) => (
+              <div key={index}>
+                <div className="grid lg:grid-cols-3 md:grid-cols-2 gap-2 sm:grid-cols-1 m-3">
+                  {item?.productList?.map((v, index) => {
+                    return (
+                      <div
+                        key={index}
+                        className="w-full bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+                        {item?.email === user?.email &&
+                          user?.photoURL === "seller" && (
+                            <>
+                              <Link
+                                to={`/buyer_dashboard/${item?._id}/${v?.id}`}>
+                                <img
+                                  className="w-full h-72 object-cover rounded"
+                                  src={v?.photo}
+                                  alt={v?.tittle}
+                                />
+                              </Link>
+                              <div className="p-5">
+                                <Link
+                                  to={`/buyer_dashboard/${item?._id}/${v?.id}`}>
+                                  <h5 className="text-center mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+                                    {v?.tittle}
+                                  </h5>
+                                </Link>
+                                <Link
+                                  to={`/buyer_dashboard/${item?._id}/${v?.id}`}>
+                                  <h5 className="text-center mb-2 text-xl font-serif tracking-tight text-gray-900 dark:text-white">
+                                    Product Name :{v?.tittle}
+                                  </h5>
+                                </Link>
+                              </div>
+                            </>
+                          )}
+
+                        {user?.photoURL === "buyer" && (
                           <>
                             <Link to={`/buyer_dashboard/${item?._id}/${v?.id}`}>
                               <img
@@ -85,36 +115,12 @@ const BamboChane = () => {
                             </div>
                           </>
                         )}
-
-                      {user?.photoURL === "buyer" && (
-                        <>
-                          <Link to={`/buyer_dashboard/${item?._id}/${v?.id}`}>
-                            <img
-                              className="w-full h-72 object-cover rounded"
-                              src={v?.photo}
-                              alt={v?.tittle}
-                            />
-                          </Link>
-                          <div className="p-5">
-                            <Link to={`/buyer_dashboard/${item?._id}/${v?.id}`}>
-                              <h5 className="text-center mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
-                                {v?.tittle}
-                              </h5>
-                            </Link>
-                            <Link to={`/buyer_dashboard/${item?._id}/${v?.id}`}>
-                              <h5 className="text-center mb-2 text-xl font-serif tracking-tight text-gray-900 dark:text-white">
-                                Product Name :{v?.tittle}
-                              </h5>
-                            </Link>
-                          </div>
-                        </>
-                      )}
-                    </div>
-                  );
-                })}
+                      </div>
+                    );
+                  })}
+                </div>
               </div>
-            </div>
-          ))}
+            ))}
         </div>
       </div>
     </>
