@@ -179,7 +179,7 @@ const DeliverySchedule = () => {
         <select
           id="tabs"
           name="selectedJob"
-          className="border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-30 p-2.5 bg-blue-900 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+          className="border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 bg-white dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
           onChange={(e) => setReport(e.target.value)}>
           <option value="none">All Sales</option>
           <option value="daily">Daily Sales</option>
@@ -224,7 +224,13 @@ const DeliverySchedule = () => {
       {isLoading && <Spin />}
       {error && <p>Error: {error.message}</p>}
 
-      <Table dataSource={deliveryReport?.data} columns={columns} />
+      <div className="overflow-x-auto">
+        <Table
+          dataSource={deliveryReport?.data}
+          columns={columns}
+          pagination={{ pageSize: 10 }}
+        />
+      </div>
 
       <div className="flex justify-center mt-4">
         <Button

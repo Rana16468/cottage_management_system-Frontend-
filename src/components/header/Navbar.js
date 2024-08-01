@@ -198,7 +198,7 @@ const Navbar = () => {
             </label>
             <ul
               tabIndex={0}
-              className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">
+              className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52 text-black">
               <li>
                 <Link to="">Home</Link>
               </li>
@@ -248,7 +248,7 @@ const Navbar = () => {
           isUrl(user?.photoURL) ||
           user?.photoUR === null ? (
             <Link
-              className="btn btn-outline bg-[#ee42ac]  btn-sm m-3"
+              className="btn btn-outline text-white btn-sm m-3"
               to="/add_to_card">
               <GiShoppingCart className="text-xl" />
             </Link>

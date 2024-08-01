@@ -137,7 +137,7 @@ const AIImageGenerator = () => {
                   <option disabled selected>
                     All Industries
                   </option>
-                  <option selected>cottage industries</option>
+                  <option selected>Creative Crafting</option>
                 </select>
                 <div className="max-w-full p-4 bg-white shadow-md rounded-md flex">
                   <input
