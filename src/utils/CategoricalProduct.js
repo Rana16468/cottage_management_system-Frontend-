@@ -28,7 +28,7 @@ const CategoricalProduct = [
   },
   {
     id: 3,
-    categorieName: "Jute goods",
+    categorieName: "Jute Goods",
     categories: [
       { id: 1, name: "Jute apparel" },
       { id: 2, name: "Jute bags" },
