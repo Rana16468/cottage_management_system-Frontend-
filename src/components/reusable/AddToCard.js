@@ -3,7 +3,7 @@ import toast from "react-hot-toast";
 export const AddToCard = (addToProduct) => {
   const { brandName, name, photo, price } = addToProduct || {};
 
-  fetch("http://localhost:3013/api/v1/addToCard_Product", {
+  fetch("https://creative-crafting.vercel.app/api/v1/addToCard_Product", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",

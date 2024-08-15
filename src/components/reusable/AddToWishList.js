@@ -10,7 +10,7 @@ export const AddToWishList = (wishList) => {
     sellingPrice,
     _id,
   } = wishList || {};
-  fetch("http://localhost:3013/api/v1/my_wish_list", {
+  fetch("https://creative-crafting.vercel.app/api/v1/my_wish_list", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",

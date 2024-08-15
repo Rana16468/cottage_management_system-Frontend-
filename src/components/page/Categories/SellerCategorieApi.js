@@ -4,7 +4,7 @@ import SellerCategorie from "./SellerCategorie";
 //import MenuDashbord from "../BuyerDashboard/MenuDashbord";
 
 const SellerCategorieApi = () => {
-  const url = `http://localhost:3013/api/v1/specific_user_product`;
+  const url = `https://creative-crafting.vercel.app/api/v1/specific_user_product`;
 
   const {
     data: productCategories = [],

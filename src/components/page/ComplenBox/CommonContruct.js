@@ -12,7 +12,7 @@ const CommonContruct = ({ information }) => {
   } = useForm();
 
   const onSubmit = (data) => {
-    fetch("http://localhost:3013/api/v1/report", {
+    fetch("https://creative-crafting.vercel.app/api/v1/report", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

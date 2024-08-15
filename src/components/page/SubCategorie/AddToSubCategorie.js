@@ -50,14 +50,17 @@ const AddToSubCategorie = () => {
               productId,
               categorieId,
             };
-            fetch("http://localhost:3013/api/v1/product_categorie", {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json",
-                authorization: localStorage.getItem("token"),
-              },
-              body: JSON.stringify(sub_categorical_product),
-            })
+            fetch(
+              "https://creative-crafting.vercel.app/api/v1/product_categorie",
+              {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                  authorization: localStorage.getItem("token"),
+                },
+                body: JSON.stringify(sub_categorical_product),
+              }
+            )
               .then((res) => {
                 if (!res.ok) {
                   throw Error("API ERROR");

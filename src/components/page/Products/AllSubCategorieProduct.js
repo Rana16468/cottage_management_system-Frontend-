@@ -16,7 +16,7 @@ const AllSubCategorieProduct = () => {
     toast.success("This Caregorical Data is Not Exist");
   }
 
-  const url = `http://localhost:3013/api/v1/buyer_specific_subcategore?subCategorieName=${subCategorieName}&subDetails=${subCategorie[id]}`;
+  const url = `https://creative-crafting.vercel.app/api/v1/buyer_specific_subcategore?subCategorieName=${subCategorieName}&subDetails=${subCategorie[id]}`;
   const {
     data: allSubCateforie = [],
     isLoading,

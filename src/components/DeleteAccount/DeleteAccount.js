@@ -28,7 +28,7 @@ const DeleteAccount = () => {
           text: "Your file has been deleted.",
           icon: "success",
         });
-        fetch("http://localhost:3013/api/v1/deleteAccount", {
+        fetch("https://creative-crafting.vercel.app/api/v1/deleteAccount", {
           method: "DELETE",
           headers: {
             authorization: localStorage.getItem("token"),

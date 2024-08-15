@@ -51,7 +51,7 @@ const product=[
     const message = element.textMessage.value;
 
     if (ChatBotValidateInput(message)) {
-      fetch("http://localhost:3013/api/v1/message", {
+      fetch("https://creative-crafting.vercel.app/api/v1/message", {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
@@ -83,7 +83,7 @@ const product=[
   };
   // my message display with my text area start the codeing
 
-  const chatUrl = `http://localhost:3013/api/v1/display_chatting_message/${_id}`;
+  const chatUrl = `https://creative-crafting.vercel.app/api/v1/display_chatting_message/${_id}`;
   const { data: chattingMessage = [] } = useQuery({
     queryKey: ["chattingMessage", _id],
     queryFn: async () => {
@@ -117,14 +117,17 @@ const product=[
           text: "Your file has been deleted.",
           icon: "success",
         });
-        fetch("http://localhost:3013/api/v1/delete_chettingMessage", {
-          method: "PATCH",
-          headers: {
-            "Content-Type": "application/json",
-            authorization: localStorage.getItem("token"),
-          },
-          body: JSON.stringify(delete_message),
-        })
+        fetch(
+          "https://creative-crafting.vercel.app/api/v1/delete_chettingMessage",
+          {
+            method: "PATCH",
+            headers: {
+              "Content-Type": "application/json",
+              authorization: localStorage.getItem("token"),
+            },
+            body: JSON.stringify(delete_message),
+          }
+        )
           .then((res) => {
             if (!res.ok) {
               throw new Error("API ERROR");

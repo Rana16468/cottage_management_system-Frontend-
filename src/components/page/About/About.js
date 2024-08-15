@@ -115,9 +115,9 @@ const About = () => {
       <AboutSection />
       <AboutWhatWeDo />
 
-      {/* <AboutDetails />
+      <AboutDetails />
       <AboutSection />
-      <AboutWhatWeDo /> */}
+      <AboutWhatWeDo />
     </>
   );
 };

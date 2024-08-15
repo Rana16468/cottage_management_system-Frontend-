@@ -35,12 +35,15 @@ const AdminHomePage = () => {
   } = useQuery({
     queryKey: ["allCollection"],
     queryFn: async () => {
-      const res = await fetch(`http://localhost:3013/api/v1/deshboard`, {
-        method: "GET",
-        headers: {
-          authorization: localStorage.getItem("token"),
-        },
-      });
+      const res = await fetch(
+        `https://creative-crafting.vercel.app/api/v1/deshboard`,
+        {
+          method: "GET",
+          headers: {
+            authorization: localStorage.getItem("token"),
+          },
+        }
+      );
       const data = await res.json();
       return data?.data;
     },
@@ -50,7 +53,7 @@ const AdminHomePage = () => {
     queryKey: ["paymentSummery"],
     queryFn: async () => {
       const res = await fetch(
-        "http://localhost:3013/api/v1/my_all_order_summary",
+        "https://creative-crafting.vercel.app/api/v1/my_all_order_summary",
         {
           method: "GET",
           headers: {

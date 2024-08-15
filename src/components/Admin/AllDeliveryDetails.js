@@ -16,7 +16,7 @@ const AllDeliveryDetails = () => {
     queryKey: ["deliverysReports"],
     queryFn: async () => {
       const res = await fetch(
-        "http://localhost:3013/api/v1/my_all_order_summary",
+        "https://creative-crafting.vercel.app/api/v1/my_all_order_summary",
         {
           method: "GET",
           headers: {

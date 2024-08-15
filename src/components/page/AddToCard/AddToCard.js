@@ -34,7 +34,7 @@ const AddToCard = () => {
     queryKey: ["MyAddToCard"],
     queryFn: async () => {
       const res = await fetch(
-        "http://localhost:3013/api/v1/my_addToCard_product",
+        "https://creative-crafting.vercel.app/api/v1/my_addToCard_product",
         {
           method: "GET",
           headers: {
@@ -58,14 +58,17 @@ const AddToCard = () => {
   };
 
   const AddToCount = (id, count, condition) => {
-    fetch(`http://localhost:3013/api/v1/add_to_product_count/${id}`, {
-      method: "PATCH",
-      headers: {
-        "Content-Type": "application/json",
-        authorization: localStorage.getItem("token"),
-      },
-      body: JSON.stringify({ condition, count }),
-    })
+    fetch(
+      `https://creative-crafting.vercel.app/api/v1/add_to_product_count/${id}`,
+      {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          authorization: localStorage.getItem("token"),
+        },
+        body: JSON.stringify({ condition, count }),
+      }
+    )
       .then((res) => {
         if (!res.ok) {
           throw new Error("API ERROR");
@@ -119,7 +122,7 @@ const AddToCard = () => {
     };
 
     if (orderSummery.actualamount > 0) {
-      fetch("http://localhost:3013/api/v1/order", {
+      fetch("https://creative-crafting.vercel.app/api/v1/order", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -160,14 +163,17 @@ const AddToCard = () => {
           text: "Your file has been deleted.",
           icon: "success",
         });
-        fetch(`http://localhost:3013/api/v1/delete_add_to_cardItem/${id}`, {
-          method: "DELETE",
-          headers: {
-            "Content-Type": "application/json",
-            authorization: localStorage.getItem("token"),
-          },
-          body: JSON.stringify({ count, email, subcategorieId }),
-        })
+        fetch(
+          `https://creative-crafting.vercel.app/api/v1/delete_add_to_cardItem/${id}`,
+          {
+            method: "DELETE",
+            headers: {
+              "Content-Type": "application/json",
+              authorization: localStorage.getItem("token"),
+            },
+            body: JSON.stringify({ count, email, subcategorieId }),
+          }
+        )
           .then((res) => {
             if (!res.ok) {
               throw new Error("API ERROR");

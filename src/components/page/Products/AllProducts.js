@@ -14,7 +14,7 @@ const AllProducts = () => {
 
   useTitle("ALL-PRODUCT");
 
-  const url = `http://localhost:3013/api/v1/all_product?page=${page}&limit=${size}`;
+  const url = `https://creative-crafting.vercel.app/api/v1/all_product?page=${page}&limit=${size}`;
 
   const {
     data: allProduct = [],

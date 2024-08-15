@@ -12,14 +12,17 @@ const EditChat = ({ editmessage, refetch }) => {
     editmessage.message = element.message.value;
 
     if (ChatBotValidateInput(editmessage.message)) {
-      fetch("http://localhost:3013/api/v1/update_chatting_message", {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-          authorization: localStorage.getItem("token"),
-        },
-        body: JSON.stringify(editmessage),
-      })
+      fetch(
+        "https://creative-crafting.vercel.app/api/v1/update_chatting_message",
+        {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+            authorization: localStorage.getItem("token"),
+          },
+          body: JSON.stringify(editmessage),
+        }
+      )
         .then((res) => {
           if (!res.ok) {
             throw new Error("API ERROR");

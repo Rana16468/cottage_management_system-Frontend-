@@ -4,7 +4,7 @@ import React from "react";
 import ErrorPage from "../error/ErrorPage";
 
 const AllWishList = () => {
-  const url = `http://localhost:3013/api/v1/find_my_wish_list`;
+  const url = `https://creative-crafting.vercel.app/api/v1/find_my_wish_list`;
 
   const {
     data: myWishList = [],

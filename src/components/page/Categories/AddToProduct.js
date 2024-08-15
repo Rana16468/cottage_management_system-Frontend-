@@ -35,14 +35,17 @@ const AddToProduct = () => {
           if (imgData?.success) {
             data.photo = imgData?.data?.url;
             // PUT Method Execution time now
-            fetch(`http://localhost:3013/api/v1/productList/${productId}`, {
-              method: "PUT",
-              headers: {
-                "Content-Type": "application/json",
-                authorization: localStorage.getItem("token"),
-              },
-              body: JSON.stringify(data),
-            })
+            fetch(
+              `https://creative-crafting.vercel.app/api/v1/productList/${productId}`,
+              {
+                method: "PUT",
+                headers: {
+                  "Content-Type": "application/json",
+                  authorization: localStorage.getItem("token"),
+                },
+                body: JSON.stringify(data),
+              }
+            )
               .then((res) => {
                 if (!res.ok) {
                   throw new Error("API ERROR");

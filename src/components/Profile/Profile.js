@@ -43,7 +43,7 @@ const Profile = () => {
     queryKey: ["specific_user"],
     queryFn: async () => {
       const res = await fetch(
-        "http://localhost:3013/api/v1/specific_user_info",
+        "https://creative-crafting.vercel.app/api/v1/specific_user_info",
         {
           method: "GET",
           headers: {
@@ -77,14 +77,17 @@ const Profile = () => {
         .then((imgData) => {
           if (imgData?.success) {
             image = imgData?.data?.url;
-            fetch("http://localhost:3013/api/v1/profile_picture", {
-              method: "PATCH",
-              headers: {
-                "Content-Type": "application/json",
-                authorization: localStorage.getItem("token"),
-              },
-              body: JSON.stringify({ image }),
-            })
+            fetch(
+              "https://creative-crafting.vercel.app/api/v1/profile_picture",
+              {
+                method: "PATCH",
+                headers: {
+                  "Content-Type": "application/json",
+                  authorization: localStorage.getItem("token"),
+                },
+                body: JSON.stringify({ image }),
+              }
+            )
               .then((res) => {
                 if (!res.ok) {
                   throw new Error("API ERROR");

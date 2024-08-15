@@ -12,7 +12,7 @@ const AllProductCategorie = () => {
   const pages = Math.ceil(75 / size);
   const [search, setSearch] = useState("");
 
-  const url = `http://localhost:3013/api/v1/all_product?page=${page}&limit=${size}`;
+  const url = `https://creative-crafting.vercel.app/api/v1/all_product?page=${page}&limit=${size}`;
 
   const {
     data: allProduct = [],

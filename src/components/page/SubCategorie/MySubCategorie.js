@@ -10,7 +10,7 @@ const MySubCategorie = () => {
   const [page, setPage] = useState(0);
   const [size, setSize] = useState(10);
   const pages = Math.ceil(75 / size);
-  const url = `http://localhost:3013/api/v1/get_specificProduct_categories?categorieId=${categorieId}&productId=${productId}`;
+  const url = `https://creative-crafting.vercel.app/api/v1/get_specificProduct_categories?categorieId=${categorieId}&productId=${productId}`;
 
   const {
     data: SubCategoricalProduct = [],

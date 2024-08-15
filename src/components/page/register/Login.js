@@ -23,7 +23,7 @@ const Login = () => {
         if (user) {
           try {
             const response = await fetch(
-              "http://localhost:3013/api/v1/create_token",
+              "https://creative-crafting.vercel.app/api/v1/create_token",
               {
                 method: "POST",
                 headers: {
@@ -84,7 +84,7 @@ const Login = () => {
           // create token
           if (user) {
             const res = await fetch(
-              "http://localhost:3013/api/v1/create_token",
+              "https://creative-crafting.vercel.app/api/v1/create_token",
               {
                 method: "POST",
                 headers: {
@@ -100,19 +100,22 @@ const Login = () => {
             localStorage.setItem("token", accessToken?.data);
             // store information data in the mongodb database
 
-            fetch("http://localhost:3013/api/v1/user_information", {
-              method: "POST", // or 'PUT'
-              headers: {
-                "Content-Type": "application/json",
-              },
-              body: JSON.stringify({
-                username: user?.displayName,
-                email: user?.email,
-                role: process.env.REACT_APP_buyer,
-                password: user?.uid,
-                photo: user?.photoURL,
-              }),
-            })
+            fetch(
+              "https://creative-crafting.vercel.app/api/v1/user_information",
+              {
+                method: "POST", // or 'PUT'
+                headers: {
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                  username: user?.displayName,
+                  email: user?.email,
+                  role: process.env.REACT_APP_buyer,
+                  password: user?.uid,
+                  photo: user?.photoURL,
+                }),
+              }
+            )
               .then((res) => res.json())
               .then((data) => {
                 toast.success(data?.message);

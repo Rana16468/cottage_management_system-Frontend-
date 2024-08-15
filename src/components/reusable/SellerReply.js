@@ -20,7 +20,7 @@ const SellerReply = ({ detailsId }) => {
   useEffect(() => {
     const fetchData = () => {
       fetch(
-        `http://localhost:3013/api/v1/display_specific_product_chat/${detailsId}`,
+        `https://creative-crafting.vercel.app/api/v1/display_specific_product_chat/${detailsId}`,
         {
           method: "GET",
           headers: {
@@ -57,7 +57,7 @@ const SellerReply = ({ detailsId }) => {
     const element = event.target;
     const replymessage = element.replymessage.value;
     if (ChatBotValidateInput(replymessage)) {
-      fetch("http://localhost:3013/api/v1/reply", {
+      fetch("https://creative-crafting.vercel.app/api/v1/reply", {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
@@ -104,14 +104,17 @@ const SellerReply = ({ detailsId }) => {
           text: "Your file has been deleted.",
           icon: "success",
         });
-        fetch("http://localhost:3013/api/v1/delete_reply_message", {
-          method: "PATCH",
-          headers: {
-            "Content-Type": "application/json",
-            authorization: localStorage.getItem("token"),
-          },
-          body: JSON.stringify(deleteData),
-        })
+        fetch(
+          "https://creative-crafting.vercel.app/api/v1/delete_reply_message",
+          {
+            method: "PATCH",
+            headers: {
+              "Content-Type": "application/json",
+              authorization: localStorage.getItem("token"),
+            },
+            body: JSON.stringify(deleteData),
+          }
+        )
           .then((res) => {
             if (!res.ok) {
               throw new Error("API ERROR");

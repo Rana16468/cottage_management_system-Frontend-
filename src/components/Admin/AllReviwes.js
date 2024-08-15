@@ -5,7 +5,7 @@ import ErrorPage from "../error/ErrorPage";
 import { MdAutoDelete } from "react-icons/md";
 import toast from "react-hot-toast";
 const AllReviwes = () => {
-  const url = `http://localhost:3013/api/v1/admin/all_reviwes`;
+  const url = `https://creative-crafting.vercel.app/api/v1/admin/all_reviwes`;
 
   const {
     data: allReviwes = [],
@@ -26,7 +26,7 @@ const AllReviwes = () => {
     },
   });
   const handelReviewDelete = (id) => {
-    fetch(`http://localhost:3013/api/v1/review_delete/${id}`, {
+    fetch(`https://creative-crafting.vercel.app/api/v1/review_delete/${id}`, {
       method: "DELETE",
       headers: {
         authorization: localStorage.getItem("token"),

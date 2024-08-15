@@ -34,7 +34,7 @@ const UpdateProductDetailsModal = ({ productDetails }) => {
             };
 
             fetch(
-              `http://localhost:3013/api/v1/update_image_details/${productDetails?._id}`,
+              `https://creative-crafting.vercel.app/api/v1/update_image_details/${productDetails?._id}`,
               {
                 method: "PUT",
                 headers: {

@@ -27,7 +27,7 @@ const AIImageGenerator = () => {
   };
 
   const onSubmit = (data) => {
-    fetch(`http://localhost:3013/api/v1/AI_image_generate`, {
+    fetch(`https://creative-crafting.vercel.app/api/v1/AI_image_generate`, {
       method: "POST", // or 'PUT'
       headers: {
         "Content-Type": "application/json",

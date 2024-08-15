@@ -16,7 +16,7 @@ const ReviewModal = ({ subcategorieId }) => {
     user: { email },
   } = useContext(AuthContext);
 
-  const url = `http://localhost:3013/api/v1/review_product/${subcategorieId}`;
+  const url = `https://creative-crafting.vercel.app/api/v1/review_product/${subcategorieId}`;
 
   const {
     data: AllReviews = [],
@@ -52,7 +52,7 @@ const ReviewModal = ({ subcategorieId }) => {
     event.preventDefault();
     const element = event.target;
     const review = element.review.value;
-    fetch("http://localhost:3013/api/v1/review_product", {
+    fetch("https://creative-crafting.vercel.app/api/v1/review_product", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -77,7 +77,7 @@ const ReviewModal = ({ subcategorieId }) => {
   };
 
   const handelReviewDelete = (id) => {
-    fetch(`http://localhost:3013/api/v1/review_delete/${id}`, {
+    fetch(`https://creative-crafting.vercel.app/api/v1/review_delete/${id}`, {
       method: "DELETE",
       headers: {
         authorization: localStorage.getItem("token"),

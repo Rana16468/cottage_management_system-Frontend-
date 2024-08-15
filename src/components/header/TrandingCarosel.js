@@ -15,7 +15,7 @@ const TrandingCarosel = () => {
 
   /*useEffect(() => {
     fetch(
-      `http://localhost:3013/api/v1/all_product?page=${page}&limit=${size}`,
+      `https://creative-crafting.vercel.app/api/v1/all_product?page=${page}&limit=${size}`,
       {
         method: "GET",
         headers: {
@@ -46,7 +46,7 @@ const TrandingCarosel = () => {
     queryKey: ["allProduct"],
     queryFn: async () => {
       const res = await fetch(
-        `http://localhost:3013/api/v1/all_product?page=${page}&limit=${size}`,
+        `https://creative-crafting.vercel.app/api/v1/all_product?page=${page}&limit=${size}`,
         {
           method: "GET",
           headers: {

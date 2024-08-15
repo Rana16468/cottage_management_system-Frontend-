@@ -6,7 +6,7 @@ const EditReviewModal = ({ specificReview, refetch }) => {
     const element = event.target;
     specificReview.review = element.review.value;
 
-    fetch("http://localhost:3013/api/v1/edit_review", {
+    fetch("https://creative-crafting.vercel.app/api/v1/edit_review", {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",

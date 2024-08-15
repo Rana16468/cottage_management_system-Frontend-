@@ -24,13 +24,16 @@ const SellerCategorie = ({ productCategories, isLoading, error, refetch }) => {
       denyButtonText: `Don't Delete`,
     }).then((result) => {
       if (result.isConfirmed) {
-        fetch(`http://localhost:3013/api/v1/delete_categorie?id=${id}`, {
-          method: "DELETE",
-          headers: {
-            "Content-Type": "application/json",
-            authorization: localStorage.getItem("token"),
-          },
-        })
+        fetch(
+          `https://creative-crafting.vercel.app/api/v1/delete_categorie?id=${id}`,
+          {
+            method: "DELETE",
+            headers: {
+              "Content-Type": "application/json",
+              authorization: localStorage.getItem("token"),
+            },
+          }
+        )
           .then((res) => {
             if (!res.ok) {
               toast.error("API ERROR");
@@ -59,12 +62,15 @@ const SellerCategorie = ({ productCategories, isLoading, error, refetch }) => {
       denyButtonText: `Don't Delete`,
     }).then((result) => {
       if (result.isConfirmed) {
-        fetch(`http://localhost:3013/api/v1/delete_categorie_list/${id}`, {
-          method: "DELETE",
-          headers: {
-            authorization: localStorage.getItem("token"),
-          },
-        })
+        fetch(
+          `https://creative-crafting.vercel.app/api/v1/delete_categorie_list/${id}`,
+          {
+            method: "DELETE",
+            headers: {
+              authorization: localStorage.getItem("token"),
+            },
+          }
+        )
           .then((res) => {
             if (!res.ok) {
               toast.error("API ERROR");
@@ -261,14 +267,17 @@ const UpdateModal = ({ item, refetch }) => {
   const { handleSubmit, register } = useForm();
 
   const onSubmit = (updatedata) => {
-    fetch(`http://localhost:3013/api/v1/update_categorie/${item?._id}`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-        authorization: localStorage.getItem("token"),
-      },
-      body: JSON.stringify(updatedata),
-    })
+    fetch(
+      `https://creative-crafting.vercel.app/api/v1/update_categorie/${item?._id}`,
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          authorization: localStorage.getItem("token"),
+        },
+        body: JSON.stringify(updatedata),
+      }
+    )
       .then((res) => {
         if (!res.ok) {
           throw new Error("API ERROR");
@@ -384,7 +393,7 @@ const UpdateProductModal = ({ item, refetch }) => {
             const photo = imgData?.data?.url;
             // fatching
             fetch(
-              `http://localhost:3013/api/v1/update_productList_images/${item.id}`,
+              `https://creative-crafting.vercel.app/api/v1/update_productList_images/${item.id}`,
               {
                 method: "PATCH",
                 headers: {

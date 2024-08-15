@@ -6,7 +6,7 @@ import ErrorPage from "../error/ErrorPage";
 import { MdAutoDelete } from "react-icons/md";
 
 const AllAddToCard = () => {
-  const url = `http://localhost:3013/api/v1/my_addToCard_product`;
+  const url = `https://creative-crafting.vercel.app/api/v1/my_addToCard_product`;
 
   const {
     data: AllAddToCard = [],

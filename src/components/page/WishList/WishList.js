@@ -9,7 +9,7 @@ import { TbHttpDelete } from "react-icons/tb";
 import Swal from "sweetalert2";
 import toast from "react-hot-toast";
 const WishList = () => {
-  const url = `http://localhost:3013/api/v1/find_my_wish_list`;
+  const url = `https://creative-crafting.vercel.app/api/v1/find_my_wish_list`;
 
   const {
     data: myWishList = [],
@@ -47,12 +47,15 @@ const WishList = () => {
           text: "Your file has been deleted.",
           icon: "success",
         });
-        fetch(`http://localhost:3013/api/v1/delete_wish_list/${id}`, {
-          method: "DELETE",
-          headers: {
-            authorization: localStorage.getItem("token"),
-          },
-        })
+        fetch(
+          `https://creative-crafting.vercel.app/api/v1/delete_wish_list/${id}`,
+          {
+            method: "DELETE",
+            headers: {
+              authorization: localStorage.getItem("token"),
+            },
+          }
+        )
           .then((res) => {
             if (!res.ok) {
               throw new Error("API ERROR");
@@ -71,14 +74,17 @@ const WishList = () => {
   };
 
   const handelAddToCartFromWishList = (product) => {
-    fetch("http://localhost:3013/api/v1/addToCard_from_wishList", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        authorization: localStorage.getItem("token"),
-      },
-      body: JSON.stringify(product),
-    })
+    fetch(
+      "https://creative-crafting.vercel.app/api/v1/addToCard_from_wishList",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          authorization: localStorage.getItem("token"),
+        },
+        body: JSON.stringify(product),
+      }
+    )
       .then((res) => {
         if (!res.ok) {
           throw new Error("API ERROR");

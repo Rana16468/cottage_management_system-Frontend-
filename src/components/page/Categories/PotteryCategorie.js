@@ -17,7 +17,7 @@ const PotteryCategorie = () => {
       isCreated: true,
       productList: [],
     };
-    fetch("http://localhost:3013/api/v1/product", {
+    fetch("https://creative-crafting.vercel.app/api/v1/product", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

@@ -7,7 +7,7 @@ import ErrorPage from "../../error/ErrorPage";
 const ProductDetails = () => {
   const { productId, SubcategorieId } = useParams();
 
-  const url = `http://localhost:3013/api/v1/specific_product_details?productId=${productId}&SubcategorieId=${SubcategorieId}`;
+  const url = `https://creative-crafting.vercel.app/api/v1/specific_product_details?productId=${productId}&SubcategorieId=${SubcategorieId}`;
   const {
     data: productDetails = [],
     isLoading,

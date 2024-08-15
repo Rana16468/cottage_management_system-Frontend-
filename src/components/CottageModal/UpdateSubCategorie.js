@@ -31,10 +31,10 @@ const UpdateSubCategorie = ({ subCategorieData }) => {
     let updateData;
 
     const commanAPIFetch = (updateData) => {
-      //http://localhost:3013/api/v1/update_sub_categorie/65dca0d728c454bf044463e6
+      //https://creative-crafting.vercel.app/api/v1/update_sub_categorie/65dca0d728c454bf044463e6
 
       fetch(
-        `http://localhost:3013/api/v1/update_sub_categorie/${subCategorieData?._id}`,
+        `https://creative-crafting.vercel.app/api/v1/update_sub_categorie/${subCategorieData?._id}`,
         {
           method: "PUT",
           headers: {

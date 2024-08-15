@@ -12,7 +12,7 @@ const BamboChane = () => {
   const { categorieName } = CategoriesName.find((v) => v.id === Number(id));
   const { user } = useContext(AuthContext);
 
-  const url = `http://localhost:3013/api/v1/specific_categorical_product?categorie_name=${categorieName}`;
+  const url = `https://creative-crafting.vercel.app/api/v1/specific_categorical_product?categorie_name=${categorieName}`;
 
   const {
     data: SpecificCategorie = [],

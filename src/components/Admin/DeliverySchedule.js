@@ -13,7 +13,7 @@ const DeliverySchedule = () => {
   const fetchPayments = async () => {
     try {
       const res = await fetch(
-        `http://localhost:3013/api/v1/admin/payment_schedule_information?interval=${report}`,
+        `https://creative-crafting.vercel.app/api/v1/admin/payment_schedule_information?interval=${report}`,
         {
           method: "GET",
           headers: {

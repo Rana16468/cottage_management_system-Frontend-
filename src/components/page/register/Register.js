@@ -30,13 +30,16 @@ const Register = () => {
         const user = result.user;
 
         if (user) {
-          const res = await fetch("http://localhost:3013/api/v1/create_token", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({ role: data?.role, email: data?.email }),
-          });
+          const res = await fetch(
+            "https://creative-crafting.vercel.app/api/v1/create_token",
+            {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({ role: data?.role, email: data?.email }),
+            }
+          );
           const accessToken = await res.json();
           localStorage.setItem("token", accessToken?.data);
         }
@@ -67,7 +70,7 @@ const Register = () => {
   };
 
   const storeUserInformation = async (data) => {
-    fetch("http://localhost:3013/api/v1/user_information", {
+    fetch("https://creative-crafting.vercel.app/api/v1/user_information", {
       method: "POST", // or 'PUT'
       headers: {
         "Content-Type": "application/json",

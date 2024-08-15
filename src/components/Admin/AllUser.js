@@ -6,7 +6,7 @@ import ErrorPage from "../error/ErrorPage";
 import { GrStatusGood } from "react-icons/gr";
 
 const AllUser = () => {
-  const url = `http://localhost:3013/api/v1/admin/all_user`;
+  const url = `https://creative-crafting.vercel.app/api/v1/admin/all_user`;
   const [search, setSearch] = useState("");
 
   const {
@@ -45,14 +45,17 @@ const AllUser = () => {
       toast.error("Only seller Account Holder Can be Admin");
       return;
     }
-    fetch(`http://localhost:3013/api/v1/admin/admin_toggle?id=${id}`, {
-      method: "PATCH",
-      headers: {
-        "Content-Type": "application/json",
-        authorization: localStorage.getItem("token"),
-      },
-      body: JSON.stringify({ isAdmin: !isAdmin }),
-    })
+    fetch(
+      `https://creative-crafting.vercel.app/api/v1/admin/admin_toggle?id=${id}`,
+      {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          authorization: localStorage.getItem("token"),
+        },
+        body: JSON.stringify({ isAdmin: !isAdmin }),
+      }
+    )
       .then((res) => {
         if (!res.ok) {
           throw new Error("API ERROR");

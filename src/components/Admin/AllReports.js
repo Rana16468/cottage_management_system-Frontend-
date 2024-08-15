@@ -14,12 +14,15 @@ const AllReports = () => {
   } = useQuery({
     queryKey: [" allReport"],
     queryFn: async () => {
-      const res = await fetch(`http://localhost:3013/api/v1/user_report`, {
-        method: "GET",
-        headers: {
-          authorization: localStorage.getItem("token"),
-        },
-      });
+      const res = await fetch(
+        `https://creative-crafting.vercel.app/api/v1/user_report`,
+        {
+          method: "GET",
+          headers: {
+            authorization: localStorage.getItem("token"),
+          },
+        }
+      );
       const data = await res.json();
       return data?.data;
     },
@@ -41,12 +44,15 @@ const AllReports = () => {
           text: "Your file has been deleted.",
           icon: "success",
         });
-        fetch(`http://localhost:3013/api/v1/delete_report/${id}`, {
-          method: "DELETE",
-          headers: {
-            authorization: localStorage.getItem("token"),
-          },
-        })
+        fetch(
+          `https://creative-crafting.vercel.app/api/v1/delete_report/${id}`,
+          {
+            method: "DELETE",
+            headers: {
+              authorization: localStorage.getItem("token"),
+            },
+          }
+        )
           .then((res) => {
             if (!res.ok) {
               throw new Error("API ERROR");

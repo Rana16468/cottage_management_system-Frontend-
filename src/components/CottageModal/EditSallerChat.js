@@ -12,14 +12,17 @@ const EditSallerChat = ({ replyDetails, setRefetch }) => {
     replyDetails.replymessage = element.replymessage.value;
 
     if (ChatBotValidateInput(replyDetails.replymessage)) {
-      fetch(`http://localhost:3013/api/v1/update_reply_message`, {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-          authorization: localStorage.getItem("token"),
-        },
-        body: JSON.stringify(replyDetails),
-      })
+      fetch(
+        `https://creative-crafting.vercel.app/api/v1/update_reply_message`,
+        {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+            authorization: localStorage.getItem("token"),
+          },
+          body: JSON.stringify(replyDetails),
+        }
+      )
         .then((res) => {
           if (!res.ok) {
             throw new Error("API ERROR");
