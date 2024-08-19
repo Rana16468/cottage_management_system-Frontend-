@@ -174,6 +174,7 @@ const Login = () => {
                   className="text-sm appearance-none rounded w-full py-2 px-3 text-gray-700 bg-gray-200 leading-tight focus:outline-none focus:shadow-outline h-10"
                   id="email"
                   name="email"
+                  defaultValue={"amsr215019@gmail.com"}
                   type="email"
                   {...register("email")}
                   required
@@ -191,6 +192,7 @@ const Login = () => {
                   id="password"
                   type="password"
                   {...register("password")}
+                  defaultValue={"215019"}
                   required
                   placeholder="Your password"
                 />
@@ -198,6 +200,15 @@ const Login = () => {
                   Please Register Your Account Info{" "}
                   <Link to="/register">Register</Link>
                 </p>
+                <p className="text-sm font-serif">
+                  Buyer Account: rana16-468@diu.edu.bd
+                </p>
+                <p className="text-sm font-serif">Password:215019</p>
+
+                <p className="text-sm font-serif">
+                  <b> Seller Account & Admin Account</b>: amsr215019@gmail.com
+                </p>
+                <p className="text-sm font-serif">Password:215019</p>
               </div>
 
               <div className="flex w-full mt-8">
